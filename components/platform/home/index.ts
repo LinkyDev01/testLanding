@@ -1,0 +1,8 @@
+export { PlatformHeroSection } from "./PlatformHeroSection"
+export { ProblemSection } from "./ProblemSection"
+export { SolutionSection } from "./SolutionSection"
+export { HowItWorksSection } from "./HowItWorksSection"
+export { EstimateCalculatorSection } from "./EstimateCalculatorSection"
+export { ExtendedFeaturesSection } from "./ExtendedFeaturesSection"
+export { PlatformCTASection } from "./PlatformCTASection"
+export { PlatformFooter } from "./PlatformFooter"
