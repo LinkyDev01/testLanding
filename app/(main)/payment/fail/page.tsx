@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import PaymentFailView from "@/src/views/payment/ui/fail-view";
+import PaymentFailView from "@/components/platform/payment/ui/fail-view";
 
 export default function PaymentFailPage() {
   return (

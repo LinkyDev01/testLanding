@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import PaymentSuccessView from "@/src/views/payment/ui/success-view";
+import PaymentSuccessView from "@/components/platform/payment/ui/success-view";
 
 export default function PaymentSuccessPage() {
   return (
