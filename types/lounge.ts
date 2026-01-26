@@ -1,4 +1,4 @@
-export type MeetupCategory = "wine" | "book" | "network" | "party"
+export type MeetupCategory = "wine" | "book" | "network" | "party" | "language"
 
 export interface Meetup {
   id: number
@@ -12,6 +12,7 @@ export interface Meetup {
   price: string
   description: string
   image: string
+  registrationUrl?: string
 }
 
 export interface CategoryStyle {

@@ -40,7 +40,7 @@ export function PlatformFooter() {
                 </div>
                 <div>
                   <p className="text-sm text-background/60">이메일</p>
-                  <p className="font-medium">hello@linky.kr</p>
+                  <p className="font-medium">contact@linkykorea.com</p>
                 </div>
               </div>
 
@@ -50,7 +50,7 @@ export function PlatformFooter() {
                 </div>
                 <div>
                   <p className="text-sm text-background/60">전화</p>
-                  <p className="font-medium">02-1234-5678</p>
+                  <p className="font-medium">010-7444-5790</p>
                 </div>
               </div>
 

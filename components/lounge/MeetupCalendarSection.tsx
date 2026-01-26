@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import {
   ArrowRight,
   Users,
@@ -9,16 +9,23 @@ import {
   ChevronLeft,
   ChevronRight,
   X,
+  Loader2,
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { AnimatedSection } from "@/components/animated-section"
 import { SectionHeader, CTAButton } from "@/components/common"
-import { MEETUPS, CATEGORY_STYLES } from "@/constants/lounge"
+import { CATEGORY_STYLES } from "@/constants/lounge"
+import { useGoogleCalendarMeetups } from "@/hooks/use-google-calendar-meetups"
 import type { Meetup } from "@/types"
 
 export function MeetupCalendarSection() {
   const [currentMonth, setCurrentMonth] = useState(new Date(2026, 0, 1))
   const [selectedDay, setSelectedDay] = useState<number | null>(null)
+
+  const { meetups: currentMonthMeetups, isLoading } = useGoogleCalendarMeetups(
+    currentMonth.getFullYear(),
+    currentMonth.getMonth()
+  )
 
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear()
@@ -27,14 +34,6 @@ export function MeetupCalendarSection() {
     const daysInMonth = new Date(year, month + 1, 0).getDate()
     return { firstDay, daysInMonth }
   }
-
-  const currentMonthMeetups = MEETUPS.filter((m) => {
-    const meetupDate = new Date(m.date)
-    return (
-      meetupDate.getFullYear() === currentMonth.getFullYear() &&
-      meetupDate.getMonth() === currentMonth.getMonth()
-    )
-  })
 
   const getMeetupsForDay = (day: number) => {
     return currentMonthMeetups.filter((m) => m.day === day)
@@ -182,7 +181,12 @@ export function MeetupCalendarSection() {
 
           {/* 모임 리스트 */}
           <div className="lg:col-span-3 space-y-4">
-            {selectedDay && selectedMeetups.length > 0 ? (
+            {isLoading ? (
+              <div className="bg-card rounded-2xl border border-border p-12 text-center">
+                <Loader2 className="w-12 h-12 mx-auto text-sage mb-4 animate-spin" />
+                <p className="text-muted-foreground">모임 정보를 불러오는 중...</p>
+              </div>
+            ) : selectedDay && selectedMeetups.length > 0 ? (
               <SelectedDayMeetups
                 currentMonth={currentMonth}
                 selectedDay={selectedDay}
@@ -231,7 +235,7 @@ function SelectedDayMeetups({
           전체 보기
         </button>
       </div>
-      <div className="grid sm:grid-cols-2 gap-6">
+      <div className="grid gap-6">
         {meetups.map((meetup, index) => (
           <AnimatedSection key={meetup.id} delay={index * 100}>
             <MeetupDetailCard meetup={meetup} />
@@ -248,11 +252,24 @@ interface AllMeetupsListProps {
   onSelectDay: (day: number) => void
 }
 
+const ITEMS_PER_PAGE = 3
+
 function AllMeetupsList({
   currentMonth,
   meetups,
   onSelectDay,
 }: AllMeetupsListProps) {
+  const [currentPage, setCurrentPage] = useState(1)
+
+  // 월이 바뀌면 페이지 리셋
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [meetups])
+
+  const totalPages = Math.ceil(meetups.length / ITEMS_PER_PAGE)
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
+  const paginatedMeetups = meetups.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+
   if (meetups.length === 0) {
     return (
       <div className="bg-card rounded-2xl border border-border p-12 text-center">
@@ -267,18 +284,62 @@ function AllMeetupsList({
 
   return (
     <>
-      <p className="text-sm text-muted-foreground mb-4">
-        날짜를 클릭하면 해당 날짜의 모임을 확인할 수 있어요
-      </p>
-      {meetups.map((meetup, index) => (
-        <AnimatedSection key={meetup.id} delay={index * 100}>
-          <MeetupListItem
-            meetup={meetup}
-            currentMonth={currentMonth}
-            onClick={() => onSelectDay(meetup.day)}
-          />
-        </AnimatedSection>
-      ))}
+      <div className="flex items-center justify-between mb-4">
+        <p className="text-sm text-muted-foreground">
+          날짜를 클릭하면 해당 날짜의 모임을 확인할 수 있어요
+        </p>
+        {totalPages > 1 && (
+          <p className="text-sm text-muted-foreground">
+            {currentPage} / {totalPages}
+          </p>
+        )}
+      </div>
+
+      <div className="space-y-4">
+        {paginatedMeetups.map((meetup, index) => (
+          <AnimatedSection key={meetup.id} delay={index * 100}>
+            <MeetupListItem
+              meetup={meetup}
+              currentMonth={currentMonth}
+              onClick={() => onSelectDay(meetup.day)}
+            />
+          </AnimatedSection>
+        ))}
+      </div>
+
+      {totalPages > 1 && (
+        <div className="flex items-center justify-center gap-2 mt-6">
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
+            disabled={currentPage === 1}
+            className="p-2 rounded-lg hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </button>
+
+          {Array.from({ length: totalPages }).map((_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => setCurrentPage(i + 1)}
+              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
+                currentPage === i + 1
+                  ? "bg-sage text-white"
+                  : "hover:bg-secondary"
+              }`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
+            disabled={currentPage === totalPages}
+            className="p-2 rounded-lg hover:bg-secondary disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <ChevronRight className="w-5 h-5" />
+          </button>
+        </div>
+      )}
     </>
   )
 }
@@ -292,7 +353,7 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
 
   return (
     <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row">
-      <div className="h-48 lg:h-auto lg:w-40 lg:flex-shrink-0 relative overflow-hidden">
+      <div className="h-64 lg:h-auto lg:w-40 lg:flex-shrink-0 relative overflow-hidden">
         <img
           src={meetup.image || "/placeholder.svg"}
           alt={meetup.title}
@@ -327,10 +388,24 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
         </div>
         <div className="flex items-center justify-between pt-3 border-t border-border">
           <span className="text-base font-bold text-rose">{meetup.price}</span>
-          <CTAButton size="sm" ctaVariant="sage" className="text-xs">
-            신청하기
-            <ArrowRight className="ml-1 w-3 h-3" />
-          </CTAButton>
+          {meetup.registrationUrl ? (
+            <CTAButton
+              size="sm"
+              ctaVariant="sage"
+              className="text-xs"
+              asChild
+            >
+              <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
+                신청하기
+                <ArrowRight className="ml-1 w-3 h-3" />
+              </a>
+            </CTAButton>
+          ) : (
+            <CTAButton size="sm" ctaVariant="sage" className="text-xs">
+              신청하기
+              <ArrowRight className="ml-1 w-3 h-3" />
+            </CTAButton>
+          )}
         </div>
       </div>
     </div>
@@ -392,13 +467,28 @@ function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) 
               </span>
             </div>
 
-            <CTAButton
-              size="sm"
-              ctaVariant="sage"
-            >
-              신청하기
-              <ArrowRight className="ml-1 w-3 h-3" />
-            </CTAButton>
+            {meetup.registrationUrl ? (
+              <CTAButton
+                size="sm"
+                ctaVariant="sage"
+                asChild
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              >
+                <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
+                  신청하기
+                  <ArrowRight className="ml-1 w-3 h-3" />
+                </a>
+              </CTAButton>
+            ) : (
+              <CTAButton
+                size="sm"
+                ctaVariant="sage"
+                onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              >
+                신청하기
+                <ArrowRight className="ml-1 w-3 h-3" />
+              </CTAButton>
+            )}
           </div>
         </div>
       </div>

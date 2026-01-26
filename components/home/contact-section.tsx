@@ -4,7 +4,7 @@ import type React from "react"
 import { useState } from "react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Mail, Phone, MapPin } from "lucide-react"
+import { Mail, MapPin } from "lucide-react"
 import { SectionHeader, CTAButton } from "@/components/common"
 
 export function ContactSection() {
@@ -43,17 +43,7 @@ export function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">이메일</p>
-                  <p className="font-medium">hello@linky.kr</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-4">
-                <div className="w-12 h-12 rounded-xl bg-mint-light flex items-center justify-center">
-                  <Phone className="w-5 h-5 text-mint" />
-                </div>
-                <div>
-                  <p className="text-sm text-muted-foreground">전화</p>
-                  <p className="font-medium">02-1234-5678</p>
+                  <p className="font-medium">contact@linkykorea.com</p>
                 </div>
               </div>
 
@@ -63,8 +53,12 @@ export function ContactSection() {
                 </div>
                 <div>
                   <p className="text-sm text-muted-foreground">주소</p>
-                  <p className="font-medium">서울특별시 강남구</p>
+                  <p className="font-medium">경기도 남양주시 별내3로 322</p>
                 </div>
+              </div>
+
+              <div className="p-4 bg-secondary/50 rounded-xl text-sm text-muted-foreground">
+                <p>대표: 안동민 | 사업자등록번호: 557-81-03588</p>
               </div>
             </div>
           </div>

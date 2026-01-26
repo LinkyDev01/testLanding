@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { Instagram } from "lucide-react"
 
 export function LoungeFooter() {
   return (
@@ -9,12 +10,11 @@ export function LoungeFooter() {
           <div>
             <h4 className="font-semibold mb-4">사업자정보</h4>
             <ul className="space-y-2 text-background/70 text-sm">
-              <li>상호명: 링키</li>
-              <li>대표자: 홍길동</li>
-              <li>사업자등록번호: 000-00-00000</li>
-              <li>통신판매업신고번호: 제0000-서울강남-0000호</li>
-              <li>주소: 서울특별시 강남구</li>
-              <li>이메일: hello@linky.kr</li>
+              <li>주식회사 링키</li>
+              <li>대표 : 안동민 | 개인정보관리책임자 : 안동민</li>
+              <li>사업자등록번호 : 402-87-03145</li>
+              <li>주소 : 경기도 남양주시 별내3로 322, 404호</li>
+              <li>이메일 : linkylounge@gmail.com | 대표번호 : 010-7444-5790</li>
             </ul>
           </div>
 
@@ -30,7 +30,18 @@ export function LoungeFooter() {
                 </Link>
               </li>
               <li>
-                <span className="text-background/70">문의: hello@linky.kr</span>
+                <span className="text-background/70">문의 : linkylounge@gmail.com</span>
+              </li>
+              <li>
+                <a
+                  href="https://www.instagram.com/linky_lounge"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-background/70 hover:text-background transition-colors inline-flex items-center gap-1"
+                >
+                  <Instagram className="w-4 h-4" />
+                  Instagram
+                </a>
               </li>
             </ul>
           </div>
@@ -38,7 +49,7 @@ export function LoungeFooter() {
 
         <div className="border-t border-background/20 mt-8 pt-6">
           <p className="text-background/50 text-sm text-center">
-            © 2025 Linky Lounge. All rights reserved.
+            © 2025 Linky Inc. All rights reserved.
           </p>
         </div>
       </div>
