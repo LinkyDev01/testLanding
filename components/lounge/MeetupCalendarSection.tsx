@@ -375,14 +375,23 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
           <p className="text-muted-foreground text-sm mb-3 leading-relaxed line-clamp-2">
             {meetup.description}
           </p>
-          <div className="flex flex-wrap items-center gap-3 text-xs text-muted-foreground mb-3">
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-3">
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {meetup.time}
             </span>
             <span className="flex items-center gap-1">
               <Users className="w-3 h-3" />
-              {meetup.current}/{meetup.capacity}명
+              {meetup.maleCapacity !== undefined && meetup.femaleCapacity !== undefined ? (
+                <>
+                  잔여
+                  <span className="text-blue-500">♂ {meetup.maleCapacity - (meetup.maleCurrent ?? 0)}석</span>
+                  <span className="text-pink-500">♀ {meetup.femaleCapacity - (meetup.femaleCurrent ?? 0)}석</span>
+                  (총 {meetup.maleCapacity + meetup.femaleCapacity}명)
+                </>
+              ) : (
+                `잔여 ${meetup.capacity - meetup.current}석 (총 ${meetup.capacity}명)`
+              )}
             </span>
           </div>
         </div>
@@ -463,7 +472,16 @@ function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) 
               </span>
               <span className="flex items-center gap-1">
                 <Users className="w-4 h-4" />
-                {meetup.current}/{meetup.capacity}명
+                {meetup.maleCapacity !== undefined && meetup.femaleCapacity !== undefined ? (
+                  <>
+                    잔여
+                    <span className="text-blue-500">♂ {meetup.maleCapacity - (meetup.maleCurrent ?? 0)}석</span>
+                    <span className="text-pink-500">♀ {meetup.femaleCapacity - (meetup.femaleCurrent ?? 0)}석</span>
+                    (총 {meetup.maleCapacity + meetup.femaleCapacity}명)
+                  </>
+                ) : (
+                  `잔여 ${meetup.capacity - meetup.current}석 (총 ${meetup.capacity}명)`
+                )}
               </span>
             </div>
 

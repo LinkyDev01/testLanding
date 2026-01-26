@@ -27,6 +27,10 @@ interface ParsedEventData {
   price?: string
   capacity?: number
   current?: number
+  maleCapacity?: number
+  maleCurrent?: number
+  femaleCapacity?: number
+  femaleCurrent?: number
   description: string
 }
 
@@ -112,6 +116,10 @@ function parseEventDescription(description: string | undefined): ParsedEventData
   const price = extractSimpleTag("PRICE")
   const capacityRaw = extractSimpleTag("CAPACITY")
   const currentRaw = extractSimpleTag("CURRENT")
+  const maleCapacityRaw = extractSimpleTag("MALE_CAPACITY")
+  const maleCurrentRaw = extractSimpleTag("MALE_CURRENT")
+  const femaleCapacityRaw = extractSimpleTag("FEMALE_CAPACITY")
+  const femaleCurrentRaw = extractSimpleTag("FEMALE_CURRENT")
 
   // Google Drive URL 변환
   const image = imageUrl ? convertGoogleDriveUrl(imageUrl) : undefined
@@ -125,6 +133,10 @@ function parseEventDescription(description: string | undefined): ParsedEventData
     .replace(/\[PRICE\][^\[]*?\[\/PRICE\]/gi, "")
     .replace(/\[CAPACITY\][^\[]*?\[\/CAPACITY\]/gi, "")
     .replace(/\[CURRENT\][^\[]*?\[\/CURRENT\]/gi, "")
+    .replace(/\[MALE_CAPACITY\][^\[]*?\[\/MALE_CAPACITY\]/gi, "")
+    .replace(/\[MALE_CURRENT\][^\[]*?\[\/MALE_CURRENT\]/gi, "")
+    .replace(/\[FEMALE_CAPACITY\][^\[]*?\[\/FEMALE_CAPACITY\]/gi, "")
+    .replace(/\[FEMALE_CURRENT\][^\[]*?\[\/FEMALE_CURRENT\]/gi, "")
     .replace(/---+/g, "")
     .replace(/\n+/g, " ")
     .replace(/\s+/g, " ")
@@ -142,6 +154,10 @@ function parseEventDescription(description: string | undefined): ParsedEventData
     price,
     capacity: capacityRaw ? parseInt(capacityRaw, 10) : undefined,
     current: currentRaw ? parseInt(currentRaw, 10) : undefined,
+    maleCapacity: maleCapacityRaw ? parseInt(maleCapacityRaw, 10) : undefined,
+    maleCurrent: maleCurrentRaw ? parseInt(maleCurrentRaw, 10) : undefined,
+    femaleCapacity: femaleCapacityRaw ? parseInt(femaleCapacityRaw, 10) : undefined,
+    femaleCurrent: femaleCurrentRaw ? parseInt(femaleCurrentRaw, 10) : undefined,
     description: cleanDescription,
   }
 }
@@ -178,10 +194,14 @@ function convertToMeetup(event: GoogleCalendarEvent, index: number): Meetup | nu
     category: parsed.category || "network",
     capacity: parsed.capacity || 20,
     current: parsed.current || 0,
-    price: parsed.price || "무료",
+    price: parsed.price || "",
     description: parsed.description || event.summary || "",
     image: parsed.image || "/placeholder.svg",
     registrationUrl: parsed.registrationUrl,
+    maleCapacity: parsed.maleCapacity,
+    maleCurrent: parsed.maleCurrent,
+    femaleCapacity: parsed.femaleCapacity,
+    femaleCurrent: parsed.femaleCurrent,
   }
 }
 

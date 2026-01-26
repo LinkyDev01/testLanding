@@ -13,6 +13,11 @@ export interface Meetup {
   description: string
   image: string
   registrationUrl?: string
+  // 남/녀 구분 정원 (와인 파티 등)
+  maleCapacity?: number
+  maleCurrent?: number
+  femaleCapacity?: number
+  femaleCurrent?: number
 }
 
 export interface CategoryStyle {
