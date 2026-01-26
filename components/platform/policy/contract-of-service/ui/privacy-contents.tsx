@@ -7,14 +7,8 @@ import { Table } from "./table";
 export function PrivacyContents() {
 	return (
 		<div className="max-w-[800px] mx-auto px-5 py-[60px]">
-        <Link
-          href="/" 
-          className="inline-flex items-center gap-2 text-[--primary] no-underline font-medium mb-5 transition-transform hover:-translate-x-1"
-        >
-          ← 홈으로 돌아가기
-        </Link>
         
-        <div className="mb-10 pb-5 border-b-2 border-[--primary]">
+        <div className="mt-10 mb-10 pb-5 border-b-2 border-[--primary]">
           <h1 className="text-4xl font-bold text-[--black] mb-2.5">
             개인정보처리방침
           </h1>

@@ -3,8 +3,10 @@ import {
   ProblemSection,
   SolutionSection,
   HowItWorksSection,
+  PackagesSection,
   EstimateCalculatorSection,
   ExtendedFeaturesSection,
+  TestimonialsSection,
   PlatformCTASection,
 } from "@/components/platform"
 
@@ -15,8 +17,10 @@ export default function PlatformPage() {
       <ProblemSection />
       <SolutionSection />
       <HowItWorksSection />
+      <PackagesSection />
       <EstimateCalculatorSection />
       <ExtendedFeaturesSection />
+      <TestimonialsSection />
       <PlatformCTASection />
     </main>
   )
