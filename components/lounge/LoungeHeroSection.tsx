@@ -42,10 +42,12 @@ export function LoungeHeroSection() {
 
             <AnimatedSection delay={300}>
               <div className="flex flex-col sm:flex-row gap-4">
-                <CTAButton size="lg" ctaVariant="sage">
-                  공간 예약하기
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </CTAButton>
+                <a href="https://naver.me/FLebi2a9" target="_blank" rel="noopener noreferrer">
+                  <CTAButton size="lg" ctaVariant="sage">
+                    공간 예약하기
+                    <ArrowRight className="ml-2 w-4 h-4" />
+                  </CTAButton>
+                </a>
               </div>
             </AnimatedSection>
           </div>
@@ -54,13 +56,13 @@ export function LoungeHeroSection() {
             <div className="relative">
               <div className="aspect-[4/5] rounded-3xl overflow-hidden group">
                 <img
-                  src="/elegant-community-lounge-with-warm-sage-green-and-.jpg"
+                  src="/landing02.png"
                   alt="링키 라운지 메인"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <div className="absolute -bottom-4 -right-4 bg-mustard text-white rounded-2xl p-4 shadow-lg animate-bounce [animation-duration:2s]">
-                <p className="font-bold text-2xl">500+</p>
+                <p className="font-bold text-2xl">10+</p>
                 <p className="text-sm">성공적인 모임</p>
               </div>
             </div>
