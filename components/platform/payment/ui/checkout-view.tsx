@@ -8,10 +8,8 @@ import {
 } from "@tosspayments/payment-widget-sdk";
 import { nanoid } from "nanoid";
 
-// 테스트용 클라이언트 키 (실제 배포 시 환경변수로 교체)
-const TOSS_CLIENT_KEY =
-  process.env.NEXT_PUBLIC_TOSS_CLIENT_KEY ||
-  "test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq";
+// 테스트용 클라이언트 키 (비회원 결제용)
+const TOSS_CLIENT_KEY = "test_gck_docs_Ovk5rk1EwkEbP0W43n07xlzm";
 
 const packageNames: Record<string, string> = {
   basic: "Basic - 간단한 정리",
