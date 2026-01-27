@@ -142,7 +142,7 @@ function parseEventDescription(description: string | undefined): ParsedEventData
     .replace(/\s+/g, " ")
     .trim()
 
-  const validCategories: MeetupCategory[] = ["wine", "book", "network", "party", "language"]
+  const validCategories: MeetupCategory[] = ["gathering", "focus", "language"]
   const category = categoryRaw && validCategories.includes(categoryRaw.trim() as MeetupCategory)
     ? (categoryRaw.trim() as MeetupCategory)
     : undefined
@@ -191,7 +191,7 @@ function convertToMeetup(event: GoogleCalendarEvent, index: number): Meetup | nu
     date: startDate.toISOString().split("T")[0],
     day: startDate.getDate(),
     time: timeString,
-    category: parsed.category || "network",
+    category: parsed.category || "gathering",
     capacity: parsed.capacity || 20,
     current: parsed.current || 0,
     price: parsed.price || "",

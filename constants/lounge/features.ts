@@ -1,26 +1,21 @@
-import { Users, Wine, Book, Sparkles, Heart, MapPin, Clock } from "lucide-react"
+import { Users, Globe, Moon, Heart, MapPin, Clock } from "lucide-react"
 import type { Feature, SpaceInfo } from "@/types"
 
 export const LOUNGE_FEATURES: Feature[] = [
   {
     icon: Users,
-    title: "소규모 파티",
-    description: "친밀한 분위기에서 의미 있는 만남을 가질 수 있는 프라이빗 파티룸",
+    title: "게더링",
+    description: "복잡한 일상을 잠시 멈추고, 함께 모인 사람들과의 대화에만 집중하는 시간",
   },
   {
-    icon: Wine,
-    title: "와인 파티",
-    description: "소믈리에가 추천하는 와인과 함께하는 특별한 테이스팅 경험",
+    icon: Globe,
+    title: "외국어 회화",
+    description: "웃고 떠들며 자연스럽게 배우는 언어! 원어민(또는 원어민 회화 수준) 호스트와 함께하는 회화 스터디",
   },
   {
-    icon: Book,
-    title: "독서 모임",
-    description: "같은 책을 읽고 깊이 있는 대화를 나누는 독서 커뮤니티",
-  },
-  {
-    icon: Sparkles,
-    title: "네트워킹 모임",
-    description: "크리에이터, 프리랜서를 위한 전문 네트워킹 이벤트",
+    icon: Moon,
+    title: "몰입의 밤",
+    description: "스마트폰과 알림에서 벗어나, 오직 자신의 작업과 내면, 그리고 함께하는 사람에게 집중하는 3시간의 몰입 의식(Ritual)",
   },
 ]
 

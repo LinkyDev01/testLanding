@@ -1,4 +1,4 @@
-export type MeetupCategory = "wine" | "book" | "network" | "party" | "language"
+export type MeetupCategory = "gathering" | "focus" | "language"
 
 export interface Meetup {
   id: number
