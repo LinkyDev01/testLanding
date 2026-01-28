@@ -10,9 +10,9 @@ import {
 export default function LoungePage() {
   return (
     <main className="min-h-screen">
+      <MeetupCalendarSection />
       <LoungeHeroSection />
       <LoungeFeaturesSection />
-      <MeetupCalendarSection />
       <SpaceSection />
       <GoalsSection />
       <LoungeCTASection />
