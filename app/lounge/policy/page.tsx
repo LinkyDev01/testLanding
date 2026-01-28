@@ -3,14 +3,14 @@
 import { useSearchParams, useRouter } from "next/navigation"
 import { Suspense } from "react"
 
-type PolicyType = "study" | "wine"
+type PolicyType = "study" | "wine" | "night"
 
 function PolicyContent() {
   const searchParams = useSearchParams()
   const router = useRouter()
 
   const typeParam = searchParams.get("type")
-  const activeTab: PolicyType = typeParam === "wine" ? "wine" : "study"
+  const activeTab: PolicyType = typeParam === "wine" ? "wine" : typeParam === "night" ? "night" : "study"
 
   const handleTabChange = (type: PolicyType) => {
     router.push(`/lounge/policy?type=${type}`)
@@ -49,10 +49,25 @@ function PolicyContent() {
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9CB7A4]" />
             )}
           </button>
+          <button
+            onClick={() => handleTabChange("night")}
+            className={`px-6 py-3 font-medium transition-colors relative ${
+              activeTab === "night"
+                ? "text-[#9CB7A4]"
+                : "text-foreground/60 hover:text-foreground/80"
+            }`}
+          >
+            몰입의 밤
+            {activeTab === "night" && (
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9CB7A4]" />
+            )}
+          </button>
         </div>
 
         {/* Content */}
-        {activeTab === "study" ? <StudyPolicy /> : <WinePolicy />}
+        {activeTab === "study" && <StudyPolicy />}
+        {activeTab === "wine" && <WinePolicy />}
+        {activeTab === "night" && <NightPolicy />}
       </div>
     </main>
   )
@@ -372,6 +387,101 @@ function WinePolicy() {
     </>
   )
 }
+
+function NightPolicy() {
+  return (
+    <>
+      <h2 className="text-2xl font-bold mb-6 text-[#9CB7A4]">신청 및 참가 안내</h2>
+
+      <section className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">1. 신청 접수</h3>
+        <ul className="space-y-3 text-foreground/80">
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span><strong>신청 마감:</strong> 모임일로부터 2일 전까지</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span><strong>참가 확정:</strong> 입금 완료 순으로 참가가 확정됩니다</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span><strong>조기 마감:</strong> 정원 충족 시 조기 마감될 수 있습니다</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span><strong>최소 인원:</strong> 3명 미달 시 모임 취소 및 전액 환불</span>
+          </li>
+        </ul>
+      </section>
+
+      <section className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">2. 참가 확정 및 안내</h3>
+        <ul className="space-y-3 text-foreground/80">
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span>입금 확인 후 문자메시지로 참가 확정을 안내드립니다</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span>카카오톡 단체방을 통해 상세 일정과 공지를 안내합니다</span>
+          </li>
+          <li className="flex gap-2">
+            <span className="text-[#9CB7A4]">•</span>
+            <span>일정 변경 시 사전 안내드립니다</span>
+          </li>
+        </ul>
+      </section>
+
+      <section className="mb-12">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">3. 사전 안내</h3>
+        <div className="bg-foreground/5 rounded-lg p-6 space-y-2 text-foreground/80">
+          <p>• 몰입의 밤은 조용하고 집중된 분위기에서 각자의 활동에 몰입하는 시간입니다</p>
+          <p>• 소규모 정원으로 운영되어 편안하고 친밀한 환경을 제공합니다</p>
+          <p>• 개인 작업물(노트북, 책, 태블릿 등) 지참을 권장합니다</p>
+        </div>
+      </section>
+
+      <h2 className="text-2xl font-bold mb-6 mt-12 text-[#9CB7A4]">환불 안내</h2>
+
+      <section className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">1. 환불 가능 기준</h3>
+        <ul className="space-y-3 text-foreground/80">
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>모임 시작 3일 전까지: 전액 환불 (100%)</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>모임 시작 2일 전: 50% 환불</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>모임 시작 전날 이후: 환불 불가</span></li>
+        </ul>
+      </section>
+
+      <section className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">2. 환불 시 유의사항</h3>
+        <ul className="space-y-3 text-foreground/80">
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>환불 신청 시점 기준으로 환불률이 적용됩니다</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>개인 사정으로 인한 불참도 동일 기준이 적용됩니다</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>불가항력 사유로 취소 시 전액 환불됩니다</span></li>
+        </ul>
+      </section>
+
+      <section className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">3. 환불 신청 방법</h3>
+        <ul className="space-y-3 text-foreground/80">
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>문자 또는 카카오톡으로 접수 가능합니다</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>영업일 기준 3~5일 내 처리됩니다</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>환불 수수료는 없습니다</span></li>
+        </ul>
+      </section>
+
+      <section className="mb-10">
+        <h3 className="text-xl font-semibold mb-4 text-[#9CB7A4]">4. 모임 미개설 시</h3>
+        <ul className="space-y-3 text-foreground/80">
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>최소 인원(3명) 미달 시 전액 환불됩니다</span></li>
+          <li className="flex gap-2"><span className="text-[#9CB7A4]">•</span><span>모임 예정일 전일까지 안내 및 처리됩니다</span></li>
+        </ul>
+      </section>
+    </>
+  )
+}
+
 
 export default function PolicyPage() {
   return (
