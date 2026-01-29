@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import Image from "next/image"
 import { useState } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -14,8 +15,7 @@ export function Header({ variant = "main" }: HeaderProps) {
 
   const config = {
     main: {
-      logo: { bg: "bg-[#9CB7A4]", href: "/" },
-      brandName: "Linky",
+      logo: { href: "/", image: "/logos/linky_platform_logo_business.svg", width: 120, height: 30, className: "h-8 w-auto" },
       navItems: [
         { href: "/lounge", label: "링키 라운지" },
         { href: "/platform", label: "링키 플랫폼" },
@@ -24,8 +24,7 @@ export function Header({ variant = "main" }: HeaderProps) {
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "시작하기" },
     },
     lounge: {
-      logo: { bg: "bg-[#9CB7A4]", href: "/lounge" },
-      brandName: "Linky Lounge",
+      logo: { href: "/lounge", image: "/linky_lounge_logo.svg", width: 180, height: 60, className: "h-15 w-auto bg-white rounded-md px-2 py-1" },
       navItems: [
         { href: "/lounge", label: "공간 소개" },
         { href: "/lounge#features", label: "특징" },
@@ -35,8 +34,7 @@ export function Header({ variant = "main" }: HeaderProps) {
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "예약하기" },
     },
     platform: {
-      logo: { bg: "bg-[#00C896]", href: "/platform" },
-      brandName: "Linky Platform",
+      logo: { href: "/platform", image: "/logos/linky_platform_logo_business.svg", width: 120, height: 30, className: "h-8 w-auto" },
       navItems: [
         { href: "/platform", label: "서비스 소개" },
         { href: "/platform#features", label: "기능" },
@@ -47,18 +45,22 @@ export function Header({ variant = "main" }: HeaderProps) {
     },
   }
 
-  const { logo, brandName, navItems, ctaButton } = config[variant]
+  const { logo, navItems, ctaButton } = config[variant]
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <Link href={logo.href} className="flex items-center gap-2">
-            <div className={`w-8 h-8 rounded-lg ${logo.bg} flex items-center justify-center`}>
-              <span className="text-white font-bold text-lg">L</span>
-            </div>
-            <span className="text-xl font-bold text-foreground">{brandName}</span>
+          <Link href={logo.href} className="flex items-center">
+            <Image
+              src={logo.image}
+              alt={variant === "lounge" ? "Linky Lounge" : "Linky"}
+              width={logo.width}
+              height={logo.height}
+              className={logo.className}
+              priority
+            />
           </Link>
 
           {/* Desktop Navigation */}
