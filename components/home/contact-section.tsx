@@ -16,7 +16,13 @@ export function ContactSection() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    console.log(formData)
+
+    const subject = encodeURIComponent(`[링키 문의] ${formData.name}님의 문의`)
+    const body = encodeURIComponent(
+      `이름: ${formData.name}\n이메일: ${formData.email}\n\n문의 내용:\n${formData.message}`
+    )
+
+    window.location.href = `mailto:qkrwhd1122@gmail.com?subject=${subject}&body=${body}`
   }
 
   return (

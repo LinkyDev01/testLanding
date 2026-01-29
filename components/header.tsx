@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -12,6 +12,27 @@ interface HeaderProps {
 
 export function Header({ variant = "main" }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const lastScrollY = useRef(0)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY
+
+      if (currentScrollY < 50) {
+        setIsVisible(true)
+      } else if (currentScrollY > lastScrollY.current) {
+        setIsVisible(false)
+      } else {
+        setIsVisible(true)
+      }
+
+      lastScrollY.current = currentScrollY
+    }
+
+    window.addEventListener("scroll", handleScroll, { passive: true })
+    return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
 
   const config = {
     main: {
@@ -24,7 +45,7 @@ export function Header({ variant = "main" }: HeaderProps) {
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "시작하기" },
     },
     lounge: {
-      logo: { href: "/lounge", image: "/linky_lounge_logo.svg", width: 180, height: 60, className: "h-15 w-auto bg-white rounded-md px-2 py-1" },
+      logo: { href: "/lounge", image: "/linky_lounge_logo.svg?v=3", width: 220, height: 80, className: "h-20 w-auto" },
       navItems: [
         { href: "/lounge", label: "공간 소개" },
         { href: "/lounge#features", label: "특징" },
@@ -48,7 +69,11 @@ export function Header({ variant = "main" }: HeaderProps) {
   const { logo, navItems, ctaButton } = config[variant]
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
+    <header
+      className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border transition-transform duration-300 ${
+        isVisible ? "translate-y-0" : "-translate-y-full"
+      }`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
@@ -77,9 +102,9 @@ export function Header({ variant = "main" }: HeaderProps) {
           </nav>
 
           {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* <div className="hidden md:block">
             <Button className={`${ctaButton.bg} text-white`}>{ctaButton.text}</Button>
-          </div>
+          </div> */}
 
           {/* Mobile Menu Button */}
           <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="메뉴 토글">
