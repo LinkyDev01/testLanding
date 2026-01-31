@@ -11,7 +11,7 @@ export function LoungeFeaturesSection() {
         <AnimatedSection>
           <SectionHeader
             label="What We Offer"
-            title="다양한 콘텐츠와 프로그램"
+            title=""
             labelColor="rose"
           />
         </AnimatedSection>

@@ -1,21 +1,17 @@
 import {
-  LoungeHeroSection,
-  LoungeFeaturesSection,
+  SpaceIntroSection,
+  ProgramsSection,
   MeetupCalendarSection,
-  SpaceSection,
-  GoalsSection,
-  LoungeCTASection,
+  GallerySection,
 } from "@/components/lounge"
 
 export default function LoungePage() {
   return (
     <main className="min-h-screen">
+      <SpaceIntroSection />
+      <ProgramsSection />
       <MeetupCalendarSection />
-      <LoungeHeroSection />
-      <LoungeFeaturesSection />
-      <SpaceSection />
-      <GoalsSection />
-      <LoungeCTASection />
+      <GallerySection />
     </main>
   )
 }

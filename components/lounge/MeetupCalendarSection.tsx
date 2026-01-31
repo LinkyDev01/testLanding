@@ -69,14 +69,14 @@ export function MeetupCalendarSection() {
   }
 
   return (
-    <section className="py-24">
+    <section className="py-24 bg-[#dedad6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionHeader
-            label="Monthly Meetups"
-            title="이번 달 모임"
+            label="Gathering Schedule"
+            title="게더링 일정"
             description="다양한 모임에 참여하고 새로운 인연을 만들어보세요"
-            labelColor="rose"
+            labelColor="sage"
           />
         </AnimatedSection>
 
@@ -352,7 +352,7 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
   const categoryStyle = CATEGORY_STYLES[meetup.category]
 
   return (
-    <div className="bg-card rounded-2xl border border-border overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row">
+    <div className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row">
       <div className="h-64 lg:h-auto lg:w-40 lg:flex-shrink-0 relative overflow-hidden">
         <img
           src={meetup.image || "/placeholder.svg"}
@@ -400,7 +400,7 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
           {meetup.registrationUrl ? (
             <CTAButton
               size="sm"
-              ctaVariant="sage"
+              ctaVariant="mint"
               className="text-xs"
               asChild
             >
@@ -410,7 +410,7 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
               </a>
             </CTAButton>
           ) : (
-            <CTAButton size="sm" ctaVariant="sage" className="text-xs">
+            <CTAButton size="sm" ctaVariant="mint" className="text-xs">
               신청하기
               <ArrowRight className="ml-1 w-3 h-3" />
             </CTAButton>
@@ -432,7 +432,7 @@ function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) 
 
   return (
     <div
-      className="bg-card rounded-2xl border border-border p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+      className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
       onClick={onClick}
     >
       <div className="flex flex-col sm:flex-row sm:items-start gap-4">
@@ -488,7 +488,7 @@ function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) 
             {meetup.registrationUrl ? (
               <CTAButton
                 size="sm"
-                ctaVariant="sage"
+                ctaVariant="mint"
                 asChild
                 onClick={(e: React.MouseEvent) => e.stopPropagation()}
               >
@@ -500,7 +500,7 @@ function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) 
             ) : (
               <CTAButton
                 size="sm"
-                ctaVariant="sage"
+                ctaVariant="mint"
                 onClick={(e: React.MouseEvent) => e.stopPropagation()}
               >
                 신청하기

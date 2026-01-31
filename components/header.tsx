@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -12,22 +12,11 @@ interface HeaderProps {
 
 export function Header({ variant = "main" }: HeaderProps) {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isVisible, setIsVisible] = useState(true)
-  const lastScrollY = useRef(0)
+  const [isScrolled, setIsScrolled] = useState(false)
 
   useEffect(() => {
     const handleScroll = () => {
-      const currentScrollY = window.scrollY
-
-      if (currentScrollY < 50) {
-        setIsVisible(true)
-      } else if (currentScrollY > lastScrollY.current) {
-        setIsVisible(false)
-      } else {
-        setIsVisible(true)
-      }
-
-      lastScrollY.current = currentScrollY
+      setIsScrolled(window.scrollY > 50)
     }
 
     window.addEventListener("scroll", handleScroll, { passive: true })
@@ -45,12 +34,11 @@ export function Header({ variant = "main" }: HeaderProps) {
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "시작하기" },
     },
     lounge: {
-      logo: { href: "/lounge", image: "/linky_lounge_logo.svg?v=3", width: 220, height: 80, className: "h-20 w-auto" },
+      logo: { href: "/lounge", image: "/logos/linky_lounge_logo_white.svg", width: 120, height: 113, className: "h-10 w-auto" },
       navItems: [
-        { href: "/lounge", label: "공간 소개" },
-        { href: "/lounge#features", label: "특징" },
-        { href: "/lounge#pricing", label: "이용 안내" },
-        { href: "/", label: "Linky 홈" },
+        { href: "https://linky-study-homepage.vercel.app/", label: "회화 스터디", external: true },
+        { href: "https://linky-wine-party01.vercel.app/", label: "와인파티", external: true },
+        { href: "https://focus-night.vercel.app/", label: "몰입의 밤", external: true },
       ],
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "예약하기" },
     },
@@ -67,15 +55,29 @@ export function Header({ variant = "main" }: HeaderProps) {
   }
 
   const { logo, navItems, ctaButton } = config[variant]
+  const isLounge = variant === "lounge"
+
+  // Lounge variant uses transparent header with white text
+  const headerBg = isLounge
+    ? isScrolled
+      ? "bg-black/30 backdrop-blur-md"
+      : "bg-transparent"
+    : isScrolled
+      ? "bg-background/80 backdrop-blur-md border-b border-border"
+      : "bg-transparent"
+
+  const textColor = isLounge
+    ? "text-white/90 hover:text-white"
+    : "text-muted-foreground hover:text-foreground"
+
+  const iconColor = isLounge ? "text-white" : "text-foreground"
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border transition-transform duration-300 ${
-        isVisible ? "translate-y-0" : "-translate-y-full"
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${headerBg}`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link href={logo.href} className="flex items-center">
             <Image
@@ -89,44 +91,67 @@ export function Header({ variant = "main" }: HeaderProps) {
           </Link>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
+          <nav className="hidden md:flex items-center gap-10">
             {navItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                className="text-muted-foreground hover:text-foreground transition-colors"
-              >
-                {item.label}
-              </Link>
+              "external" in item && item.external ? (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`${textColor} transition-colors text-sm font-medium tracking-wide uppercase`}
+                >
+                  {item.label}
+                </a>
+              ) : (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={`${textColor} transition-colors text-sm font-medium tracking-wide uppercase`}
+                >
+                  {item.label}
+                </Link>
+              )
             ))}
           </nav>
 
-          {/* CTA Button */}
-          {/* <div className="hidden md:block">
-            <Button className={`${ctaButton.bg} text-white`}>{ctaButton.text}</Button>
-          </div> */}
-
           {/* Mobile Menu Button */}
-          <button className="md:hidden p-2" onClick={() => setIsMenuOpen(!isMenuOpen)} aria-label="메뉴 토글">
+          <button
+            className={`md:hidden p-2 ${iconColor}`}
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="메뉴 토글"
+          >
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
         </div>
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <nav className="md:hidden py-4 border-t border-border">
+          <nav className={`md:hidden py-6 ${isLounge ? "bg-black/50 backdrop-blur-md -mx-4 px-4" : "border-t border-border"}`}>
             <div className="flex flex-col gap-4">
               {navItems.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-muted-foreground hover:text-foreground transition-colors py-2"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+                "external" in item && item.external ? (
+                  <a
+                    key={item.href}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={`${textColor} transition-colors py-2 text-sm font-medium tracking-wide uppercase`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={`${textColor} transition-colors py-2 text-sm font-medium tracking-wide uppercase`}
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )
               ))}
-              <Button className={`${ctaButton.bg} text-white w-full mt-2`}>{ctaButton.text}</Button>
             </div>
           </nav>
         )}

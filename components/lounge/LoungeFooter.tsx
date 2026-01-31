@@ -30,9 +30,6 @@ export function LoungeFooter() {
                 </Link>
               </li>
               <li>
-                <span className="text-background/70">문의 : linkylounge@gmail.com</span>
-              </li>
-              <li>
                 <a
                   href="https://www.instagram.com/linky_lounge"
                   target="_blank"
@@ -41,6 +38,19 @@ export function LoungeFooter() {
                 >
                   <Instagram className="w-4 h-4" />
                   Instagram
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://naver.me/FLebi2a9"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-background/70 hover:text-background transition-colors inline-flex items-center gap-1"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/>
+                  </svg>
+                  Naver
                 </a>
               </li>
             </ul>
