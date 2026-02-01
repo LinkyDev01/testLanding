@@ -57,21 +57,21 @@ export function SpaceIntroSection() {
   }, [])
 
   return (
-    <section className="relative h-screen min-h-[600px] flex items-center justify-center bg-[#d5d2ce]">
+    <section className="relative h-[70vh] flex items-center justify-center bg-[#d5d2ce]">
       {/* Background Image with rounded bottom */}
-      <div className="absolute h-[95vh] inset-0 overflow-hidden rounded-b-[3rem] sm:rounded-b-[4rem] md:rounded-b-[5rem]">
-        <Image
+      <div className="absolute bg-foreground h-[65vh] inset-0 overflow-hidden rounded-b-[3rem] sm:rounded-b-[4rem] md:rounded-b-[5rem]">
+        {/* <Image
           src="/linky-lounge/gallary/intro.jpg"
           alt="링키 라운지 공간"
           fill
           className="object-cover saturate-50 brightness-75"
           priority
-        />
-        <div className="absolute inset-0 bg-black/40" />
+        /> */}
+        <div className="absolute inset-0"/>
       </div>
 
       {/* Content Overlay */}
-      <div className="relative z-10 text-center text-white px-4">
+      <div className="relative z-10 text-center text-white px-4 mb-32">
         <p className="text-2xl sm:text-3xl md:text-4xl font-playfair font-semibold italic tracking-wide mb-8" style={{ perspective: "1000px" }}>
           <AnimatedText text="Where we link" />
         </p>
@@ -103,7 +103,7 @@ export function SpaceIntroSection() {
 
       {/* Scroll Indicator */}
       <div
-        className={`absolute bottom-36 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 ${
+        className={`absolute bottom-24 left-1/2 -translate-x-1/2 z-10 transition-all duration-1000 ${
           showLogo ? "opacity-100" : "opacity-0"
         }`}
       >
