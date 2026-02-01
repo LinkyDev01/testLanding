@@ -109,8 +109,8 @@ export function GallerySection() {
         <AnimatedSection>
           <SectionHeader
             label="Our Space"
-            title="공간 사진 갤러리"
-            description="링키 라운지만의 감각적인 무드를 확인하세요"
+            title=""
+            description=""
             labelColor="sage"
           />
         </AnimatedSection>

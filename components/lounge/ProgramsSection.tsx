@@ -133,8 +133,8 @@ export function ProgramsSection() {
         <AnimatedSection>
           <SectionHeader
             label="Programs We Offer"
-            title="어떤 모임을 제공하나요?"
-            description="링키 라운지에서 진행하는 다양한 프로그램을 만나보세요"
+            title=""
+            description=""
             labelColor="sage"
           />
         </AnimatedSection>

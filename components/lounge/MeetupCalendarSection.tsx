@@ -74,8 +74,8 @@ export function MeetupCalendarSection() {
         <AnimatedSection>
           <SectionHeader
             label="Gathering Schedule"
-            title="게더링 일정"
-            description="다양한 모임에 참여하고 새로운 인연을 만들어보세요"
+            title=""
+            description=""
             labelColor="sage"
           />
         </AnimatedSection>
