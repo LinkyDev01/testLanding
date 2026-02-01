@@ -69,7 +69,7 @@ export function MeetupCalendarSection() {
   }
 
   return (
-    <section className="py-24 bg-[#dedad6]">
+    <section className="py-12 bg-[#dedad6]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionHeader
