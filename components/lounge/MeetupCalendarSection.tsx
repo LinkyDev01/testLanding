@@ -197,7 +197,6 @@ export function MeetupCalendarSection() {
               <AllMeetupsList
                 currentMonth={currentMonth}
                 meetups={currentMonthMeetups}
-                onSelectDay={setSelectedDay}
               />
             )}
           </div>
@@ -235,13 +234,7 @@ function SelectedDayMeetups({
           전체 보기
         </button>
       </div>
-      <div className="grid gap-6">
-        {meetups.map((meetup, index) => (
-          <AnimatedSection key={meetup.id} delay={index * 100}>
-            <MeetupDetailCard meetup={meetup} />
-          </AnimatedSection>
-        ))}
-      </div>
+      <AllMeetupsList currentMonth={currentMonth} meetups={meetups} />
     </>
   )
 }
@@ -249,7 +242,6 @@ function SelectedDayMeetups({
 interface AllMeetupsListProps {
   currentMonth: Date
   meetups: Meetup[]
-  onSelectDay: (day: number) => void
 }
 
 const ITEMS_PER_PAGE = 2
@@ -257,7 +249,6 @@ const ITEMS_PER_PAGE = 2
 function AllMeetupsList({
   currentMonth,
   meetups,
-  onSelectDay,
 }: AllMeetupsListProps) {
   const [currentPage, setCurrentPage] = useState(1)
   const [isMobile, setIsMobile] = useState(false)
@@ -402,7 +393,6 @@ function AllMeetupsList({
                 <MeetupSliderCard
                   meetup={meetup}
                   currentMonth={currentMonth}
-                  onClick={() => onSelectDay(meetup.day)}
                 />
               </div>
             ))}
@@ -448,7 +438,6 @@ function AllMeetupsList({
             <MeetupListItem
               meetup={meetup}
               currentMonth={currentMonth}
-              onClick={() => onSelectDay(meetup.day)}
             />
           </AnimatedSection>
         ))}
@@ -501,96 +490,17 @@ function AllMeetupsList({
   )
 }
 
-interface MeetupDetailCardProps {
-  meetup: Meetup
-}
-
-function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
-  const categoryStyle = CATEGORY_STYLES[meetup.category]
-
-  return (
-    <div className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row">
-      <div className="h-64 lg:h-auto lg:w-40 lg:flex-shrink-0 relative overflow-hidden">
-        <img
-          src={meetup.image || "/placeholder.svg"}
-          alt={meetup.title}
-          className="w-full h-full object-cover"
-        />
-        <div className="absolute top-3 left-3">
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} backdrop-blur-sm bg-white/80`}
-          >
-            {categoryStyle.label}
-          </span>
-        </div>
-      </div>
-      <div className="p-4 flex flex-col justify-between flex-1 min-w-0">
-        <div>
-          <h4 className="font-semibold text-base mb-2 truncate">
-            {meetup.title}
-          </h4>
-          <p className="text-muted-foreground text-sm mb-3 leading-relaxed line-clamp-2">
-            {meetup.description}
-          </p>
-          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-3">
-            <span className="flex items-center gap-1">
-              <Clock className="w-3 h-3" />
-              {meetup.time}
-            </span>
-            <span className="flex items-center gap-1">
-              <Users className="w-3 h-3" />
-              {meetup.maleCapacity !== undefined && meetup.femaleCapacity !== undefined ? (
-                <>
-                  잔여
-                  <span className="text-blue-500">♂ {meetup.maleCapacity - (meetup.maleCurrent ?? 0)}석</span>
-                  <span className="text-pink-500">♀ {meetup.femaleCapacity - (meetup.femaleCurrent ?? 0)}석</span>
-                  (총 {meetup.maleCapacity + meetup.femaleCapacity}명)
-                </>
-              ) : (
-                `잔여 ${meetup.capacity - meetup.current}석 (총 ${meetup.capacity}명)`
-              )}
-            </span>
-          </div>
-        </div>
-        <div className="flex items-center justify-between pt-3 border-t border-border">
-          <span className="text-base font-bold text-rose">{meetup.price}</span>
-          {meetup.registrationUrl ? (
-            <CTAButton
-              size="sm"
-              ctaVariant="mint"
-              className="text-xs"
-              asChild
-            >
-              <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
-                신청하기
-                <ArrowRight className="ml-1 w-3 h-3" />
-              </a>
-            </CTAButton>
-          ) : (
-            <CTAButton size="sm" ctaVariant="mint" className="text-xs">
-              신청하기
-              <ArrowRight className="ml-1 w-3 h-3" />
-            </CTAButton>
-          )}
-        </div>
-      </div>
-    </div>
-  )
-}
-
 interface MeetupSliderCardProps {
   meetup: Meetup
   currentMonth: Date
-  onClick: () => void
 }
 
-function MeetupSliderCard({ meetup, currentMonth, onClick }: MeetupSliderCardProps) {
+function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
   const categoryStyle = CATEGORY_STYLES[meetup.category]
 
   return (
     <div
       className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg"
-      onClick={onClick}
     >
       {/* 포스터 이미지 */}
       <div className="relative aspect-3/4 overflow-hidden">
@@ -656,16 +566,14 @@ function MeetupSliderCard({ meetup, currentMonth, onClick }: MeetupSliderCardPro
 interface MeetupListItemProps {
   meetup: Meetup
   currentMonth: Date
-  onClick: () => void
 }
 
-function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) {
+function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
   const categoryStyle = CATEGORY_STYLES[meetup.category]
 
   return (
     <div
-      className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row cursor-pointer"
-      onClick={onClick}
+      className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row"
     >
       {/* 포스터 이미지 */}
       <div className="h-96 lg:h-auto lg:w-40 lg:flex-shrink-0 relative overflow-hidden">
