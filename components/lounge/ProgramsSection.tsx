@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useRef } from "react"
+import { useState, useRef, useEffect } from "react"
 import Image from "next/image"
 import { ArrowRight, Clock, ChevronLeft, ChevronRight } from "lucide-react"
 import { AnimatedSection } from "@/components/animated-section"
@@ -38,9 +38,17 @@ export function ProgramsSection() {
   const [isDragging, setIsDragging] = useState(false)
   const [startX, setStartX] = useState(0)
   const [dragOffset, setDragOffset] = useState(0)
+  const [isMobile, setIsMobile] = useState(false)
   const sliderRef = useRef<HTMLDivElement>(null)
 
   const len = PROGRAMS.length
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
 
   const handlePrev = () => {
     setActiveIndex((prev) => (prev - 1 + len) % len)
@@ -90,6 +98,7 @@ export function ProgramsSection() {
   const getItemStyle = (index: number) => {
     const diff = getCircularDiff(index)
     const offsetX = dragOffset * 0.3
+    const spacing = isMobile ? 140 : 300
 
     // 양쪽에 1개씩만 표시
     if (Math.abs(diff) > 1) {
@@ -102,12 +111,12 @@ export function ProgramsSection() {
       }
     }
 
-    const baseTranslate = diff * 300 + offsetX
-    const scale = diff === 0 ? 1 : 0.85
+    const baseTranslate = diff * spacing + offsetX
+    const scale = diff === 0 ? 1 : isMobile ? 0.75 : 0.85
     const rotateY = diff * -3
     const zIndex = diff === 0 ? 10 : 5
     const blur = diff === 0 ? 0 : 2
-    const opacity = diff === 0 ? 1 : 0.7
+    const opacity = diff === 0 ? 1 : 0.5
 
     return {
       transform: `translateX(calc(-50% + ${baseTranslate}px)) scale(${scale}) perspective(1000px) rotateY(${rotateY}deg)`,

@@ -42,12 +42,25 @@ export function LoungeFooter() {
               </li>
               <li>
                 <a
+                  href="http://pf.kakao.com/_cuWDn"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-background/70 hover:text-background transition-colors inline-flex items-center gap-1"
+                >
+                  <svg className="w-4 h-4" viewBox="0 0 300 300" fill="currentColor">
+                    <path d="M150,40.992c-56.923,0-103.069,42.684-103.069,95.336,0,38.887,16.287,57.45,38.593,74.373l.107.046v45.636a2.621,2.621,0,0,0,4.184,2.1L128.9,229.452l.841.365A111.675,111.675,0,0,0,150,231.663c56.924,0,103.069-42.684,103.069-95.335S206.924,40.992,150,40.992"/>
+                  </svg>
+                  KakaoTalk
+                </a>
+              </li>
+              <li>
+                <a
                   href="https://naver.me/FLebi2a9"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-background/70 hover:text-background transition-colors inline-flex items-center gap-1"
                 >
-                  <svg className="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="w-4 h-3" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727v12.845z"/>
                   </svg>
                   Naver

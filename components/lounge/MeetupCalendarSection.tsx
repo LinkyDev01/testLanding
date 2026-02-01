@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import {
   ArrowRight,
   Users,
@@ -252,7 +252,7 @@ interface AllMeetupsListProps {
   onSelectDay: (day: number) => void
 }
 
-const ITEMS_PER_PAGE = 3
+const ITEMS_PER_PAGE = 2
 
 function AllMeetupsList({
   currentMonth,
@@ -260,15 +260,103 @@ function AllMeetupsList({
   onSelectDay,
 }: AllMeetupsListProps) {
   const [currentPage, setCurrentPage] = useState(1)
+  const [isMobile, setIsMobile] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+  const [startX, setStartX] = useState(0)
+  const [dragOffset, setDragOffset] = useState(0)
+  const sliderRef = useRef<HTMLDivElement>(null)
 
-  // 월이 바뀌면 페이지 리셋
+  // 모바일 감지
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  // 월이 바뀌면 페이지/인덱스 리셋
   useEffect(() => {
     setCurrentPage(1)
+    setActiveIndex(0)
   }, [meetups])
 
   const totalPages = Math.ceil(meetups.length / ITEMS_PER_PAGE)
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
   const paginatedMeetups = meetups.slice(startIndex, startIndex + ITEMS_PER_PAGE)
+
+  // 모바일 슬라이더 핸들러
+  const handlePrev = () => {
+    setActiveIndex((prev) => (prev - 1 + meetups.length) % meetups.length)
+  }
+
+  const handleNext = () => {
+    setActiveIndex((prev) => (prev + 1) % meetups.length)
+  }
+
+  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+    setIsDragging(true)
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
+    setStartX(clientX)
+  }
+
+  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging) return
+    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
+    const diff = clientX - startX
+    setDragOffset(diff)
+  }
+
+  const handleDragEnd = () => {
+    if (!isDragging) return
+    setIsDragging(false)
+
+    if (dragOffset > 80) {
+      handlePrev()
+    } else if (dragOffset < -80) {
+      handleNext()
+    }
+    setDragOffset(0)
+  }
+
+  const getCircularDiff = (index: number) => {
+    let diff = index - activeIndex
+    const len = meetups.length
+    if (diff > len / 2) diff -= len
+    if (diff < -len / 2) diff += len
+    return diff
+  }
+
+  const getItemStyle = (index: number) => {
+    const diff = getCircularDiff(index)
+    const offsetX = dragOffset * 0.3
+    const spacing = 160
+
+    if (Math.abs(diff) > 1) {
+      return {
+        transform: `translateX(calc(-50% + ${diff > 0 ? 400 : -400}px)) scale(0.7)`,
+        zIndex: 0,
+        opacity: 0,
+        pointerEvents: "none" as const,
+        transition: isDragging ? "none" : "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
+      }
+    }
+
+    const baseTranslate = diff * spacing + offsetX
+    const scale = diff === 0 ? 1 : 0.85
+    const rotateY = diff * -3
+    const zIndex = diff === 0 ? 10 : 5
+    const blur = diff === 0 ? 0 : 2
+    const opacity = diff === 0 ? 1 : 0.5
+
+    return {
+      transform: `translateX(calc(-50% + ${baseTranslate}px)) scale(${scale}) perspective(1000px) rotateY(${rotateY}deg)`,
+      zIndex,
+      filter: blur > 0 ? `blur(${blur}px)` : "none",
+      opacity,
+      transition: isDragging ? "none" : "all 0.5s cubic-bezier(0.25, 0.1, 0.25, 1)",
+    }
+  }
 
   if (meetups.length === 0) {
     return (
@@ -282,6 +370,65 @@ function AllMeetupsList({
     )
   }
 
+  // 모바일 슬라이더 뷰
+  if (isMobile) {
+    return (
+      <>
+        <div className="flex items-center justify-between mb-4">
+          <p className="text-sm text-muted-foreground">
+            스와이프하여 모임을 확인하세요
+          </p>
+        </div>
+
+        <div
+          ref={sliderRef}
+          className="relative h-[520px] cursor-grab active:cursor-grabbing select-none overflow-hidden"
+          onMouseDown={handleDragStart}
+          onMouseMove={handleDragMove}
+          onMouseUp={handleDragEnd}
+          onMouseLeave={handleDragEnd}
+          onTouchStart={handleDragStart}
+          onTouchMove={handleDragMove}
+          onTouchEnd={handleDragEnd}
+        >
+          <div className="relative h-full">
+            {meetups.map((meetup, index) => (
+              <div
+                key={meetup.id}
+                className="absolute left-1/2 top-0 w-[280px]"
+                style={getItemStyle(index)}
+                onClick={() => !isDragging && setActiveIndex(index)}
+              >
+                <MeetupSliderCard
+                  meetup={meetup}
+                  currentMonth={currentMonth}
+                  onClick={() => onSelectDay(meetup.day)}
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Navigation Buttons */}
+          <button
+            onClick={handlePrev}
+            className="absolute left-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-all duration-300"
+            aria-label="이전"
+          >
+            <ChevronLeft className="w-8 h-8" strokeWidth={2} />
+          </button>
+          <button
+            onClick={handleNext}
+            className="absolute right-0 top-1/2 -translate-y-1/2 z-20 w-10 h-10 flex items-center justify-center text-gray-500 hover:text-gray-800 transition-all duration-300"
+            aria-label="다음"
+          >
+            <ChevronRight className="w-8 h-8" strokeWidth={2} />
+          </button>
+        </div>
+      </>
+    )
+  }
+
+  // 데스크탑 페이지네이션 뷰
   return (
     <>
       <div className="flex items-center justify-between mb-4">
@@ -317,19 +464,29 @@ function AllMeetupsList({
             <ChevronLeft className="w-5 h-5" />
           </button>
 
-          {Array.from({ length: totalPages }).map((_, i) => (
-            <button
-              key={i + 1}
-              onClick={() => setCurrentPage(i + 1)}
-              className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
-                currentPage === i + 1
-                  ? "bg-sage text-white"
-                  : "hover:bg-secondary"
-              }`}
-            >
-              {i + 1}
-            </button>
-          ))}
+          {(() => {
+            const maxButtons = 5
+            let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2))
+            let endPage = Math.min(totalPages, startPage + maxButtons - 1)
+
+            if (endPage - startPage + 1 < maxButtons) {
+              startPage = Math.max(1, endPage - maxButtons + 1)
+            }
+
+            return Array.from({ length: endPage - startPage + 1 }, (_, i) => startPage + i).map((page) => (
+              <button
+                key={page}
+                onClick={() => setCurrentPage(page)}
+                className={`w-9 h-9 rounded-lg text-sm font-medium transition-colors ${
+                  currentPage === page
+                    ? "bg-sage text-white"
+                    : "hover:bg-secondary"
+                }`}
+              >
+                {page}
+              </button>
+            ))
+          })()}
 
           <button
             onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
@@ -421,6 +578,81 @@ function MeetupDetailCard({ meetup }: MeetupDetailCardProps) {
   )
 }
 
+interface MeetupSliderCardProps {
+  meetup: Meetup
+  currentMonth: Date
+  onClick: () => void
+}
+
+function MeetupSliderCard({ meetup, currentMonth, onClick }: MeetupSliderCardProps) {
+  const categoryStyle = CATEGORY_STYLES[meetup.category]
+
+  return (
+    <div
+      className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg"
+      onClick={onClick}
+    >
+      {/* 포스터 이미지 */}
+      <div className="relative aspect-3/4 overflow-hidden">
+        <img
+          src={meetup.image || "/placeholder.svg"}
+          alt={meetup.title}
+          className="w-full h-full object-cover"
+          draggable={false}
+        />
+        <div className="absolute top-3 left-3">
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} backdrop-blur-sm bg-white/80`}
+          >
+            {categoryStyle.label}
+          </span>
+        </div>
+        {/* 날짜 배지 */}
+        <div className="absolute bottom-3 right-3 bg-sage text-white rounded-lg px-2 py-1 text-center">
+          <span className="text-xs">{currentMonth.getMonth() + 1}월</span>
+          <span className="text-lg font-bold block leading-none">{meetup.day}</span>
+        </div>
+      </div>
+
+      {/* 모임 정보 */}
+      <div className="p-4">
+        <h4 className="font-semibold text-base mb-2 truncate">{meetup.title}</h4>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+          <Clock className="w-3 h-3" />
+          <span>{meetup.time}</span>
+        </div>
+        <div className="flex items-center justify-between pt-2 border-t border-border">
+          <span className="text-sm font-bold text-rose">{meetup.price}</span>
+          {meetup.registrationUrl ? (
+            <CTAButton
+              size="sm"
+              ctaVariant="mint"
+              className="text-xs"
+              asChild
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
+                신청하기
+                <ArrowRight className="ml-1 w-3 h-3" />
+              </a>
+            </CTAButton>
+          ) : (
+            <CTAButton
+              size="sm"
+              ctaVariant="mint"
+              className="text-xs"
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              신청하기
+              <ArrowRight className="ml-1 w-3 h-3" />
+            </CTAButton>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 interface MeetupListItemProps {
   meetup: Meetup
   currentMonth: Date
@@ -432,82 +664,85 @@ function MeetupListItem({ meetup, currentMonth, onClick }: MeetupListItemProps) 
 
   return (
     <div
-      className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] p-6 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group cursor-pointer"
+      className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col lg:flex-row cursor-pointer"
       onClick={onClick}
     >
-      <div className="flex flex-col sm:flex-row sm:items-start gap-4">
-        {/* 날짜 박스 */}
-        <div className="flex-shrink-0 w-16 h-16 bg-sage rounded-xl flex flex-col items-center justify-center text-white">
-          <span className="text-2xl font-bold">{meetup.day}</span>
-          <span className="text-xs">{currentMonth.getMonth() + 1}월</span>
+      {/* 포스터 이미지 */}
+      <div className="h-96 lg:h-auto lg:w-40 lg:flex-shrink-0 relative overflow-hidden">
+        <img
+          src={meetup.image || "/placeholder.svg"}
+          alt={meetup.title}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute top-3 left-3">
+          <span
+            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} backdrop-blur-sm bg-white/80`}
+          >
+            {categoryStyle.label}
+          </span>
         </div>
+        {/* 날짜 배지 */}
+        <div className="absolute bottom-3 right-3 bg-sage text-white rounded-lg px-2 py-1 text-center">
+          <span className="text-xs">{currentMonth.getMonth() + 1}월</span>
+          <span className="text-lg font-bold block leading-none">{meetup.day}</span>
+        </div>
+      </div>
 
-        {/* 모임 정보 */}
-        <div className="flex-1 min-w-0">
-          <div className="flex items-start justify-between gap-4">
-            <div>
-              <span
-                className={`inline-block px-2 py-0.5 rounded-full text-xs mb-2 ${categoryStyle.bg} ${categoryStyle.text}`}
-              >
-                {categoryStyle.label}
-              </span>
-              <h4 className="font-semibold text-lg group-hover:text-sage transition-colors">
-                {meetup.title}
-              </h4>
-            </div>
-            <span className="text-lg font-bold text-rose whitespace-nowrap">
-              {meetup.price}
-            </span>
-          </div>
-
-          <p className="text-muted-foreground text-sm mt-2 line-clamp-2">
+      {/* 모임 정보 */}
+      <div className="p-4 flex flex-col justify-between flex-1 min-w-0">
+        <div>
+          <h4 className="font-semibold text-base mb-2 truncate">
+            {meetup.title}
+          </h4>
+          <p className="text-muted-foreground text-sm mb-3 leading-relaxed line-clamp-2">
             {meetup.description}
           </p>
-
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between mt-4 gap-3">
-            <div className="flex items-center gap-4 text-sm text-muted-foreground">
-              <span className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                {meetup.time}
-              </span>
-              <span className="flex items-center gap-1">
-                <Users className="w-4 h-4" />
-                {meetup.maleCapacity !== undefined && meetup.femaleCapacity !== undefined ? (
-                  <>
-                    잔여
-                    <span className="text-blue-500">♂ {meetup.maleCapacity - (meetup.maleCurrent ?? 0)}석</span>
-                    <span className="text-pink-500">♀ {meetup.femaleCapacity - (meetup.femaleCurrent ?? 0)}석</span>
-                    (총 {meetup.maleCapacity + meetup.femaleCapacity}명)
-                  </>
-                ) : (
-                  `잔여 ${meetup.capacity - meetup.current}석 (총 ${meetup.capacity}명)`
-                )}
-              </span>
-            </div>
-
-            {meetup.registrationUrl ? (
-              <CTAButton
-                size="sm"
-                ctaVariant="mint"
-                asChild
-                onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              >
-                <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
-                  신청하기
-                  <ArrowRight className="ml-1 w-3 h-3" />
-                </a>
-              </CTAButton>
-            ) : (
-              <CTAButton
-                size="sm"
-                ctaVariant="mint"
-                onClick={(e: React.MouseEvent) => e.stopPropagation()}
-              >
+          <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-3">
+            <span className="flex items-center gap-1">
+              <Clock className="w-3 h-3" />
+              {meetup.time}
+            </span>
+            <span className="flex items-center gap-1">
+              <Users className="w-3 h-3" />
+              {meetup.maleCapacity !== undefined && meetup.femaleCapacity !== undefined ? (
+                <>
+                  잔여
+                  <span className="text-blue-500">♂ {meetup.maleCapacity - (meetup.maleCurrent ?? 0)}석</span>
+                  <span className="text-pink-500">♀ {meetup.femaleCapacity - (meetup.femaleCurrent ?? 0)}석</span>
+                  (총 {meetup.maleCapacity + meetup.femaleCapacity}명)
+                </>
+              ) : (
+                `잔여 ${meetup.capacity - meetup.current}석 (총 ${meetup.capacity}명)`
+              )}
+            </span>
+          </div>
+        </div>
+        <div className="flex items-center justify-between pt-3 border-t border-border">
+          <span className="text-base font-bold text-rose">{meetup.price}</span>
+          {meetup.registrationUrl ? (
+            <CTAButton
+              size="sm"
+              ctaVariant="mint"
+              className="text-xs"
+              asChild
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
                 신청하기
                 <ArrowRight className="ml-1 w-3 h-3" />
-              </CTAButton>
-            )}
-          </div>
+              </a>
+            </CTAButton>
+          ) : (
+            <CTAButton
+              size="sm"
+              ctaVariant="mint"
+              className="text-xs"
+              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+            >
+              신청하기
+              <ArrowRight className="ml-1 w-3 h-3" />
+            </CTAButton>
+          )}
         </div>
       </div>
     </div>
