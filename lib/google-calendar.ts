@@ -142,7 +142,7 @@ function parseEventDescription(description: string | undefined): ParsedEventData
     .replace(/\s+/g, " ")
     .trim()
 
-  const validCategories: MeetupCategory[] = ["gathering", "focus", "language"]
+  const validCategories: MeetupCategory[] = ["gathering", "focus", "language", "potato"]
   const category = categoryRaw && validCategories.includes(categoryRaw.trim() as MeetupCategory)
     ? (categoryRaw.trim() as MeetupCategory)
     : undefined

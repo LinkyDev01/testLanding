@@ -19,4 +19,10 @@ export const CATEGORY_STYLES: Record<MeetupCategory, CategoryStyle> = {
     label: "외국어 회화",
     dot: "bg-blue-500",
   },
+  potato: {
+    bg: "bg-pink-100",
+    text: "text-pink-600",
+    label: "감자소개팅",
+    dot: "bg-pink-500",
+  },
 }

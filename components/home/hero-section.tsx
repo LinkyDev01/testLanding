@@ -74,32 +74,42 @@ export function HeroSection() {
           {/* Hero Image Grid */}
           <AnimatedSection direction="right" delay={200}>
             <div className="relative grid grid-cols-2 gap-4">
-              <div className="space-y-4">
+              <Link href="/lounge" className="space-y-4 block cursor-pointer">
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden group">
                   <img
-                    src="/cozy-lounge-space-with-warm-lighting-and-people-ne.jpg"
+                    src="/linky-lounge/gallary/b.jpg"
                     alt="링키 라운지 공간"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>
                 <div className="aspect-square rounded-2xl bg-sage p-6 flex flex-col justify-end transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
+                  <div className="flex-1 flex items-center justify-center">
+                      <img src="/logos/linky_lounge_logo_white.svg" alt="링키 플랫폼 로고" className="w-28 h-28" />
+                  </div>
                   <p className="text-white font-semibold text-lg">링키 라운지</p>
                   <p className="text-white/80 text-sm">커뮤니티 공간</p>
                 </div>
-              </div>
-              <div className="space-y-4 pt-8">
-                <div className="aspect-square rounded-2xl bg-mint p-6 flex flex-col justify-end transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
-                  <p className="text-white font-semibold text-lg">링키 플랫폼</p>
-                  <p className="text-white/80 text-sm">청소 중개 서비스</p>
+              </Link>
+              <Link href="/platform" className="space-y-4 block cursor-pointer">
+                <div className="space-y-4 pt-8">
+                  <div className="aspect-square rounded-2xl bg-mint p-6 flex flex-col items-center justify-between transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
+                    <div className="flex-1 flex items-center justify-center">
+                      <img src="/logos/linky_platform_logo_white.svg" alt="링키 플랫폼 로고" className="w-48 h-48" />
+                    </div>
+                    <div className="w-full">
+                      <p className="text-white font-semibold text-lg">링키 플랫폼</p>
+                      <p className="text-white/80 text-sm">청소 중개 서비스</p>
+                    </div>
+                  </div>
+                  <div className="aspect-[4/5] rounded-2xl overflow-hidden group">
+                    <img
+                      src="/professional-cleaning-service-team-working-in-mode.jpg"
+                      alt="링키 플랫폼 서비스"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    />
+                  </div>
                 </div>
-                <div className="aspect-[4/5] rounded-2xl overflow-hidden group">
-                  <img
-                    src="/professional-cleaning-service-team-working-in-mode.jpg"
-                    alt="링키 플랫폼 서비스"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  />
-                </div>
-              </div>
+              </Link>
             </div>
           </AnimatedSection>
         </div>

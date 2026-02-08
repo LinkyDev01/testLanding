@@ -44,7 +44,7 @@ function PolicyContent() {
                 : "text-foreground/60 hover:text-foreground/80"
             }`}
           >
-            와인게더링
+            게더링·소개
             {activeTab === "wine" && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9CB7A4]" />
             )}

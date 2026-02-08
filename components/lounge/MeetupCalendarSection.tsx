@@ -19,7 +19,10 @@ import { useGoogleCalendarMeetups } from "@/hooks/use-google-calendar-meetups"
 import type { Meetup } from "@/types"
 
 export function MeetupCalendarSection() {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2026, 0, 1))
+  const [currentMonth, setCurrentMonth] = useState(() => {
+    const now = new Date()
+    return new Date(now.getFullYear(), now.getMonth(), 1)
+  })
   const [selectedDay, setSelectedDay] = useState<number | null>(null)
 
   const { meetups: currentMonthMeetups, isLoading } = useGoogleCalendarMeetups(

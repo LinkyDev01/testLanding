@@ -23,7 +23,7 @@ export function ServicesSection() {
             <div className="group bg-card rounded-3xl overflow-hidden border border-border hover:shadow-2xl transition-all duration-500 hover:-translate-y-2">
               <div className="aspect-video overflow-hidden">
                 <img
-                  src="/elegant-community-lounge-space-with-cozy-interior-.jpg"
+                  src="/linky-lounge/gallary/e.jpg"
                   alt="링키 라운지"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />

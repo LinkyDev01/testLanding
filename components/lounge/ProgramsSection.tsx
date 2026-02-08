@@ -12,15 +12,15 @@ const PROGRAMS = [
     title: "회화 스터디",
     image: "/linky-lounge/foreign_class.png",
     schedule: "매주 월화 저녁 1시간 반 진행",
-    description: "외국어 회화 실력을 함께 키워가는 스터디",
+    description: "외국어 회화 실력을 함께 키워가는 시간",
     link: "https://linky-study-homepage.vercel.app/",
   },
   {
     id: 2,
-    title: "와인 파티",
+    title: "와인 한잔",
     image: "/linky-lounge/wine_party.png",
-    schedule: "매주 금토 3시간 진행",
-    description: "와인과 함께하는 특별한 네트워킹",
+    schedule: "매주 토 3시간 진행",
+    description: "와인과 함께하는 특별한 네트워킹 시간",
     link: "https://linky-wine-party01.vercel.app/",
   },
   {
@@ -31,6 +31,14 @@ const PROGRAMS = [
     description: "집중과 몰입을 위한 조용한 시간",
     link: "https://focus-night.vercel.app/",
   },
+  {
+    id: 4,
+    title: "감자 소개팅",
+    image: "/linky-lounge/potato_meeting.png",
+    schedule: "매주 금 저녁 진행",
+    description: "감자튀김과 함께 새로운 인연을 만나는 시간",
+    link: "https://tally.so/r/lbrdkN",
+  },  
 ]
 
 export function ProgramsSection() {
