@@ -376,7 +376,7 @@ function AllMeetupsList({
 
         <div
           ref={sliderRef}
-          className="relative h-[530px] cursor-grab active:cursor-grabbing select-none overflow-hidden"
+          className="relative h-[560px] cursor-grab active:cursor-grabbing select-none overflow-hidden"
           onMouseDown={handleDragStart}
           onMouseMove={handleDragMove}
           onMouseUp={handleDragEnd}
@@ -499,8 +499,6 @@ interface MeetupSliderCardProps {
 }
 
 function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
-  const categoryStyle = CATEGORY_STYLES[meetup.category]
-
   return (
     <div
       className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg"
@@ -513,23 +511,15 @@ function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
           className="w-full h-full object-cover"
           draggable={false}
         />
-        <div className="absolute top-3 left-3">
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} border border-current backdrop-blur-sm bg-white/80`}
-          >
-            {categoryStyle.label}
-          </span>
-        </div>
-        {/* 날짜 배지 */}
-        <div className="absolute bottom-3 right-3 bg-sage text-white rounded-lg px-2 py-1 text-center">
-          <span className="text-xs">{currentMonth.getMonth() + 1}월</span>
-          <span className="text-lg font-bold block leading-none">{meetup.day}</span>
-        </div>
       </div>
 
       {/* 모임 정보 */}
       <div className="p-4">
         <h4 className="font-semibold text-base mb-2 truncate">{meetup.title}</h4>
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
+          <Calendar className="w-3 h-3" />
+          <span>{currentMonth.getMonth() + 1}월 {meetup.day}일</span>
+        </div>
         <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
           <Clock className="w-3 h-3" />
           <span>{meetup.time}</span>
@@ -597,18 +587,6 @@ function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
           alt={meetup.title}
           className="w-full h-full object-cover"
         />
-        <div className="absolute top-3 left-3">
-          <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} border border-current backdrop-blur-sm bg-white/80`}
-          >
-            {categoryStyle.label}
-          </span>
-        </div>
-        {/* 날짜 배지 */}
-        <div className="absolute bottom-3 right-3 bg-sage text-white rounded-lg px-2 py-1 text-center">
-          <span className="text-xs">{currentMonth.getMonth() + 1}월</span>
-          <span className="text-lg font-bold block leading-none">{meetup.day}</span>
-        </div>
       </div>
 
       {/* 모임 정보 */}
@@ -621,6 +599,10 @@ function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
             {meetup.description}
           </p>
           <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground mb-3">
+            <span className="flex items-center gap-1">
+              <Calendar className="w-3 h-3" />
+              {currentMonth.getMonth() + 1}월 {meetup.day}일
+            </span>
             <span className="flex items-center gap-1">
               <Clock className="w-3 h-3" />
               {meetup.time}

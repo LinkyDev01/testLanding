@@ -108,7 +108,7 @@ export function SpaceIntroSection() {
         }`}
       >
         <div className="flex flex-col items-center gap-2 text-white/70">
-          <span className="text-xs tracking-widest uppercase">Scroll</span>
+          <span className="md:hidden text-xs tracking-widest uppercase">Scroll</span>
           <div className="w-6 h-10 border-2 border-white/40 rounded-full flex justify-center pt-2">
             <div className="w-1 h-2 bg-white/70 rounded-full animate-bounce" />
           </div>

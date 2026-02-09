@@ -18,6 +18,7 @@ function PolicyContent() {
 
   return (
     <main className="bg-background">
+      <div className="h-20 bg-foreground" />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 break-keep">
         <h1 className="text-3xl font-bold mb-8 mt-8">참가 및 환불 안내</h1>
 
@@ -44,7 +45,7 @@ function PolicyContent() {
                 : "text-foreground/60 hover:text-foreground/80"
             }`}
           >
-            게더링·소개
+            게더링·모임
             {activeTab === "wine" && (
               <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#9CB7A4]" />
             )}
@@ -487,6 +488,7 @@ export default function PolicyPage() {
   return (
     <Suspense fallback={
       <main className="bg-background">
+        <div className="h-20 bg-black/80" />
         <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-16 break-keep">
           <h1 className="text-3xl font-bold mb-8 mt-8">환불 안내</h1>
           <div className="animate-pulse">
