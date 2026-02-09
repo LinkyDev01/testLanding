@@ -22,7 +22,7 @@ export const CATEGORY_STYLES: Record<MeetupCategory, CategoryStyle> = {
   potato: {
     bg: "bg-pink-100",
     text: "text-pink-600",
-    label: "감자소개팅",
+    label: "감튀소개팅",
     dot: "bg-pink-500",
   },
 }
