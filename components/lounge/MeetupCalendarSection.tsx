@@ -376,7 +376,7 @@ function AllMeetupsList({
 
         <div
           ref={sliderRef}
-          className="relative h-[520px] cursor-grab active:cursor-grabbing select-none overflow-hidden"
+          className="relative h-[530px] cursor-grab active:cursor-grabbing select-none overflow-hidden"
           onMouseDown={handleDragStart}
           onMouseMove={handleDragMove}
           onMouseUp={handleDragEnd}
@@ -515,7 +515,7 @@ function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
         />
         <div className="absolute top-3 left-3">
           <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} backdrop-blur-sm bg-white/80`}
+            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} border border-current backdrop-blur-sm bg-white/80`}
           >
             {categoryStyle.label}
           </span>
@@ -530,9 +530,21 @@ function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
       {/* 모임 정보 */}
       <div className="p-4">
         <h4 className="font-semibold text-base mb-2 truncate">{meetup.title}</h4>
-        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-2">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-1">
           <Clock className="w-3 h-3" />
           <span>{meetup.time}</span>
+        </div>
+        <div className="flex items-center gap-1 text-sm text-muted-foreground mb-2">
+          <Users className="w-3 h-3" />
+          {meetup.maleCapacity !== undefined && meetup.femaleCapacity !== undefined ? (
+            <>
+              잔여
+              <span className="text-blue-500">♂ {meetup.maleCapacity - (meetup.maleCurrent ?? 0)}석</span>
+              <span className="text-pink-500">♀ {meetup.femaleCapacity - (meetup.femaleCurrent ?? 0)}석</span>
+            </>
+          ) : (
+            <span>잔여 {meetup.capacity - meetup.current}석</span>
+          )}
         </div>
         <div className="flex items-center justify-between pt-2 border-t border-border">
           <span className="text-sm font-bold text-rose">{meetup.price}</span>
@@ -587,7 +599,7 @@ function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
         />
         <div className="absolute top-3 left-3">
           <span
-            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} backdrop-blur-sm bg-white/80`}
+            className={`px-3 py-1 rounded-full text-xs font-medium ${categoryStyle.bg} ${categoryStyle.text} border border-current backdrop-blur-sm bg-white/80`}
           >
             {categoryStyle.label}
           </span>
