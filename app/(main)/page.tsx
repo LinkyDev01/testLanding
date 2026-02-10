@@ -8,7 +8,7 @@ export default function Home() {
     <main className="min-h-screen">
       <HeroSection />
       <ServicesSection />
-      <AboutSection />
+      {/* <AboutSection /> */}
       <ContactSection />
     </main>
   )
