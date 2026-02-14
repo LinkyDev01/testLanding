@@ -11,6 +11,7 @@ export const metadata: Metadata = {
     title: "링키 라운지 - 사람을 잇는 오프라인 커뮤니티 공간",
     description:
       "목적 있는 만남이 자연스럽게 이루어지는 커뮤니티 라운지. 회화 스터디, 와인 파티, 몰입의 밤 등 다양한 프로그램을 경험해보세요.",
+    images: ["/landing02.png"],
   },
   icons: {
     icon: "/favicon/favicon_lounge.svg",
