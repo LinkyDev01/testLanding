@@ -14,6 +14,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { AnimatedSection } from "@/components/animated-section"
 import { SectionHeader, CTAButton } from "@/components/common"
+import { trackCustom } from "@/lib/meta-pixel"
 import { CATEGORY_STYLES } from "@/constants/lounge"
 import { useGoogleCalendarMeetups } from "@/hooks/use-google-calendar-meetups"
 import type { Meetup } from "@/types"
@@ -51,23 +52,24 @@ export function MeetupCalendarSection() {
   })
 
   const prevMonth = () => {
-    setCurrentMonth(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
-    )
+    const prev = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
+    setCurrentMonth(prev)
     setSelectedDay(null)
+    trackCustom("CalendarNavigate", { direction: "prev", month: `${prev.getFullYear()}-${prev.getMonth() + 1}` })
   }
 
   const nextMonth = () => {
-    setCurrentMonth(
-      new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
-    )
+    const next = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
+    setCurrentMonth(next)
     setSelectedDay(null)
+    trackCustom("CalendarNavigate", { direction: "next", month: `${next.getFullYear()}-${next.getMonth() + 1}` })
   }
 
   const handleDayClick = (day: number) => {
     const dayMeetups = getMeetupsForDay(day)
     if (dayMeetups.length > 0) {
       setSelectedDay(selectedDay === day ? null : day)
+      trackCustom("CalendarDayClick", { day, meetup_count: dayMeetups.length })
     }
   }
 
@@ -499,6 +501,11 @@ interface MeetupSliderCardProps {
 }
 
 function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
+  const handleRegisterClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    trackCustom("MeetupRegister", { meetup_title: meetup.title, category: meetup.category })
+  }
+
   return (
     <div
       className="bg-[#f2ecdd] rounded-2xl border-[1.4px] border-[#595959] overflow-hidden shadow-lg"
@@ -544,7 +551,7 @@ function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
               ctaVariant="mint"
               className="text-xs"
               asChild
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={handleRegisterClick}
             >
               <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
                 신청하기
@@ -556,7 +563,7 @@ function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
               size="sm"
               ctaVariant="mint"
               className="text-xs"
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={handleRegisterClick}
             >
               신청하기
               <ArrowRight className="ml-1 w-3 h-3" />
@@ -575,6 +582,11 @@ interface MeetupListItemProps {
 
 function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
   const categoryStyle = CATEGORY_STYLES[meetup.category]
+
+  const handleRegisterClick = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    trackCustom("MeetupRegister", { meetup_title: meetup.title, category: meetup.category })
+  }
 
   return (
     <div
@@ -630,7 +642,7 @@ function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
               ctaVariant="mint"
               className="text-xs"
               asChild
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={handleRegisterClick}
             >
               <a href={meetup.registrationUrl} target="_blank" rel="noopener noreferrer">
                 신청하기
@@ -642,7 +654,7 @@ function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
               size="sm"
               ctaVariant="mint"
               className="text-xs"
-              onClick={(e: React.MouseEvent) => e.stopPropagation()}
+              onClick={handleRegisterClick}
             >
               신청하기
               <ArrowRight className="ml-1 w-3 h-3" />

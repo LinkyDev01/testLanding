@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import Script from "next/script"
 import { Geist, Geist_Mono, Playfair_Display } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { MetaPixelTracker } from "@/components/meta-pixel-tracker"
 import "./globals.css"
 
 const META_PIXEL_ID = "1350610706836537"
@@ -62,6 +63,7 @@ export default function RootLayout({
       </head>
       <body className={`font-sans antialiased ${playfair.variable}`}>
         {children}
+        <MetaPixelTracker />
         <Analytics />
       </body>
     </html>
