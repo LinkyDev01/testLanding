@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(ls:*)",
+      "Bash(npm run build:*)",
+      "Bash(npx tsc:*)",
+      "Bash(curl:*)",
+      "Bash(grep:*)",
+      "WebFetch(domain:codepen.io)",
+      "Bash(xargs cat:*)",
+      "WebFetch(domain:www.thepartywell.com)"
+    ]
+  }
+}

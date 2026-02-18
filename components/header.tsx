@@ -5,6 +5,7 @@ import Image from "next/image"
 import { useState, useEffect } from "react"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { trackCustom } from "@/lib/meta-pixel"
 
 interface HeaderProps {
   variant?: "main" | "lounge" | "platform"
@@ -101,6 +102,7 @@ export function Header({ variant = "main" }: HeaderProps) {
                   target="_blank"
                   rel="noopener noreferrer"
                   className={`${textColor} transition-colors text-sm font-medium tracking-wide uppercase`}
+                  onClick={() => trackCustom("Navigation", { item: item.label })}
                 >
                   {item.label}
                 </a>
@@ -109,6 +111,7 @@ export function Header({ variant = "main" }: HeaderProps) {
                   key={item.href}
                   href={item.href}
                   className={`${textColor} transition-colors text-sm font-medium tracking-wide uppercase`}
+                  onClick={() => trackCustom("Navigation", { item: item.label })}
                 >
                   {item.label}
                 </Link>
@@ -138,7 +141,7 @@ export function Header({ variant = "main" }: HeaderProps) {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`${textColor} transition-colors py-2 text-sm font-medium tracking-wide uppercase`}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => { trackCustom("Navigation", { item: item.label }); setIsMenuOpen(false) }}
                   >
                     {item.label}
                   </a>
@@ -147,7 +150,7 @@ export function Header({ variant = "main" }: HeaderProps) {
                     key={item.href}
                     href={item.href}
                     className={`${textColor} transition-colors py-2 text-sm font-medium tracking-wide uppercase`}
-                    onClick={() => setIsMenuOpen(false)}
+                    onClick={() => { trackCustom("Navigation", { item: item.label }); setIsMenuOpen(false) }}
                   >
                     {item.label}
                   </Link>

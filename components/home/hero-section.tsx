@@ -5,10 +5,11 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight } from "lucide-react"
 import { AnimatedSection } from "@/components/animated-section"
 import { CTAButton, StatCard } from "@/components/common"
+import { trackCustom } from "@/lib/meta-pixel"
 
 export function HeroSection() {
   return (
-    <section className="relative min-h-screen flex items-center pt-16">
+    <section data-track-section="hero" className="relative min-h-screen flex items-center pt-16">
       {/* Background Pattern */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 right-10 w-72 h-72 bg-sage/20 rounded-full blur-3xl animate-pulse" />
@@ -46,7 +47,11 @@ export function HeroSection() {
 
             <AnimatedSection delay={300}>
               <div className="flex flex-col sm:flex-row gap-4">
-                <CTAButton size="lg" ctaVariant="sage">
+                <CTAButton
+                  size="lg"
+                  ctaVariant="sage"
+                  onClick={() => trackCustom("ClickCTA", { button: "learn_services" })}
+                >
                   서비스 알아보기
                   <ArrowRight className="ml-2 w-4 h-4" />
                 </CTAButton>
@@ -55,6 +60,7 @@ export function HeroSection() {
                   variant="outline"
                   asChild
                   className="transition-transform hover:scale-105 bg-transparent"
+                  onClick={() => trackCustom("ClickCTA", { button: "contact" })}
                 >
                   <Link href="#contact">문의하기</Link>
                 </Button>

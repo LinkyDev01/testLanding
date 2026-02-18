@@ -4,10 +4,11 @@ import Link from "next/link"
 import { ArrowRight, Users, Building, Calendar, Star, MapPin, Clock } from "lucide-react"
 import { AnimatedSection } from "@/components/animated-section"
 import { SectionHeader, CTAButton } from "@/components/common"
+import { trackCustom } from "@/lib/meta-pixel"
 
 export function ServicesSection() {
   return (
-    <section className="py-24 bg-secondary/50">
+    <section data-track-section="services" className="py-24 bg-secondary/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionHeader
@@ -78,7 +79,12 @@ export function ServicesSection() {
                   />
                 </div> */}
 
-                <CTAButton asChild className="w-full" ctaVariant="sage">
+                <CTAButton
+                  asChild
+                  className="w-full"
+                  ctaVariant="sage"
+                  onClick={() => trackCustom("ClickCTA", { button: "lounge_detail" })}
+                >
                   <Link href="/lounge">
                     자세히 알아보기
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
@@ -140,7 +146,12 @@ export function ServicesSection() {
                   />
                 </div> */}
 
-                <CTAButton asChild className="w-full" ctaVariant="mint">
+                <CTAButton
+                  asChild
+                  className="w-full"
+                  ctaVariant="mint"
+                  onClick={() => trackCustom("ClickCTA", { button: "platform_detail" })}
+                >
                   <Link href="/platform">
                     자세히 알아보기
                     <ArrowRight className="ml-2 w-4 h-4 transition-transform group-hover:translate-x-1" />
