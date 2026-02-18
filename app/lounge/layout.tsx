@@ -1,7 +1,5 @@
 import type React from "react"
 import type { Metadata } from "next"
-import { Header } from "@/components/header"
-import { LoungeFooter } from "@/components/lounge"
 
 export const metadata: Metadata = {
   title: "링키 라운지 - 사람을 잇는 오프라인 커뮤니티 공간",
@@ -23,11 +21,5 @@ export default function LoungeLayout({
 }: {
   children: React.ReactNode
 }) {
-  return (
-    <>
-      <Header variant="lounge" />
-      {children}
-      <LoungeFooter />
-    </>
-  )
+  return <>{children}</>
 }

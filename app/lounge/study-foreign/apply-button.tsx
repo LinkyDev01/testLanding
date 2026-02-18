@@ -1,0 +1,17 @@
+"use client"
+
+import Link from "next/link"
+import { trackCustom } from "@/lib/meta-pixel"
+import styles from "./page.module.css"
+
+export function ApplyButton() {
+  return (
+    <Link
+      href="/lounge/study-foreign/apply"
+      className={styles.applyButton}
+      onClick={() => trackCustom("ClickCTA", { button: "study_foreign_apply" })}
+    >
+      신청하기
+    </Link>
+  )
+}

@@ -1,0 +1,29 @@
+import type { Metadata } from "next"
+import Image from "next/image"
+import styles from "./page.module.css"
+import { ApplyButton } from "./apply-button"
+
+export const metadata: Metadata = {
+  title: "Linky Study",
+}
+
+export default function StudyForeignPage() {
+  return (
+    <>
+      <main className={styles.container} data-track-section="study-foreign-home">
+        <Image
+          src="/linky-lounge/study-foreign/linky-study.png"
+          alt="Linky Study"
+          className={styles.mainImage}
+          width={600}
+          height={3000}
+          priority
+        />
+      </main>
+
+      <div className={styles.fixedButtonContainer}>
+        <ApplyButton />
+      </div>
+    </>
+  )
+}
