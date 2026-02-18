@@ -6,7 +6,7 @@ import styles from "./page.module.css"
 
 export default function StudyForeignApplyPage() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [charCount, setCharCount] = useState(0)
+  const [language, setLanguage] = useState<"" | "일본어" | "중국어">("")
   const [loading, setLoading] = useState(false)
 
   function showStep(step: number) {
@@ -24,29 +24,28 @@ export default function StudyForeignApplyPage() {
       const gender = form.querySelectorAll<HTMLInputElement>('input[name="gender"]')
       const age = form.querySelector<HTMLInputElement>('input[name="age"]')
       const phone = form.querySelector<HTMLInputElement>('input[name="phone"]')
-      const intro = form.querySelector<HTMLTextAreaElement>('textarea[name="introduction"]')
 
       if (!name?.value.trim()) { alert("이름을 입력해주세요."); name?.focus(); return false }
       if (!Array.from(gender).some(r => r.checked)) { alert("성별을 선택해주세요."); return false }
       const ageVal = Number(age?.value)
       if (isNaN(ageVal) || ageVal < 19 || ageVal > 39) { alert("만 19세 ~ 39세만 신청이 가능합니다."); age?.focus(); return false }
       if (!phone?.value.trim()) { alert("연락처를 입력해주세요."); phone?.focus(); return false }
-      if (!intro?.value.trim()) { alert("자기소개를 입력해주세요."); intro?.focus(); return false }
     }
 
     if (step === 2) {
-      const month = form.querySelectorAll<HTMLInputElement>('input[name="month"]')
-      const language = form.querySelectorAll<HTMLInputElement>('input[name="language"]')
-      const cls = form.querySelectorAll<HTMLInputElement>('input[name="class"]')
-      const level = form.querySelectorAll<HTMLInputElement>('input[name="level"]')
-
-      if (!Array.from(month).some(r => r.checked)) { alert("희망 수강 월을 선택해주세요."); return false }
-      if (!Array.from(language).some(r => r.checked)) { alert("희망 언어를 선택해주세요."); return false }
-      if (!Array.from(cls).some(r => r.checked)) { alert("희망 반을 선택해주세요."); return false }
-      if (!Array.from(level).some(r => r.checked)) { alert("회화 수준을 선택해주세요."); return false }
+      const lang = form.querySelectorAll<HTMLInputElement>('input[name="language"]')
+      if (!Array.from(lang).some(r => r.checked)) { alert("희망 수강 언어를 선택해주세요."); return false }
+      const schedules = form.querySelectorAll<HTMLInputElement>('input[name="schedule"]')
+      if (!Array.from(schedules).some(r => r.checked)) { alert("가능한 일정을 선택해주세요."); return false }
     }
 
     if (step === 3) {
+      const qReason = form.querySelector<HTMLTextAreaElement>('textarea[name="q_reason"]')
+      const qGoal = form.querySelector<HTMLTextAreaElement>('textarea[name="q_goal"]')
+      if (!qReason?.value.trim()) { alert("관심을 갖게 된 계기를 입력해주세요."); qReason?.focus(); return false }
+      if (!qGoal?.value.trim()) { alert("배워서 해보고 싶은 것을 입력해주세요."); qGoal?.focus(); return false }
+      const qExp = form.querySelector<HTMLTextAreaElement>('textarea[name="q_experience"]')
+      if (!qExp?.value.trim()) { alert("외국어 공부 경험을 입력해주세요."); qExp?.focus(); return false }
       const privacy = form.querySelector<HTMLInputElement>('input[name="privacy_agree"]')
       const photo = form.querySelector<HTMLInputElement>('input[name="photo_agree"]')
       if (!privacy?.checked || !photo?.checked) { alert("필수 동의 항목을 모두 체크해주세요."); return false }
@@ -71,25 +70,23 @@ export default function StudyForeignApplyPage() {
 
     const payload = {
       name: (form.querySelector<HTMLInputElement>('input[name="name"]'))?.value,
-      month: (form.querySelector<HTMLInputElement>('input[name="month"]:checked'))?.value,
-      language: (form.querySelector<HTMLInputElement>('input[name="language"]:checked'))?.value,
-      class: (form.querySelector<HTMLInputElement>('input[name="class"]:checked'))?.value,
-      level: (form.querySelector<HTMLInputElement>('input[name="level"]:checked'))?.value,
       gender: (form.querySelector<HTMLInputElement>('input[name="gender"]:checked'))?.value,
       age: (form.querySelector<HTMLInputElement>('input[name="age"]'))?.value,
       phone: (form.querySelector<HTMLInputElement>('input[name="phone"]'))?.value,
       job: (form.querySelector<HTMLInputElement>('input[name="job"]'))?.value || "",
       instagram: (form.querySelector<HTMLInputElement>('input[name="instagram"]'))?.value || "",
-      introduction: (form.querySelector<HTMLTextAreaElement>('textarea[name="introduction"]'))?.value,
-      source: (form.querySelector<HTMLSelectElement>('select[name="source"]'))?.value || "",
-      referrer: (form.querySelector<HTMLInputElement>('input[name="referrer"]'))?.value || "",
+      language: (form.querySelector<HTMLInputElement>('input[name="language"]:checked'))?.value,
+      schedule: Array.from(form.querySelectorAll<HTMLInputElement>('input[name="schedule"]:checked')).map(el => el.value),
+      q_reason: (form.querySelector<HTMLTextAreaElement>('textarea[name="q_reason"]'))?.value,
+      q_goal: (form.querySelector<HTMLTextAreaElement>('textarea[name="q_goal"]'))?.value,
+      q_experience: (form.querySelector<HTMLTextAreaElement>('textarea[name="q_experience"]'))?.value,
       privacy_agree: (form.querySelector<HTMLInputElement>('input[name="privacy_agree"]'))?.checked,
       photo_agree: (form.querySelector<HTMLInputElement>('input[name="photo_agree"]'))?.checked,
     }
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbyZ-5ra8NLj3CaPmcyIc3yMk3BoTX-t2DFBP0qlhJEP1Ek6C14uw4nP-8vFDKU30Wo/exec",
+        "https://script.google.com/macros/s/AKfycby9SVRcDB8srkQoYjj7Mo_qLYl7Zxx0Hjb5kc22b2olkWvtGQOBMzqPglCrxcO7epA/exec",
         {
           method: "POST",
           mode: "no-cors",
@@ -174,19 +171,12 @@ export default function StudyForeignApplyPage() {
                 />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>자기소개 및 신청 계기 (200자 이하) *</label>
-                <textarea
-                  name="introduction"
-                  className={`${styles.formInput} ${styles.textareaResize}`}
-                  required
-                  placeholder="학습 동기, 목표, 신청 계기 등을 작성해주세요"
-                  maxLength={200}
-                  rows={4}
-                  onChange={e => setCharCount(e.target.value.length)}
-                />
-                <div className={styles.charCounter}>
-                  <span>{charCount}</span> / 200자
-                </div>
+                <label className={styles.formLabel}>직업 (선택)</label>
+                <input type="text" name="job" className={styles.formInput} placeholder="예: 마케터, 개발자 등" />
+              </div>
+              <div className={styles.formGroup}>
+                <label className={styles.formLabel}>Instagram ID (선택)</label>
+                <input type="text" name="instagram" className={styles.formInput} placeholder="@your_instagram_id" />
               </div>
               <button
                 type="button"
@@ -198,58 +188,33 @@ export default function StudyForeignApplyPage() {
             </div>
 
             {/* Step 2 */}
-            <div className={`${styles.formStep} ${currentStep === 2 ? styles.active : ""}`}>
+            <div className={`${styles.formStep} ${currentStep === 2 ? styles.active : ""} ${language === "일본어" ? styles.langJa : ""} ${language === "중국어" ? styles.langZh : ""}`}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>희망 수강 월 선택 *</label>
+                <label className={styles.formLabel}>희망 수강 언어 *</label>
                 <div className={styles.radioGroup}>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="month" value="3월" required />
-                    <span className={styles.radioText}>3월</span>
-                  </label>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="month" value="4월" required />
-                    <span className={styles.radioText}>4월</span>
-                  </label>
+                  {["일본어", "중국어"].map(lang => (
+                    <label key={lang} className={`${styles.radioLabel} ${lang === "일본어" ? styles.radioLabelJa : styles.radioLabelZh}`}>
+                      <input type="radio" name="language" value={lang} required onChange={() => setLanguage(lang as "일본어" | "중국어")} />
+                      <span className={styles.radioText}>{lang}</span>
+                    </label>
+                  ))}
                 </div>
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>희망 수강 언어 선택 (언어별 요일 상이) *</label>
-                <div className={styles.radioGroup}>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="language" value="일본어" required />
-                    <span className={styles.radioText}>일본어 (매주 월요일)</span>
-                  </label>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="language" value="중국어" required />
-                    <span className={styles.radioText}>중국어 (매주 화요일)</span>
-                  </label>
-                </div>
-              </div>
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>희망 반 선택 *</label>
-                <div className={styles.radioGroup}>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="class" value="A반 (19:00~20:30)" required />
-                    <span className={styles.radioText}>A반 (19:00~20:30)</span>
-                  </label>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="class" value="B반 (21:00~22:30)" required />
-                    <span className={styles.radioText}>B반 (21:00~22:30)</span>
-                  </label>
-                </div>
-              </div>
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>회화 수준 선택 *</label>
-                <div className={styles.radioGroup}>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="level" value="입문" required />
-                    <span className={styles.radioText}>입문</span>
-                  </label>
-                  <label className={styles.radioLabel}>
-                    <input type="radio" name="level" value="초급" required />
-                    <span className={styles.radioText}>초급</span>
-                  </label>
-                </div>
+                <label className={styles.formLabel}>가능한 일정 선택 (복수 선택 가능) *</label>
+                {["월", "화", "수", "목"].map(day => (
+                  <div key={day} className={styles.dayGroup}>
+                    <div className={styles.dayLabel}>{day}요일</div>
+                    <div className={styles.radioGroup}>
+                      {["19:00-20:30", "21:00-22:30"].map(time => (
+                        <label key={`${day}-${time}`} className={styles.radioLabel}>
+                          <input type="checkbox" name="schedule" value={`${day} ${time}`} />
+                          <span className={styles.radioText}>{time}</span>
+                        </label>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
               <div className={styles.formButtons}>
                 <button type="button" className={styles.btnPrevious} onClick={() => showStep(1)}>이전</button>
@@ -260,26 +225,16 @@ export default function StudyForeignApplyPage() {
             {/* Step 3 */}
             <div className={`${styles.formStep} ${currentStep === 3 ? styles.active : ""}`}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>직업 (선택)</label>
-                <input type="text" name="job" className={styles.formInput} placeholder="예: 마케터, 개발자 등" />
+                <label className={styles.formLabel}>어떤 계기로 관심을 갖게 되셨나요? *</label>
+                <textarea name="q_reason" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="예: 여행, 드라마, 업무, 친구 등 편하게 적어주세요" rows={3} />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>Instagram ID (선택)</label>
-                <input type="text" name="instagram" className={styles.formInput} placeholder="@your_instagram_id" />
+                <label className={styles.formLabel}>배워서 가장 먼저 해보고 싶은 것은? *</label>
+                <textarea name="q_goal" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="예: 이자카야에서 일본어로 주문하기, 중드 자막 없이 보기 등" rows={3} />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>알게 된 경로 (선택)</label>
-                <select name="source" className={styles.formInput}>
-                  <option value="">선택해주세요</option>
-                  <option value="Instagram">Instagram</option>
-                  <option value="지인 추천">지인 추천</option>
-                  <option value="검색">검색</option>
-                  <option value="기타">기타</option>
-                </select>
-              </div>
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>추천인 (선택)</label>
-                <input type="text" name="referrer" className={styles.formInput} placeholder="추천해주신 분의 성함" />
+                <label className={styles.formLabel}>외국어 공부 경험이 있으시다면 알려주세요! *</label>
+                <textarea name="q_experience" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="없으면 '없음'이라고 적어주셔도 됩니다" rows={3} />
               </div>
               <div className={`${styles.formGroup} ${styles.formPrivacySection}`}>
                 <label className={styles.formCheckboxLabel}>

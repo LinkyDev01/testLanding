@@ -200,6 +200,22 @@
     line-height: 1.6;
 }
 
+/* Day Group */
+.dayGroup {
+    margin-top: 16px;
+}
+
+.dayGroup:first-of-type {
+    margin-top: 8px;
+}
+
+.dayLabel {
+    font-size: 14px;
+    font-weight: 500;
+    color: #999;
+    margin-bottom: 8px;
+}
+
 /* Radio */
 .radioGroup {
     display: flex;
@@ -210,7 +226,7 @@
 
 .radioLabel {
     flex: 1;
-    min-width: 150px;
+    min-width: 80px;
     display: flex;
     align-items: center;
     padding: 15px 20px;
@@ -226,7 +242,8 @@
     background: #f9f9f9;
 }
 
-.radioLabel input[type="radio"] {
+.radioLabel input[type="radio"],
+.radioLabel input[type="checkbox"] {
     width: 20px;
     height: 20px;
     margin-right: 12px;
@@ -235,15 +252,55 @@
     flex-shrink: 0;
 }
 
-.radioLabel input[type="radio"]:checked + .radioText {
+.radioLabel input[type="radio"]:checked + .radioText,
+.radioLabel input[type="checkbox"]:checked + .radioText {
     font-weight: 500;
     color: var(--text-primary);
 }
 
-.radioLabel:has(input[type="radio"]:checked) {
+.radioLabel:has(input[type="radio"]:checked),
+.radioLabel:has(input[type="checkbox"]:checked) {
     border-color: var(--accent-color);
     background: white;
     box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+/* Language-specific radio styles */
+.radioLabelJa:has(input:checked) {
+    border-color: #4CAF50;
+    background: #F0FFF0;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.2);
+}
+
+.radioLabelZh:has(input:checked) {
+    border-color: #DE2910;
+    background: #FFF5F5;
+    box-shadow: 0 2px 8px rgba(222, 41, 16, 0.2);
+}
+
+/* Language-themed step background */
+.langJa {
+    background: linear-gradient(135deg, #F8FFF8 0%, #F2FAF2 100%);
+    border-radius: 12px;
+    padding: 30px;
+    transition: background 0.4s ease;
+}
+
+.langJa .radioLabel:has(input[type="checkbox"]:checked) {
+    border-color: #81C784;
+    box-shadow: 0 2px 6px rgba(76, 175, 80, 0.12);
+}
+
+.langZh {
+    background: linear-gradient(135deg, #FFFAFA 0%, #FFF5F5 100%);
+    border-radius: 12px;
+    padding: 30px;
+    transition: background 0.4s ease;
+}
+
+.langZh .radioLabel:has(input[type="checkbox"]:checked) {
+    border-color: #EF9A9A;
+    box-shadow: 0 2px 6px rgba(222, 41, 16, 0.12);
 }
 
 .radioText {
