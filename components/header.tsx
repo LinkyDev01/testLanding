@@ -37,7 +37,7 @@ export function Header({ variant = "main" }: HeaderProps) {
     lounge: {
       logo: { href: "/lounge", image: "/logos/linky_lounge_logo_white.svg", width: 120, height: 113, className: "h-10 w-auto" },
       navItems: [
-        { href: "https://linky-korea.vercel.app/lounge/study-foreign", label: "회화 스터디", external: true },
+        { href: "https://www.linkykorea.com/lounge/study-foreign", label: "회화 스터디", external: true },
         { href: "https://linky-wine-party01.vercel.app/", label: "와인파티", external: true },
         { href: "https://focus-night.vercel.app/", label: "몰입의 밤", external: true },
         { href: "https://tally.so/r/lbrdkN", label: "감튀 소개팅", external: true },
