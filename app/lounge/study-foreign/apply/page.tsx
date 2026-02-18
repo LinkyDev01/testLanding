@@ -234,7 +234,7 @@ export default function StudyForeignApplyPage() {
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>외국어 공부 경험이 있으시다면 알려주세요! *</label>
-                <textarea name="q_experience" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="없으면 '없음'이라고 적어주셔도 됩니다" rows={3} />
+                <textarea name="q_experience" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="반 배정 시 참고 예정" rows={3} />
               </div>
               <div className={`${styles.formGroup} ${styles.formPrivacySection}`}>
                 <label className={styles.formCheckboxLabel}>
