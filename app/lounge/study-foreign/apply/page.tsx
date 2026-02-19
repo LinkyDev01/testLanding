@@ -107,7 +107,7 @@ export default function StudyForeignApplyPage() {
 
   return (
     <>
-      <section className={styles.application} id="apply">
+      <section className={`${styles.application} ${language === "일본어" ? styles.langJa : ""} ${language === "중국어" ? styles.langZh : ""}`} id="apply">
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <div className={styles.sectionLabel}>APPLY NOW</div>
@@ -188,7 +188,7 @@ export default function StudyForeignApplyPage() {
             </div>
 
             {/* Step 2 */}
-            <div className={`${styles.formStep} ${currentStep === 2 ? styles.active : ""} ${language === "일본어" ? styles.langJa : ""} ${language === "중국어" ? styles.langZh : ""}`}>
+            <div className={`${styles.formStep} ${currentStep === 2 ? styles.active : ""}`}>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>희망 수강 언어 *</label>
                 <div className={styles.radioGroup}>
