@@ -86,7 +86,7 @@ export default function StudyForeignApplyPage() {
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbw0CMqlSRHKOzC-LdY38y2ldOtRBIJWDzsfVmM2aKAmcVAoVlB9cWIx3AlBAzA5VEI/exec",
+        "https://script.google.com/macros/s/AKfycbxsOQmL8F5XYRY1HZLGQowFHpQhqt6MJvpJZu78pNRiZbSp7FZ_FP0iHXrgtJysw-A/exec",
         {
           method: "POST",
           mode: "no-cors",
