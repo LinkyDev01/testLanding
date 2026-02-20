@@ -10,7 +10,7 @@ export default function StudyForeignApplyPage() {
 
   function showStep(step: number) {
     setCurrentStep(step)
-    trackCustom("FormStep", { step, form: "study_foreign_apply" })
+    trackCustom("신청폼_단계이동", { 단계: step, 폼: "외국어회화_신청" })
     window.scrollTo({ top: 0, behavior: "smooth" })
   }
 
@@ -94,8 +94,8 @@ export default function StudyForeignApplyPage() {
           body: JSON.stringify(payload),
         }
       )
-      trackStandard("CompleteRegistration", { content_name: "study_foreign_apply" })
-      trackStandard("Lead", { content_name: "study_foreign_apply" })
+      trackStandard("CompleteRegistration", { content_name: "외국어회화_신청완료" })
+      trackStandard("Lead", { content_name: "외국어회화_신청완료" })
       alert("신청이 완료되었습니다!")
       window.location.replace("https://buy.tosspayments.com/products/SCBnFcyXiE?shopId=prreBmgHJwPY")
     } catch {
@@ -234,7 +234,7 @@ export default function StudyForeignApplyPage() {
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>현재 회화 수준에 해당하는 것을 모두 골라 주세요 (복수 선택) *</label>
-                <div className={styles.radioGroup} style={{ flexDirection: "column" }}>
+                <div className={styles.radioGroup} style={{ flexDirection: "column", gap: "8px" }}>
                   {[
                     "아직 아무것도 못 하지만 도전하고 싶다!",
                     "인사, 자기소개 정도는 할 수 있다",
@@ -244,12 +244,12 @@ export default function StudyForeignApplyPage() {
                     "자기 생각이나 의견을 문장으로 말할 수 있다",
                     "드라마·영상을 자막 없이 대체로 이해할 수 있다",
                   ].map(level => (
-                    <label key={level} className={styles.radioLabel}>
+                    <label key={level} className={styles.radioLabelCompact}>
                       <input type="checkbox" name="q_level" value={level} />
                       <span className={styles.radioText}>{level}</span>
                     </label>
                   ))}
-                  <label className={styles.radioLabel}>
+                  <label className={styles.radioLabelCompact}>
                     <input type="checkbox" name="q_level" value="기타" />
                     <span className={styles.radioText}>기타 (직접 입력)</span>
                   </label>

@@ -8,7 +8,7 @@ import { trackCustom } from "@/lib/meta-pixel"
 
 export function ServicesSection() {
   return (
-    <section data-track-section="services" className="py-24 bg-secondary/50">
+    <section data-track-section="메인_서비스소개" className="py-24 bg-secondary/50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionHeader
@@ -83,7 +83,7 @@ export function ServicesSection() {
                   asChild
                   className="w-full"
                   ctaVariant="sage"
-                  onClick={() => trackCustom("ClickCTA", { button: "lounge_detail" })}
+                  onClick={() => trackCustom("ClickCTA", { button: "서비스_라운지상세" })}
                 >
                   <Link href="/lounge">
                     자세히 알아보기
@@ -150,7 +150,7 @@ export function ServicesSection() {
                   asChild
                   className="w-full"
                   ctaVariant="mint"
-                  onClick={() => trackCustom("ClickCTA", { button: "platform_detail" })}
+                  onClick={() => trackCustom("ClickCTA", { button: "서비스_플랫폼상세" })}
                 >
                   <Link href="/platform">
                     자세히 알아보기

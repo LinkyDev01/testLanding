@@ -55,21 +55,21 @@ export function MeetupCalendarSection() {
     const prev = new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1, 1)
     setCurrentMonth(prev)
     setSelectedDay(null)
-    trackCustom("CalendarNavigate", { direction: "prev", month: `${prev.getFullYear()}-${prev.getMonth() + 1}` })
+    trackCustom("캘린더_월이동", { 방향: "이전", 월: `${prev.getFullYear()}-${prev.getMonth() + 1}` })
   }
 
   const nextMonth = () => {
     const next = new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1, 1)
     setCurrentMonth(next)
     setSelectedDay(null)
-    trackCustom("CalendarNavigate", { direction: "next", month: `${next.getFullYear()}-${next.getMonth() + 1}` })
+    trackCustom("캘린더_월이동", { 방향: "다음", 월: `${next.getFullYear()}-${next.getMonth() + 1}` })
   }
 
   const handleDayClick = (day: number) => {
     const dayMeetups = getMeetupsForDay(day)
     if (dayMeetups.length > 0) {
       setSelectedDay(selectedDay === day ? null : day)
-      trackCustom("CalendarDayClick", { day, meetup_count: dayMeetups.length })
+      trackCustom("캘린더_날짜클릭", { 날짜: day, 밋업수: dayMeetups.length })
     }
   }
 
@@ -503,7 +503,7 @@ interface MeetupSliderCardProps {
 function MeetupSliderCard({ meetup, currentMonth }: MeetupSliderCardProps) {
   const handleRegisterClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    trackCustom("MeetupRegister", { meetup_title: meetup.title, category: meetup.category })
+    trackCustom("밋업_신청클릭", { 밋업명: meetup.title, 카테고리: meetup.category })
   }
 
   return (
@@ -585,7 +585,7 @@ function MeetupListItem({ meetup, currentMonth }: MeetupListItemProps) {
 
   const handleRegisterClick = (e: React.MouseEvent) => {
     e.stopPropagation()
-    trackCustom("MeetupRegister", { meetup_title: meetup.title, category: meetup.category })
+    trackCustom("밋업_신청클릭", { 밋업명: meetup.title, 카테고리: meetup.category })
   }
 
   return (

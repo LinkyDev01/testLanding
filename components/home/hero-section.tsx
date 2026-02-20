@@ -9,7 +9,7 @@ import { trackCustom } from "@/lib/meta-pixel"
 
 export function HeroSection() {
   return (
-    <section data-track-section="hero" className="relative min-h-screen flex items-center pt-16">
+    <section data-track-section="메인_히어로" className="relative min-h-screen flex items-center pt-16">
       {/* Background Pattern */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 right-10 w-72 h-72 bg-sage/20 rounded-full blur-3xl animate-pulse" />
@@ -50,7 +50,7 @@ export function HeroSection() {
                 <CTAButton
                   size="lg"
                   ctaVariant="sage"
-                  onClick={() => trackCustom("ClickCTA", { button: "learn_services" })}
+                  onClick={() => trackCustom("ClickCTA", { button: "메인_서비스알아보기" })}
                 >
                   서비스 알아보기
                   <ArrowRight className="ml-2 w-4 h-4" />
@@ -60,7 +60,7 @@ export function HeroSection() {
                   variant="outline"
                   asChild
                   className="transition-transform hover:scale-105 bg-transparent"
-                  onClick={() => trackCustom("ClickCTA", { button: "contact" })}
+                  onClick={() => trackCustom("ClickCTA", { button: "메인_문의하기" })}
                 >
                   <Link href="#contact">문의하기</Link>
                 </Button>

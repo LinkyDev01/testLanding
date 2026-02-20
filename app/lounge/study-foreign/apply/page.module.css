@@ -237,6 +237,11 @@
     background: white;
 }
 
+.radioLabelCompact {
+    composes: radioLabel;
+    padding: 10px 16px;
+}
+
 .radioLabel:hover {
     border-color: var(--accent-color);
     background: #f9f9f9;
