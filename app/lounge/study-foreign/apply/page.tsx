@@ -233,16 +233,16 @@ export default function StudyForeignApplyPage() {
                 <textarea name="q_goal" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="ex) 자막 없이 중드 보기, 거래처와 중국어로 미팅하기, 일본인 친구와 스몰토크하기 등" rows={3} />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>현재 회화 수준에 해당하는 것을 모두 골라 주세요 (복수 선택) *</label>
+                <label className={styles.formLabel}>현재 회화 수준에 해당하는 것을 모두 골라 주세요. (복수 선택) *</label>
                 <div className={styles.radioGroup} style={{ flexDirection: "column", gap: "8px" }}>
                   {[
-                    "아직 아무것도 못 하지만 도전하고 싶다!",
-                    "인사, 자기소개 정도는 할 수 있다",
-                    "식당·카페에서 간단한 주문이 가능하다",
-                    "짧은 일상 대화(날씨, 취미 등)를 주고받을 수 있다",
-                    "상대방이 천천히 말하면 대략적인 내용을 알아들을 수 있다",
-                    "자기 생각이나 의견을 문장으로 말할 수 있다",
-                    "드라마·영상을 자막 없이 대체로 이해할 수 있다",
+                    "아직 아무것도 못 하지만 도전!",
+                    "인사, 자기소개 정도",
+                    "식당·카페에서 간단한 주문",
+                    "짧은 일상 대화(날씨, 취미 등)",
+                    "천천히 말하면 알아 들을 수 있음",
+                    "문장으로 의견을 말할 수 있음",
+                    "자막 없이 드라마·영화를 어느 정도 이해"
                   ].map(level => (
                     <label key={level} className={styles.radioLabelCompact}>
                       <input type="checkbox" name="q_level" value={level} />
@@ -254,7 +254,7 @@ export default function StudyForeignApplyPage() {
                     <span className={styles.radioText}>기타 (직접 입력)</span>
                   </label>
                 </div>
-                <div className={styles.formNote}>작성해 주신 내용과 희망 시간대를 바탕으로, 최적의 반을 배정해 드립니다</div>
+                <div className={styles.formNote}>작성해 주신 내용과 희망 시간대를 바탕으로, 최적의 반을 배정해 드립니다.</div>
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>신청하신 언어를 접해 본 경험이 있으시다면 알려 주세요!</label>
