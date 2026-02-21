@@ -223,11 +223,10 @@ export default function StudyForeignApplyPage() {
                       .filter(({ lang }) => lang === selectedLanguage)
                       .map(({ day }) => (
                         <div key={day} className={styles.dayGroup}>
-                          <div className={styles.dayLabel}>{`수업은 매주 ${day}요일에 진행됩니다. (4주 진행)`}</div>
                           <div className={styles.radioGroup}>
                             {[
-                              { label: `A반 (19:00-20:30)`, value: `${day}요일 A반 (19:00-20:30)` },
-                              { label: `B반 (21:00-22:30)`, value: `${day}요일 B반 (21:00-22:30)` },
+                              { label: `${day}요일 A반 (19:00-20:30)`, value: `${day}요일 A반 (19:00-20:30)` },
+                              { label: `${day}요일 B반 (21:00-22:30)`, value: `${day}요일 B반 (21:00-22:30)` },
                             ].map(({ label, value }) => (
                               <label key={value} className={styles.radioLabel}>
                                 <input
@@ -245,6 +244,7 @@ export default function StudyForeignApplyPage() {
                               </label>
                             ))}
                           </div>
+                          <div className={styles.dayLabel}>{`수업은 4주간 진행됩니다.`}</div>
                         </div>
                       ))}
                   </div>
@@ -265,7 +265,7 @@ export default function StudyForeignApplyPage() {
                 <textarea name="q_reason" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="ex) 여행, 드라마, 업무, 외국인 친구와 소통 등" rows={3} />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>외국어를 잘하게 된다면 가장 먼저 해보고 싶은 것은? *</label>
+                <label className={styles.formLabel}>딱 한 달 뒤, 외국어로 꼭 해내고 싶은 '단 한 가지'가 있다면 무엇인가요? *</label>
                 <textarea name="q_goal" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="ex) 자막 없이 중드 보기, 거래처와 중국어로 미팅하기, 일본인 친구와 스몰토크하기 등" rows={3} />
               </div>
               <div className={styles.formGroup}>
