@@ -566,6 +566,11 @@
         padding: 60px 0;
     }
 
+    /* iOS Safari 자동 줌인 방지 (font-size 16px 미만이면 포커스 시 줌) */
+    .formInput {
+        font-size: 16px;
+    }
+
     .radioGroup {
         flex-direction: column;
     }
