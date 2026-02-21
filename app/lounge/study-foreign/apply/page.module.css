@@ -47,6 +47,7 @@
     color: var(--text-secondary);
     line-height: 1.8;
     font-weight: 300;
+    word-break: keep-all;
 }
 
 /* Form Progress */
@@ -143,12 +144,12 @@
 
 .formLabel {
     display: block;
-    font-size: 11px;
+    font-size: 12px;
     letter-spacing: 2px;
     text-transform: uppercase;
     margin-bottom: 12px;
     color: var(--text-primary);
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .formInput {
@@ -200,6 +201,29 @@
     line-height: 1.6;
 }
 
+/* Schedule options animation */
+@keyframes fadeInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.scheduleOptions {
+    animation: fadeInDown 0.3s ease;
+}
+
+.scheduleHint {
+    font-size: 13px;
+    color: #000000;
+    margin-top: 10px;
+    font-weight: 300;
+}
+
 /* Day Group */
 .dayGroup {
     margin-top: 16px;
@@ -210,10 +234,15 @@
 }
 
 .dayLabel {
-    font-size: 14px;
-    font-weight: 500;
-    color: #999;
-    margin-bottom: 8px;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 600;
+    /* color: white; */
+    /* background: var(--accent-color); */
+    /* padding: 4px 12px; */
+    border-radius: 20px;
+    /* margin-bottom: 10px; */
+    letter-spacing: 1px;
 }
 
 /* Radio */
@@ -528,6 +557,7 @@
 /* Responsive */
 @media (max-width: 768px) {
     .sectionTitle {
+        word-break: keep-all;
         font-size: 32px;
     }
 
