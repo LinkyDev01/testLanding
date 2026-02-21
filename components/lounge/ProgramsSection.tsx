@@ -13,7 +13,7 @@ const PROGRAMS = [
     image: "/linky-lounge/foreign_class.png",
     schedule: "매주 월화 저녁 1시간 반 진행",
     description: "선생님과 함께, 웃으며 배우는 회화 스터디",
-    link: "https://www.linkykorea.com/lounge/study-foreign",
+    link: "/lounge/study-foreign",
   },
   {
     id: 2,
