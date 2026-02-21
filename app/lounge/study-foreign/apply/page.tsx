@@ -261,11 +261,11 @@ export default function StudyForeignApplyPage() {
             {/* Step 3 */}
             <div className={`${styles.formStep} ${currentStep === 3 ? styles.active : ""}`}>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>어떤 계기로 외국어 회화 클래스에 관심을 갖게 되셨나요? *</label>
+                <label className={styles.formLabel}>어떤 계기로 {selectedLanguage || "외국어"} 회화 클래스에 관심을 갖게 되셨나요? *</label>
                 <textarea name="q_reason" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="ex) 여행, 드라마, 업무, 외국인 친구와 소통 등" rows={3} />
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>딱 한 달 뒤, 외국어로 꼭 해내고 싶은 '단 한 가지'가 있다면 무엇인가요? *</label>
+                <label className={styles.formLabel}>딱 한 달 뒤, {selectedLanguage || "외국어"}로 꼭 해내고 싶은 '단 한 가지'가 있다면 무엇인가요? *</label>
                 <textarea name="q_goal" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="ex) 자막 없이 중드 보기, 거래처와 중국어로 미팅하기, 일본인 친구와 스몰토크하기 등" rows={3} />
               </div>
               <div className={styles.formGroup}>
@@ -291,7 +291,7 @@ export default function StudyForeignApplyPage() {
                 <div className={styles.formNote}>작성해 주신 내용과 희망 시간대를 바탕으로, 최적의 반을 배정해 드립니다.</div>
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>신청 언어를 접해본 경험은? *</label>
+                <label className={styles.formLabel}>{selectedLanguage || "신청 언어"}를 접해본 경험은? *</label>
                 <textarea name="q_experience" className={`${styles.formInput} ${styles.textareaResize}`} required placeholder="ex) 드라마 정주행, 학원 3개월, 워홀·유학 경험, 학교 수업, 일본인 친구와 대화, HSK 3급 취득, 거래처 소통 등" rows={3} />
               </div>
               <div className={`${styles.formGroup} ${styles.formPrivacySection}`}>
