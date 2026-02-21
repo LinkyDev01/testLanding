@@ -12,7 +12,9 @@ export default function StudyForeignApplyPage() {
   function showStep(step: number) {
     setCurrentStep(step)
     trackCustom("신청폼_단계이동", { 단계: step, 폼: "외국어회화_신청" })
-    window.scrollTo({ top: 0, behavior: "smooth" })
+    setTimeout(() => {
+      document.getElementById("apply")?.scrollIntoView({ behavior: "smooth", block: "start" })
+    }, 50)
   }
 
   function validateStep(step: number): boolean {
