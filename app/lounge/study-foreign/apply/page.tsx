@@ -8,6 +8,7 @@ export default function StudyForeignApplyPage() {
   const [currentStep, setCurrentStep] = useState(1)
   const [loading, setLoading] = useState(false)
   const [selectedLanguage, setSelectedLanguage] = useState<string>("")
+  const [selectedSchedules, setSelectedSchedules] = useState<string[]>([])
 
   function showStep(step: number) {
     setCurrentStep(step)
@@ -37,8 +38,7 @@ export default function StudyForeignApplyPage() {
     if (step === 2) {
       const lang = form.querySelectorAll<HTMLInputElement>('input[name="language"]')
       if (!Array.from(lang).some(r => r.checked)) { alert("신청 언어를 선택해주세요."); return false }
-      const schedules = form.querySelectorAll<HTMLInputElement>('input[name="schedule"]')
-      if (!Array.from(schedules).some(r => r.checked)) { alert("가능한 일정을 선택해주세요."); return false }
+      if (selectedSchedules.length === 0) { alert("가능한 일정을 선택해주세요."); return false }
     }
 
     if (step === 3) {
@@ -80,7 +80,7 @@ export default function StudyForeignApplyPage() {
       job: (form.querySelector<HTMLInputElement>('input[name="job"]'))?.value || "",
       instagram: (form.querySelector<HTMLInputElement>('input[name="instagram"]'))?.value || "",
       language: (form.querySelector<HTMLInputElement>('input[name="language"]:checked'))?.value,
-      schedule: Array.from(form.querySelectorAll<HTMLInputElement>('input[name="schedule"]:checked')).map(el => el.value),
+      schedule: selectedSchedules,
       q_reason: (form.querySelector<HTMLTextAreaElement>('textarea[name="q_reason"]'))?.value,
       q_goal: (form.querySelector<HTMLTextAreaElement>('textarea[name="q_goal"]'))?.value,
       q_level: Array.from(form.querySelectorAll<HTMLInputElement>('input[name="q_level"]:checked')).map(el => el.value),
@@ -208,7 +208,7 @@ export default function StudyForeignApplyPage() {
                         name="language"
                         value={lang}
                         required
-                        onChange={() => setSelectedLanguage(lang)}
+                        onChange={() => { setSelectedLanguage(lang); setSelectedSchedules([]) }}
                       />
                       <span className={styles.radioText}>{lang}</span>
                     </label>
@@ -217,7 +217,7 @@ export default function StudyForeignApplyPage() {
               </div>
               <div className={styles.formGroup}>
                 <label className={styles.formLabel}>가능한 일정 (모두 선택) *</label>
-                {selectedLanguage ? (
+                {currentStep === 2 && selectedLanguage ? (
                   <div className={styles.scheduleOptions}>
                     {scheduleDays
                       .filter(({ lang }) => lang === selectedLanguage)
@@ -230,7 +230,17 @@ export default function StudyForeignApplyPage() {
                               { label: `B반 (21:00-22:30)`, value: `${day}요일 B반 (21:00-22:30)` },
                             ].map(({ label, value }) => (
                               <label key={value} className={styles.radioLabel}>
-                                <input type="checkbox" name="schedule" value={value} />
+                                <input
+                                  type="checkbox"
+                                  name="schedule"
+                                  value={value}
+                                  checked={selectedSchedules.includes(value)}
+                                  onChange={(e) => {
+                                    setSelectedSchedules(prev =>
+                                      e.target.checked ? [...prev, value] : prev.filter(s => s !== value)
+                                    )
+                                  }}
+                                />
                                 <span className={styles.radioText}>{label}</span>
                               </label>
                             ))}
@@ -238,9 +248,9 @@ export default function StudyForeignApplyPage() {
                         </div>
                       ))}
                   </div>
-                ) : (
+                ) : !selectedLanguage ? (
                   <p className={styles.scheduleHint}>일본어 클래스는 월요일, 중국어 클래스는 화요일에 진행됩니다.</p>
-                )}
+                ) : null}
               </div>
               <div className={styles.formButtons}>
                 <button type="button" className={styles.btnPrevious} onClick={() => showStep(1)}>이전</button>
