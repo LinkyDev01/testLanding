@@ -263,6 +263,13 @@ function AllMeetupsList({
   const [dragOffset, setDragOffset] = useState(0)
   const sliderRef = useRef<HTMLDivElement>(null)
 
+  // 터치 방향 감지용 refs
+  const touchStartXRef = useRef(0)
+  const touchStartYRef = useRef(0)
+  const isDraggingRef = useRef(false)
+  const dragOffsetRef = useRef(0)
+  const directionRef = useRef<"horizontal" | "vertical" | null>(null)
+
   // 모바일 감지
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768)
@@ -277,6 +284,72 @@ function AllMeetupsList({
     setActiveIndex(0)
   }, [meetups])
 
+  // 모바일 터치: passive: false 네이티브 리스너로 방향 감지 후 가로만 차단
+  useEffect(() => {
+    const el = sliderRef.current
+    if (!el) return
+
+    const onTouchStart = (e: TouchEvent) => {
+      isDraggingRef.current = true
+      directionRef.current = null
+      touchStartXRef.current = e.touches[0].clientX
+      touchStartYRef.current = e.touches[0].clientY
+      dragOffsetRef.current = 0
+      setIsDragging(true)
+      setDragOffset(0)
+    }
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDraggingRef.current) return
+
+      const dx = e.touches[0].clientX - touchStartXRef.current
+      const dy = e.touches[0].clientY - touchStartYRef.current
+
+      if (!directionRef.current) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          const angle = Math.abs(Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI)
+          directionRef.current = angle < 30 ? "horizontal" : "vertical"
+        }
+        return
+      }
+
+      if (directionRef.current === "horizontal") {
+        e.preventDefault()
+        dragOffsetRef.current = dx
+        setDragOffset(dx)
+      }
+    }
+
+    const onTouchEnd = () => {
+      if (!isDraggingRef.current) return
+      isDraggingRef.current = false
+
+      if (directionRef.current === "horizontal") {
+        const offset = dragOffsetRef.current
+        if (offset > 80) {
+          setActiveIndex((prev) => (prev - 1 + meetups.length) % meetups.length)
+        } else if (offset < -80) {
+          setActiveIndex((prev) => (prev + 1) % meetups.length)
+        }
+      }
+
+      directionRef.current = null
+      dragOffsetRef.current = 0
+      setIsDragging(false)
+      setDragOffset(0)
+    }
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true })
+    el.addEventListener("touchmove", onTouchMove, { passive: false })
+    el.addEventListener("touchend", onTouchEnd, { passive: true })
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart)
+      el.removeEventListener("touchmove", onTouchMove)
+      el.removeEventListener("touchend", onTouchEnd)
+    }
+  }, [isMobile, meetups.length])
+
   const totalPages = Math.ceil(meetups.length / ITEMS_PER_PAGE)
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE
   const paginatedMeetups = meetups.slice(startIndex, startIndex + ITEMS_PER_PAGE)
@@ -290,28 +363,22 @@ function AllMeetupsList({
     setActiveIndex((prev) => (prev + 1) % meetups.length)
   }
 
-  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+  // 마우스 드래그 핸들러 (데스크탑)
+  const handleDragStart = (e: React.MouseEvent) => {
     setIsDragging(true)
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
-    setStartX(clientX)
+    setStartX(e.clientX)
   }
 
-  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+  const handleDragMove = (e: React.MouseEvent) => {
     if (!isDragging) return
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
-    const diff = clientX - startX
-    setDragOffset(diff)
+    setDragOffset(e.clientX - startX)
   }
 
   const handleDragEnd = () => {
     if (!isDragging) return
     setIsDragging(false)
-
-    if (dragOffset > 80) {
-      handlePrev()
-    } else if (dragOffset < -80) {
-      handleNext()
-    }
+    if (dragOffset > 80) handlePrev()
+    else if (dragOffset < -80) handleNext()
     setDragOffset(0)
   }
 
@@ -383,9 +450,6 @@ function AllMeetupsList({
           onMouseMove={handleDragMove}
           onMouseUp={handleDragEnd}
           onMouseLeave={handleDragEnd}
-          onTouchStart={handleDragStart}
-          onTouchMove={handleDragMove}
-          onTouchEnd={handleDragEnd}
         >
           <div className="relative h-full">
             {meetups.map((meetup, index) => (

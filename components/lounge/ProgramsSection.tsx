@@ -49,6 +49,13 @@ export function ProgramsSection() {
   const [isMobile, setIsMobile] = useState(false)
   const sliderRef = useRef<HTMLDivElement>(null)
 
+  // 터치 방향 감지용 refs (native listener에서 사용)
+  const touchStartXRef = useRef(0)
+  const touchStartYRef = useRef(0)
+  const isDraggingRef = useRef(false)
+  const dragOffsetRef = useRef(0)
+  const directionRef = useRef<"horizontal" | "vertical" | null>(null)
+
   const len = PROGRAMS.length
 
   useEffect(() => {
@@ -56,6 +63,75 @@ export function ProgramsSection() {
     checkMobile()
     window.addEventListener("resize", checkMobile)
     return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  // 모바일 터치: passive: false 네이티브 리스너로 방향 감지 후 가로만 차단
+  useEffect(() => {
+    const el = sliderRef.current
+    if (!el) return
+
+    const onTouchStart = (e: TouchEvent) => {
+      isDraggingRef.current = true
+      directionRef.current = null
+      touchStartXRef.current = e.touches[0].clientX
+      touchStartYRef.current = e.touches[0].clientY
+      dragOffsetRef.current = 0
+      setIsDragging(true)
+      setDragOffset(0)
+    }
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!isDraggingRef.current) return
+
+      const dx = e.touches[0].clientX - touchStartXRef.current
+      const dy = e.touches[0].clientY - touchStartYRef.current
+
+      // 8px 이상 움직였을 때 방향 확정
+      if (!directionRef.current) {
+        if (Math.abs(dx) > 8 || Math.abs(dy) > 8) {
+          // 수평에서 ±30° 이내만 가로로 인정
+          const angle = Math.abs(Math.atan2(Math.abs(dy), Math.abs(dx)) * 180 / Math.PI)
+          directionRef.current = angle < 30 ? "horizontal" : "vertical"
+        }
+        return
+      }
+
+      if (directionRef.current === "horizontal") {
+        e.preventDefault() // 가로 드래그 시 페이지 스크롤 차단
+        dragOffsetRef.current = dx
+        setDragOffset(dx)
+      }
+      // 세로 방향이면 브라우저 기본 스크롤에 맡김
+    }
+
+    const onTouchEnd = () => {
+      if (!isDraggingRef.current) return
+      isDraggingRef.current = false
+
+      if (directionRef.current === "horizontal") {
+        const offset = dragOffsetRef.current
+        if (offset > 80) {
+          setActiveIndex((prev) => (prev - 1 + PROGRAMS.length) % PROGRAMS.length)
+        } else if (offset < -80) {
+          setActiveIndex((prev) => (prev + 1) % PROGRAMS.length)
+        }
+      }
+
+      directionRef.current = null
+      dragOffsetRef.current = 0
+      setIsDragging(false)
+      setDragOffset(0)
+    }
+
+    el.addEventListener("touchstart", onTouchStart, { passive: true })
+    el.addEventListener("touchmove", onTouchMove, { passive: false })
+    el.addEventListener("touchend", onTouchEnd, { passive: true })
+
+    return () => {
+      el.removeEventListener("touchstart", onTouchStart)
+      el.removeEventListener("touchmove", onTouchMove)
+      el.removeEventListener("touchend", onTouchEnd)
+    }
   }, [])
 
   const handlePrev = () => {
@@ -66,18 +142,15 @@ export function ProgramsSection() {
     setActiveIndex((prev) => (prev + 1) % len)
   }
 
-  // 드래그 핸들러
-  const handleDragStart = (e: React.MouseEvent | React.TouchEvent) => {
+  // 마우스 드래그 핸들러 (데스크탑)
+  const handleDragStart = (e: React.MouseEvent) => {
     setIsDragging(true)
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
-    setStartX(clientX)
+    setStartX(e.clientX)
   }
 
-  const handleDragMove = (e: React.MouseEvent | React.TouchEvent) => {
+  const handleDragMove = (e: React.MouseEvent) => {
     if (!isDragging) return
-    const clientX = "touches" in e ? e.touches[0].clientX : e.clientX
-    const diff = clientX - startX
-    setDragOffset(diff)
+    setDragOffset(e.clientX - startX)
   }
 
   const handleDragEnd = () => {
@@ -156,9 +229,6 @@ export function ProgramsSection() {
             onMouseMove={handleDragMove}
             onMouseUp={handleDragEnd}
             onMouseLeave={handleDragEnd}
-            onTouchStart={handleDragStart}
-            onTouchMove={handleDragMove}
-            onTouchEnd={handleDragEnd}
           >
             {/* Cards */}
             <div className="relative h-full">
