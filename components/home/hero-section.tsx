@@ -84,7 +84,7 @@ export function HeroSection() {
                 <div className="aspect-[4/5] rounded-2xl overflow-hidden group">
                   <img
                     src="/main/main02.jpeg"
-                    alt="링키 라운지 공간"
+                    alt="링키라운지 공간"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
                 </div>

@@ -25,7 +25,7 @@ export function ServicesSection() {
               <div className="aspect-video overflow-hidden">
                 <img
                   src="/linky-lounge/gallary/e.jpg"
-                  alt="링키 라운지"
+                  alt="링키라운지"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
@@ -35,7 +35,7 @@ export function ServicesSection() {
                     <Users className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">링키 라운지</h3>
+                    <h3 className="text-xl font-bold">링키라운지</h3>
                     <p className="text-sm text-muted-foreground">Linky Lounge</p>
                   </div>
                 </div>

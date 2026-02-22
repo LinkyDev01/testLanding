@@ -16,7 +16,7 @@ export function GoalsSection() {
                 사람을 만나는 이유가 있는 공간
               </h2>
               <p className="text-white/80 leading-relaxed text-lg">
-                링키 라운지는 단순히 공간을 제공하는 것이 아닌, 사람들이 서로
+                링키라운지는 단순히 공간을 제공하는 것이 아닌, 사람들이 서로
                 연결되고 의미 있는 경험을 만들어갈 수 있는 커뮤니티를 구축합니다.
               </p>
             </div>

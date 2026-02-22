@@ -133,10 +133,18 @@ export default function BookClubApplyPage() {
   }
 
   const scheduleOptions = [
-    { label: "목요일 A반", dates: "3/6, 3/20, 4/3, 4/17" },
-    { label: "목요일 B반", dates: "3/12, 3/26, 4/9, 4/23" },
-    { label: "일요일 A반", dates: "3/8, 3/22, 4/5, 4/19" },
-    { label: "일요일 B반", dates: "3/15, 3/29, 4/12, 4/26" },
+    {
+      label: "목요일",
+      time: "19:30 – 22:30",
+      datesA: "3/12, 3/26, 4/9, 4/23",
+      datesB: "3/19, 4/2, 4/16, 4/30",
+    },
+    {
+      label: "일요일",
+      time: "오전 10:30–13:30 / 오후 14:30–17:30",
+      datesA: "3/8, 3/22, 4/5, 4/19",
+      datesB: "3/15, 3/29, 4/12, 4/26",
+    },
   ]
 
   const [howFoundEtc, setHowFoundEtc] = useState(false)
@@ -277,31 +285,30 @@ export default function BookClubApplyPage() {
                 </div>
               </div>
               <div className={styles.formGroup}>
-                <label className={styles.formLabel}>희망하는 모임 시간대를 선택해주세요. *</label>
-                <div className={styles.formNote} style={{ marginBottom: 12 }}>복수 선택 가능합니다.</div>
+                <label className={styles.formLabel}>희망하는 모임 요일을 선택해주세요. *</label>
+                <div className={styles.formNote} style={{ marginBottom: 12 }}>A/B반 배정은 운영진이 진행합니다. 복수 선택 가능합니다.</div>
                 <div className={styles.scheduleOptions}>
-                  {scheduleOptions.map(({ label, dates }) => {
-                    const value = `${label} (${dates})`
-                    return (
-                      <label key={value} className={styles.scheduleLabel}>
-                        <input
-                          type="checkbox"
-                          name="schedule"
-                          value={value}
-                          checked={selectedSchedules.includes(value)}
-                          onChange={(e) => {
-                            setSelectedSchedules(prev =>
-                              e.target.checked ? [...prev, value] : prev.filter(s => s !== value)
-                            )
-                          }}
-                        />
-                        <div className={styles.scheduleLabelContent}>
-                          <span className={styles.scheduleDay}>{label}</span>
-                          <span className={styles.scheduleDates}>{dates}</span>
-                        </div>
-                      </label>
-                    )
-                  })}
+                  {scheduleOptions.map(({ label, time, datesA, datesB }) => (
+                    <label key={label} className={styles.scheduleLabel}>
+                      <input
+                        type="checkbox"
+                        name="schedule"
+                        value={label}
+                        checked={selectedSchedules.includes(label)}
+                        onChange={(e) => {
+                          setSelectedSchedules(prev =>
+                            e.target.checked ? [...prev, label] : prev.filter(s => s !== label)
+                          )
+                        }}
+                      />
+                      <div className={styles.scheduleLabelContent}>
+                        <span className={styles.scheduleDay}>{label}</span>
+                        <span className={styles.scheduleTime}>{time}</span>
+                        <span className={styles.scheduleDates}>A반 {datesA}</span>
+                        <span className={styles.scheduleDates}>B반 {datesB}</span>
+                      </div>
+                    </label>
+                  ))}
                 </div>
               </div>
               <div className={styles.formButtons}>

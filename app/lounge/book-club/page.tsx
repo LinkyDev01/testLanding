@@ -4,7 +4,10 @@ import styles from "./page.module.css"
 import { ApplyButton } from "./apply-button"
 
 export const metadata: Metadata = {
-  title: "Linky Study",
+  title: "레이지데이 북클럽",
+  openGraph: {
+    images: ["/linky-lounge/book-club/bookclub-og-image.png"],
+  },
 }
 
 export default function StudyForeignPage() {

@@ -363,10 +363,16 @@
     color: var(--accent-color);
 }
 
-.scheduleDates {
+.scheduleTime {
     font-size: 13px;
+    color: var(--accent-color);
+    font-weight: 400;
+}
+
+.scheduleDates {
+    font-size: 12px;
     color: var(--text-secondary);
-    font-weight: 300;
+    font-weight: 400;
 }
 
 /* Label Row */

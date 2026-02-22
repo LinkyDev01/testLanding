@@ -4,7 +4,7 @@ import styles from "./page.module.css"
 import { ApplyButton } from "./apply-button"
 
 export const metadata: Metadata = {
-  title: "Linky Study",
+  title: "링키라운지 외국어 회화",
 }
 
 export default function StudyForeignPage() {

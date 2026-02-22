@@ -43,7 +43,7 @@ export const LOUNGE_GOALS: Feature[] = [
 ]
 
 export const SPACE_INFO: SpaceInfo = {
-  name: "링키 라운지",
+  name: "링키라운지",
   capacity: "5-20명",
   description:
     "소규모 파티부터 네트워킹 모임까지, 다양한 목적에 맞게 활용할 수 있는 유연한 공간입니다.",

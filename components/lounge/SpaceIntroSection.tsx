@@ -62,7 +62,7 @@ export function SpaceIntroSection() {
       <div className="absolute bg-foreground h-[65vh] inset-0 overflow-hidden rounded-b-[3rem] sm:rounded-b-[4rem] md:rounded-b-[5rem]">
         {/* <Image
           src="/linky-lounge/gallary/intro.jpg"
-          alt="링키 라운지 공간"
+          alt="링키라운지 공간"
           fill
           className="object-cover saturate-50 brightness-75"
           priority

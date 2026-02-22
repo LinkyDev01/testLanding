@@ -42,7 +42,7 @@ export function Footer() {
             <ul className="space-y-3">
               <li>
                 <Link href="/lounge" className="text-background/70 hover:text-background transition-colors">
-                  링키 라운지
+                  링키라운지
                 </Link>
               </li>
               <li>

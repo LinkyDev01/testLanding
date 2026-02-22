@@ -11,12 +11,12 @@ export function LoungeCTASection() {
     <section className="py-24">
       <AnimatedSection className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 className="text-3xl sm:text-4xl font-bold mb-6 text-balance">
-          링키 라운지에서
+          링키라운지에서
           <br />
           특별한 만남을 시작하세요
         </h2>
         <p className="text-muted-foreground mb-8">
-          공간 예약부터 프로그램 참여까지, 링키 라운지가 함께합니다.
+          공간 예약부터 프로그램 참여까지, 링키라운지가 함께합니다.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <a href="https://naver.me/FLebi2a9" target="_blank" rel="noopener noreferrer">

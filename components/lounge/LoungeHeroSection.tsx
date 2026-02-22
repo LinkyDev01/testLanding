@@ -34,7 +34,7 @@ export function LoungeHeroSection() {
 
             <AnimatedSection delay={200}>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                링키 라운지는 단순한 파티룸이 아닌, '목적 있는 만남'이 자연스럽게
+                링키라운지는 단순한 파티룸이 아닌, '목적 있는 만남'이 자연스럽게
                 이루어지는 커뮤니티 라운지입니다. 사람들이 "또 오고 싶은 공간",
                 "사람을 만나는 이유가 있는 공간"을 만드는 것이 우리의 목표입니다.
               </p>
@@ -57,7 +57,7 @@ export function LoungeHeroSection() {
               <div className="aspect-[4/5] rounded-3xl overflow-hidden group">
                 <img
                   src="/landing02.png"
-                  alt="링키 라운지 메인"
+                  alt="링키라운지 메인"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
