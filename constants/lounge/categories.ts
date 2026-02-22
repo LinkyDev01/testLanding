@@ -25,4 +25,10 @@ export const CATEGORY_STYLES: Record<MeetupCategory, CategoryStyle> = {
     label: "감튀소개팅",
     dot: "bg-pink-500",
   },
+  bookclub: {
+    bg: "bg-amber-100",
+    text: "text-amber-800",
+    label: "독서모임",
+    dot: "bg-amber-700",
+  },
 }

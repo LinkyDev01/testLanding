@@ -38,6 +38,14 @@ const PROGRAMS = [
     schedule: "매주 금 저녁 진행",
     description: "짭짤한 감튀와 함께 찾는 달콤한 인연",
     link: "https://tally.so/r/lbrdkN",
+  },
+  {
+    id: 5,
+    title: "레이지데이 북클럽",
+    image: "/linky-lounge/book-club.png",
+    schedule: "",
+    description: "책과 함께 시작하는 만남",
+    link: "/lounge/book-club",
   },  
 ]
 
