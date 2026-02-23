@@ -103,18 +103,18 @@ export default function BookClubApplyPage() {
 
           {/* 일정 공지 */}
           <div className={styles.scheduleNotice}>
-            <div className={styles.scheduleNoticeTitle}>📅 모임 일정</div>
+            <p className={styles.scheduleNoticeTitle}>[레이지데이 북클럽]</p>
             <div className={styles.scheduleNoticeGrid}>
               {scheduleInfo.map(({ label, time, datesA, datesB }) => (
                 <div key={label} className={styles.scheduleNoticeItem}>
-                  <div className={styles.scheduleNoticeDay}>{label}</div>
-                  <div className={styles.scheduleNoticeTime}>{time}</div>
-                  <div className={styles.scheduleNoticeDates}>A반 {datesA}</div>
-                  <div className={styles.scheduleNoticeDates}>B반 {datesB}</div>
+                  <span className={styles.scheduleNoticeDay}>{label}</span>
+                  <span className={styles.scheduleNoticeTime}>{time}</span>
+                  <span className={styles.scheduleNoticeDates}>A반 {datesA}</span>
+                  <span className={styles.scheduleNoticeDates}>B반 {datesB}</span>
                 </div>
               ))}
             </div>
-            <div className={styles.scheduleNoticeNote}>A/B반 배정은 운영진이 진행합니다.</div>
+            <p className={styles.scheduleNoticeNote}>A/B반 배정은 운영진이 진행합니다.</p>
           </div>
 
           <form className={styles.applicationForm} id="applicationForm" onSubmit={handleSubmit}>
