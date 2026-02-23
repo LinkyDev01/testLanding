@@ -114,7 +114,7 @@ export default function BookClubApplyPage() {
                 </div>
               ))}
             </div>
-            <p className={styles.scheduleNoticeNote}>A/B반 배정은 운영진이 진행합니다.</p>
+            <p className={styles.scheduleNoticeNote}>인터뷰 진행 후, 희망 일정을 고려하여 반배정을 진행합니다.</p>
           </div>
 
           <form className={styles.applicationForm} id="applicationForm" onSubmit={handleSubmit}>
