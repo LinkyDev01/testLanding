@@ -31,14 +31,14 @@ const PROGRAMS = [
     description: "디지털 디톡스, 나의 내면에 접속하는 시간",
     link: "https://focus-night.vercel.app/",
   },
-  {
-    id: 4,
-    title: "감튀소개팅",
-    image: "/linky-lounge/potato_meeting.png",
-    schedule: "매주 금 저녁 진행",
-    description: "짭짤한 감튀와 함께 찾는 달콤한 인연",
-    link: "https://tally.so/r/lbrdkN",
-  },
+  // {
+  //   id: 4,
+  //   title: "감튀소개팅",
+  //   image: "/linky-lounge/potato_meeting.png",
+  //   schedule: "매주 금 저녁 진행",
+  //   description: "짭짤한 감튀와 함께 찾는 달콤한 인연",
+  //   link: "https://tally.so/r/lbrdkN",
+  // },
   {
     id: 5,
     title: "레이지데이 북클럽",

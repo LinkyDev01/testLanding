@@ -14,6 +14,12 @@
     padding: 0 30px;
 }
 
+.formContainer {
+    max-width: 520px;
+    margin: 0 auto;
+    width: 100%;
+}
+
 .application {
     background: var(--bg-color);
     padding: 80px 0;
@@ -172,6 +178,13 @@
     line-height: 1.6;
 }
 
+.optionalTag {
+    font-size: 11px;
+    font-weight: 400;
+    color: var(--text-secondary);
+    margin-left: 4px;
+}
+
 .formInput {
     width: 100%;
     padding: 16px 20px;
@@ -308,7 +321,72 @@
     }
 }
 
-/* Schedule */
+/* Schedule Notice */
+.scheduleNotice {
+    background: var(--light-accent);
+    border: 1.5px solid #e8d5c0;
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 32px;
+}
+
+.scheduleNoticeTitle {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--accent-color);
+    margin-bottom: 14px;
+    letter-spacing: 0.3px;
+}
+
+.scheduleNoticeGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.scheduleNoticeItem {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8d5c0;
+}
+
+.scheduleNoticeItem:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.scheduleNoticeDay {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-primary);
+    min-width: 80px;
+}
+
+.scheduleNoticeTime {
+    font-size: 13px;
+    color: var(--accent-color);
+    font-weight: 500;
+}
+
+.scheduleNoticeDates {
+    font-size: 12px;
+    color: var(--text-secondary);
+    width: 100%;
+    padding-left: 2px;
+}
+
+.scheduleNoticeNote {
+    font-size: 11px;
+    color: var(--text-secondary);
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid #e8d5c0;
+}
+
+/* Schedule (legacy) */
 .scheduleOptions {
     display: flex;
     flex-direction: column;
