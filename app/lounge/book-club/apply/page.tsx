@@ -83,7 +83,7 @@ export default function BookClubApplyPage() {
       trackStandard("CompleteRegistration", { content_name: "독서모임_신청완료" })
       trackStandard("Lead", { content_name: "독서모임_신청완료" })
       alert("신청이 완료되었습니다!\n\n운영진 검토 후 개별 연락드리겠습니다.")
-      window.location.replace("https://buy.tosspayments.com/products/ihBnIOCGdY?shopId=prreBmgHJwPY")
+      window.location.replace("/lounge")
     } catch {
       alert("전송 중 오류가 발생했습니다.")
     } finally {
