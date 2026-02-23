@@ -72,7 +72,7 @@ export default function BookClubApplyPage() {
 
     try {
       await fetch(
-        "https://script.google.com/macros/s/AKfycbz_vksT-709F6vbiZbET1z5tnPW-TxF07VnVV2pUn9UA2U-Ji709NlwRzDllIshciU/exec",
+        "https://script.google.com/macros/s/AKfycbzw9OJENbONvthOvyUXVjnwA_B9fTcha44tcXP962arL7FkasW-KOINLYy2l3wuq7s/exec",
         {
           method: "POST",
           mode: "no-cors",
