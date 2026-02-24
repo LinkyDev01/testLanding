@@ -87,9 +87,9 @@ export const EXTENDED_FEATURES: Feature[] = [
 ]
 
 export const PLATFORM_STATS: StatItem[] = [
-  { value: "200+", label: "파트너 공간" },
-  { value: "1,000+", label: "등록 긱워커" },
-  { value: "5,000+", label: "완료 서비스" },
+  { value: "30+", label: "파트너 공간" },
+  { value: "100+", label: "등록 긱워커" },
+  { value: "500+", label: "완료 서비스" },
 ]
 
 export const BUSINESS_PROBLEMS = [
