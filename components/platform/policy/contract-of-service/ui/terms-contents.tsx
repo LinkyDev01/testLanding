@@ -250,8 +250,8 @@ export function TermsContents() {
               <Highlight>
                 <h4 className="font-semibold mb-2">【 긴급 옵션 환불 규정 】</h4>
                 <ul className="list-disc list-inside space-y-1">
-                  <li><strong>24시간 내 긴급 요청 (5,000원):</strong> 상기 환불 규정 동일 적용</li>
-                  <li><strong>4시간 내 초긴급 요청 (10,000원):</strong> 상기 환불 규정 동일 적용</li>
+                  <li><strong>24시간 내 긴급 요청 (10,000원):</strong> 상기 환불 규정 동일 적용</li>
+                  <li><strong>4시간 내 초긴급 요청 (20,000원):</strong> 상기 환불 규정 동일 적용</li>
                 </ul>
               </Highlight>
 

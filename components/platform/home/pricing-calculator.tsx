@@ -40,9 +40,9 @@ export const PricingCalculator = () => {
   };
 
   const additionalOptions = [
-    { id: 'toilet_cleaning', name: '화장실 정리', price: 2000 },
-    { id: 'urgent_24h', name: '24시간 내 요청', price: 5000 },
-    { id: 'urgent_4h', name: '4시간 내 긴급 요청', price: 10000 },
+    { id: 'toilet_cleaning', name: '화장실 정리', price: 3000 },
+    { id: 'urgent_24h', name: '24시간 내 요청', price: 10000 },
+    { id: 'urgent_4h', name: '4시간 내 긴급 요청', price: 20000 },
   ];
 
   const calculateSubtotal = () => {
