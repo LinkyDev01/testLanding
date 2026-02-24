@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/src/shared/ui/card';
 import { Button } from '@/src/shared/ui/button';
 import { Input } from '@/src/shared/ui/input';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/src/shared/ui/select';
 import { Checkbox } from '@/src/shared/ui/checkbox';
 
 type PackageType = 'basic' | 'standard' | 'premium';
@@ -28,69 +27,62 @@ export const PricingCalculator = () => {
     customRequests: [],
   });
 
-  const packagePrices = {
+  const packagePrices: Record<PackageType, number> = {
     basic: 12000,
     standard: 22000,
     premium: 35000,
   };
 
-  const areaMultipliers = {
+  const areaMultipliers: Record<PackageType, number> = {
     basic: 200,
     standard: 500,
     premium: 1000,
   };
 
   const additionalOptions = [
-    { id: 'floor_cleaning', name: '바닥 청소기', price: 2000 },
-    { id: 'trash_separation', name: '분리수거', price: 3000 },
-    { id: 'dishes', name: '설거지', price: 3000 },
     { id: 'toilet_cleaning', name: '화장실 정리', price: 2000 },
-    { id: 'mop_cleaning', name: '바닥 물걸레', price: 2000 },
     { id: 'urgent_24h', name: '24시간 내 요청', price: 5000 },
     { id: 'urgent_4h', name: '4시간 내 긴급 요청', price: 10000 },
   ];
 
-  const calculatePrice = () => {
-    let totalPrice = packagePrices[pricingData.packageType];
-    
-    // Area size additional cost
+  const calculateSubtotal = () => {
+    let total = packagePrices[pricingData.packageType];
+
     const areaExtra = pricingData.areaSize - 10;
     if (areaExtra > 0) {
-      totalPrice += areaExtra * areaMultipliers[pricingData.packageType];
+      total += areaExtra * areaMultipliers[pricingData.packageType];
     }
-    
-    // Additional options
-    const selectedOptions = additionalOptions.filter(option => 
+
+    const selectedOptions = additionalOptions.filter(option =>
       pricingData.additionalOptions.includes(option.id)
     );
-    totalPrice += selectedOptions.reduce((sum, option) => sum + option.price, 0);
-    
-    // Custom requests
-    totalPrice += pricingData.customRequests.reduce((sum, request) => sum + request.price, 0);
-    
-    return totalPrice;
+    total += selectedOptions.reduce((sum, option) => sum + option.price, 0);
+
+    total += pricingData.customRequests.reduce((sum, request) => sum + request.price, 0);
+
+    return total;
   };
 
   const addCustomRequest = () => {
     setPricingData(prev => ({
       ...prev,
-      customRequests: [...prev.customRequests, { name: '', price: 0 }]
+      customRequests: [...prev.customRequests, { name: '', price: 0 }],
     }));
   };
 
   const updateCustomRequest = (index: number, field: 'name' | 'price', value: string | number) => {
     setPricingData(prev => ({
       ...prev,
-      customRequests: prev.customRequests.map((request, i) => 
+      customRequests: prev.customRequests.map((request, i) =>
         i === index ? { ...request, [field]: value } : request
-      )
+      ),
     }));
   };
 
   const removeCustomRequest = (index: number) => {
     setPricingData(prev => ({
       ...prev,
-      customRequests: prev.customRequests.filter((_, i) => i !== index)
+      customRequests: prev.customRequests.filter((_, i) => i !== index),
     }));
   };
 
@@ -99,23 +91,21 @@ export const PricingCalculator = () => {
       ...prev,
       additionalOptions: prev.additionalOptions.includes(optionId)
         ? prev.additionalOptions.filter(id => id !== optionId)
-        : [...prev.additionalOptions, optionId]
+        : [...prev.additionalOptions, optionId],
     }));
   };
 
   const nextStep = () => {
-    if (currentStep < 4) {
-      setCurrentStep(currentStep + 1);
-    }
+    if (currentStep < 4) setCurrentStep(currentStep + 1);
   };
 
   const prevStep = () => {
-    if (currentStep > 1) {
-      setCurrentStep(currentStep - 1);
-    }
+    if (currentStep > 1) setCurrentStep(currentStep - 1);
   };
 
-  const totalPrice = calculatePrice();
+  const subtotal = calculateSubtotal();
+  const vatAmount = Math.round(subtotal * 0.1);
+  const totalWithVat = subtotal + vatAmount;
 
   return (
     <div className="max-w-4xl mx-auto">
@@ -123,17 +113,15 @@ export const PricingCalculator = () => {
       <div className="flex items-center justify-center mb-8">
         {[1, 2, 3, 4].map((step) => (
           <div key={step} className="flex items-center">
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
-              step <= currentStep 
-                ? 'bg-blue-600 text-white' 
-                : 'bg-gray-200 text-gray-600'
-            }`}>
+            <div
+              className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-semibold ${
+                step <= currentStep ? 'bg-blue-600 text-white' : 'bg-gray-200 text-gray-600'
+              }`}
+            >
               {step}
             </div>
             {step < 4 && (
-              <div className={`w-12 h-1 mx-2 ${
-                step < currentStep ? 'bg-blue-600' : 'bg-gray-200'
-              }`} />
+              <div className={`w-12 h-1 mx-2 ${step < currentStep ? 'bg-blue-600' : 'bg-gray-200'}`} />
             )}
           </div>
         ))}
@@ -146,7 +134,7 @@ export const PricingCalculator = () => {
             <CardTitle>서비스 패키지 선택</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            {Object.entries(packagePrices).map(([type, price]) => (
+            {(Object.entries(packagePrices) as [PackageType, number][]).map(([type, price]) => (
               <div
                 key={type}
                 className={`p-4 border-2 rounded-lg cursor-pointer transition-all ${
@@ -154,17 +142,10 @@ export const PricingCalculator = () => {
                     ? 'border-blue-500 bg-blue-50'
                     : 'border-gray-200 hover:border-gray-300'
                 }`}
-                onClick={() => setPricingData(prev => ({ ...prev, packageType: type as PackageType }))}
+                onClick={() => setPricingData(prev => ({ ...prev, packageType: type }))}
               >
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h3 className="font-semibold text-lg capitalize">{type} 패키지</h3>
-                    <p className="text-gray-600 mt-1">
-                      {type === 'basic' && '간단한 정리 (15-30분 소요)'}
-                      {type === 'standard' && '파티룸 정리 (1-2시간 소요)'}
-                      {type === 'premium' && '토탈 케어 (2-4시간 소요)'}
-                    </p>
-                  </div>
+                <div className="flex justify-between items-center">
+                  <h3 className="font-semibold text-lg capitalize">{type} 패키지</h3>
                   <div className="text-2xl font-bold text-blue-600">
                     ₩{price.toLocaleString()}
                   </div>
@@ -184,14 +165,16 @@ export const PricingCalculator = () => {
           <CardContent className="space-y-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
-                연면적: {pricingData.areaSize}평
+                청소 실평수: {pricingData.areaSize}평
               </label>
               <input
                 type="range"
                 min="10"
                 max="50"
                 value={pricingData.areaSize}
-                onChange={(e) => setPricingData(prev => ({ ...prev, areaSize: parseInt(e.target.value) }))}
+                onChange={(e) =>
+                  setPricingData(prev => ({ ...prev, areaSize: parseInt(e.target.value) }))
+                }
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
               />
               <div className="flex justify-between text-sm text-gray-500 mt-1">
@@ -200,11 +183,11 @@ export const PricingCalculator = () => {
                 <span>50평</span>
               </div>
             </div>
-            
+
             {pricingData.areaSize > 10 && (
               <div className="p-4 bg-blue-50 rounded-lg">
                 <p className="text-sm text-blue-800">
-                  {pricingData.areaSize - 10}평 추가 × ₩{areaMultipliers[pricingData.packageType].toLocaleString()} = 
+                  {pricingData.areaSize - 10}평 추가 × ₩{areaMultipliers[pricingData.packageType].toLocaleString()} ={' '}
                   ₩{((pricingData.areaSize - 10) * areaMultipliers[pricingData.packageType]).toLocaleString()}
                 </p>
               </div>
@@ -253,13 +236,11 @@ export const PricingCalculator = () => {
                     type="number"
                     placeholder="가격"
                     value={request.price || ''}
-                    onChange={(e) => updateCustomRequest(index, 'price', parseInt(e.target.value) || 0)}
+                    onChange={(e) =>
+                      updateCustomRequest(index, 'price', parseInt(e.target.value) || 0)
+                    }
                   />
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => removeCustomRequest(index)}
-                  >
+                  <Button variant="outline" size="sm" onClick={() => removeCustomRequest(index)}>
                     삭제
                   </Button>
                 </div>
@@ -284,14 +265,16 @@ export const PricingCalculator = () => {
                 <span>패키지 ({pricingData.packageType})</span>
                 <span>₩{packagePrices[pricingData.packageType].toLocaleString()}</span>
               </div>
-              
+
               {pricingData.areaSize > 10 && (
                 <div className="flex justify-between">
-                  <span>평수 추가 ({pricingData.areaSize - 10}평)</span>
-                  <span>₩{((pricingData.areaSize - 10) * areaMultipliers[pricingData.packageType]).toLocaleString()}</span>
+                  <span>청소 실평수 추가 ({pricingData.areaSize - 10}평)</span>
+                  <span>
+                    ₩{((pricingData.areaSize - 10) * areaMultipliers[pricingData.packageType]).toLocaleString()}
+                  </span>
                 </div>
               )}
-              
+
               {pricingData.additionalOptions.map((optionId) => {
                 const option = additionalOptions.find(opt => opt.id === optionId);
                 return option ? (
@@ -301,7 +284,7 @@ export const PricingCalculator = () => {
                   </div>
                 ) : null;
               })}
-              
+
               {pricingData.customRequests
                 .filter(req => req.name && req.price > 0)
                 .map((request, index) => (
@@ -310,10 +293,18 @@ export const PricingCalculator = () => {
                     <span>₩{request.price.toLocaleString()}</span>
                   </div>
                 ))}
-              
+
+              <div className="border-t pt-2 flex justify-between text-gray-700">
+                <span>소계</span>
+                <span>₩{subtotal.toLocaleString()}</span>
+              </div>
+              <div className="flex justify-between text-gray-500 text-sm">
+                <span>VAT (10%)</span>
+                <span>₩{vatAmount.toLocaleString()}</span>
+              </div>
               <div className="border-t pt-2 flex justify-between font-bold text-lg">
-                <span>총 예상 금액</span>
-                <span className="text-blue-600">₩{totalPrice.toLocaleString()}</span>
+                <span>최종 예상 금액 (VAT 포함)</span>
+                <span className="text-blue-600">₩{totalWithVat.toLocaleString()}</span>
               </div>
             </div>
           </CardContent>
@@ -321,30 +312,20 @@ export const PricingCalculator = () => {
       )}
 
       {/* Navigation */}
-      <div className="flex justify-between mt-6">
-        <Button
-          variant="outline"
-          onClick={prevStep}
-          disabled={currentStep === 1}
-        >
+      <div className="flex justify-between items-center mt-6">
+        <Button variant="outline" onClick={prevStep} disabled={currentStep === 1}>
           이전
         </Button>
-        
+
         <div className="text-center">
-          <div className="text-2xl font-bold text-blue-600">
-            ₩{totalPrice.toLocaleString()}
-          </div>
-          <div className="text-sm text-gray-600">예상 금액</div>
+          <div className="text-2xl font-bold text-blue-600">₩{subtotal.toLocaleString()}</div>
+          <div className="text-sm text-gray-500">예상 금액 (VAT 별도)</div>
         </div>
-        
+
         {currentStep < 4 ? (
-          <Button onClick={nextStep}>
-            다음
-          </Button>
+          <Button onClick={nextStep}>다음</Button>
         ) : (
-          <Button className="bg-green-600 hover:bg-green-700">
-            견적서 다운로드
-          </Button>
+          <div className="w-18" />
         )}
       </div>
     </div>

@@ -16,7 +16,7 @@ export function PlatformCTASection() {
           공간 운영을 더 쉽게
         </h2>
         <p className="text-muted-foreground mb-8 break-keep">
-          공간 대여 업자든 긱워커든, 링키 플랫폼이 연결해 드립니다.
+          공간 운영자든 파트너든, 링키 플랫폼이 연결해 드립니다.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <CTAButton size="lg" ctaVariant="mint">

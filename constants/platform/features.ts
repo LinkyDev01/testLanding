@@ -49,7 +49,7 @@ export const HOW_IT_WORKS: ProcessStep[] = [
   {
     step: "01",
     title: "청소 요청",
-    description: "공간 대여 업자가 예약 일정에 맞춰 청소를 요청합니다",
+    description: "공간 운영자가 예약 일정에 맞춰 청소를 요청합니다",
   },
   {
     step: "02",

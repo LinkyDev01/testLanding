@@ -15,9 +15,9 @@ interface QuoteModalProps {
 }
 
 const packageNames: Record<string, string> = {
-  basic: "Basic - 청소 뉴비",
-  standard: "Standard - 청소 중급자",
-  premium: "Premium - 청소 마스터",
+  basic: "Basic",
+  standard: "Standard",
+  premium: "Premium",
 }
 
 function generateQuoteNumber() {

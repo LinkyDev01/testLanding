@@ -25,7 +25,7 @@ export function SolutionSection() {
                 <div className="w-10 h-10 rounded-lg bg-mint flex items-center justify-center">
                   <Building className="w-5 h-5 text-white" />
                 </div>
-                <h3 className="text-xl font-bold break-keep">공간 대여 업자를 위한</h3>
+                <h3 className="text-xl font-bold break-keep">공간 운영자를 위한</h3>
               </div>
               <div className="space-y-6">
                 {FOR_BUSINESSES.map((feature, index) => (

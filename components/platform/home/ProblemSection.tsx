@@ -24,7 +24,7 @@ export function ProblemSection() {
               <div className="w-12 h-12 rounded-xl bg-mint-light flex items-center justify-center mb-6">
                 <Building className="w-6 h-6 text-mint" />
               </div>
-              <h3 className="text-xl font-bold mb-4 break-keep">공간 대여 업자의 고민</h3>
+              <h3 className="text-xl font-bold mb-4 break-keep">공간 운영자의 고민</h3>
               <ul className="space-y-4">
                 {BUSINESS_PROBLEMS.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 group">

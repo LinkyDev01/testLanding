@@ -4,124 +4,82 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Switch } from "@/components/ui/switch"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { ArrowLeft, ArrowRight, Calculator, Check, Clock, Sparkles, AlertCircle, FileText } from "lucide-react"
+import { ArrowLeft, ArrowRight, Calculator, Check, Sparkles, AlertCircle } from "lucide-react"
 import Link from "next/link"
 import { AnimatedSection } from "@/components/animated-section"
-import { QuoteModal } from "@/components/platform/quote/quote-modal"
-import { useRouter } from "next/navigation";
 
 type PackageType = "basic" | "standard" | "premium"
 
 interface PricingData {
-  estimateName: string
   packageType: PackageType
   areaSize: number
   additionalOptions: string[]
   customRequests: Array<{ name: string; price: number }>
-  notes: string
-  isDefault: boolean
 }
 
-const packages = {
+type Package = {
+  name: string
+  price: number
+  features: string[]
+  areaMultiplier: number
+  popular?: boolean
+}
+
+const packages: Record<PackageType, Package> = {
   basic: {
     name: "Basic",
     price: 12000,
-    description: "청소 뉴비",
     features: ["청소 매뉴얼 제공", "소품 원위치", "테이블 정리 및 닦기", "바닥 쓰레기 정리", "일회용품 보충"],
-    time: 30, // 분
     areaMultiplier: 200,
   },
   standard: {
     name: "Standard",
     price: 18000,
-    description: "청소 중급자",
     features: ["Basic 모든 기능", "바닥 청소기", "설거지 점검(식기 오염 제거)", "화장실 정리", "분리수거"],
-    time: 60,
     areaMultiplier: 500,
     popular: true,
   },
   premium: {
     name: "Premium",
     price: 35000,
-    description: "청소 마스터",
     features: ["Standard 모든 기능", "어질러진 공간 대청소"],
-    time: 120,
     areaMultiplier: 1000,
   },
 }
 
 const additionalOptions = [
-  { id: "floor_cleaning", name: "바닥 청소기", price: 2000, time: 10 },
-  { id: "trash_separation", name: "분리수거", price: 3000, time: 15 },
-  { id: "dishes", name: "설거지", price: 3000, time: 20 },
-  { id: "toilet_cleaning", name: "화장실 정리", price: 2000, time: 15 },
-  { id: "mop_cleaning", name: "바닥 물걸레", price: 2000, time: 15 },
-  { id: "window_cleaning", name: "창문 청소", price: 5000, time: 20 },
-  { id: "bedding_change", name: "침구 교체", price: 5000, time: 15 },
-  { id: "urgent_24h", name: "24시간 내 요청", price: 5000, time: 0 },
-  { id: "urgent_4h", name: "4시간 내 긴급 요청", price: 10000, time: 0 },
+  { id: "toilet_cleaning", name: "화장실 정리", price: 2000 },
+  { id: "urgent_24h", name: "24시간 내 요청", price: 5000 },
+  { id: "urgent_4h", name: "4시간 내 긴급 요청", price: 10000 },
 ]
 
 export default function CalculatorPage() {
   const [currentStep, setCurrentStep] = useState(1)
-  const [isQuoteModalOpen, setIsQuoteModalOpen] = useState(false)
   const [pricingData, setPricingData] = useState<PricingData>({
-    estimateName: "",
     packageType: "standard",
     areaSize: 10,
     additionalOptions: [],
     customRequests: [],
-    notes: "",
-    isDefault: false,
   })
 
-  const router = useRouter();
+  const calculateSubtotal = () => {
+    let total = packages[pricingData.packageType].price
 
-  const calculatePrice = () => {
-    let totalPrice = packages[pricingData.packageType].price
-
-    // 평수 추가 비용 (10평 초과 시)
     const areaExtra = pricingData.areaSize - 10
     if (areaExtra > 0) {
-      totalPrice += areaExtra * packages[pricingData.packageType].areaMultiplier
+      total += areaExtra * packages[pricingData.packageType].areaMultiplier
     }
 
-    // 추가 옵션
-    const selectedOptions = additionalOptions.filter((option) => pricingData.additionalOptions.includes(option.id))
-    totalPrice += selectedOptions.reduce((sum, option) => sum + option.price, 0)
+    const selectedOptions = additionalOptions.filter((option) =>
+      pricingData.additionalOptions.includes(option.id)
+    )
+    total += selectedOptions.reduce((sum, option) => sum + option.price, 0)
 
-    // 커스텀 요청
-    totalPrice += pricingData.customRequests.reduce((sum, request) => sum + request.price, 0)
+    total += pricingData.customRequests.reduce((sum, request) => sum + request.price, 0)
 
-    return totalPrice
-  }
-
-  const calculateTime = () => {
-    let totalTime = packages[pricingData.packageType].time
-
-    // 평수 추가 시간 (10평 초과 시 평당 5분 추가)
-    const areaExtra = pricingData.areaSize - 10
-    if (areaExtra > 0) {
-      totalTime += areaExtra * 5
-    }
-
-    // 추가 옵션 시간
-    const selectedOptions = additionalOptions.filter((option) => pricingData.additionalOptions.includes(option.id))
-    totalTime += selectedOptions.reduce((sum, option) => sum + option.time, 0)
-
-    return totalTime
-  }
-
-  const formatTime = (minutes: number) => {
-    const hours = Math.floor(minutes / 60)
-    const mins = minutes % 60
-    if (hours === 0) return `${mins}분`
-    if (mins === 0) return `${hours}시간`
-    return `${hours}시간 ${mins}분`
+    return total
   }
 
   const toggleAdditionalOption = (optionId: string) => {
@@ -143,7 +101,9 @@ export default function CalculatorPage() {
   const updateCustomRequest = (index: number, field: "name" | "price", value: string | number) => {
     setPricingData((prev) => ({
       ...prev,
-      customRequests: prev.customRequests.map((request, i) => (i === index ? { ...request, [field]: value } : request)),
+      customRequests: prev.customRequests.map((request, i) =>
+        i === index ? { ...request, [field]: value } : request
+      ),
     }))
   }
 
@@ -168,17 +128,9 @@ export default function CalculatorPage() {
     }
   }
 
-  const totalPrice = calculatePrice()
-  const totalTime = calculateTime()
-
-  const canProceed = () => {
-    if (currentStep === 1) return true
-    if (currentStep === 2) return true
-    if (currentStep === 3) return true
-    return true
-  }
-
-  const canSave = pricingData.estimateName.trim() !== ""
+  const subtotal = calculateSubtotal()
+  const vatAmount = Math.round(subtotal * 0.1)
+  const totalWithVat = subtotal + vatAmount
 
   return (
     <main className="min-h-screen bg-background">
@@ -249,7 +201,7 @@ export default function CalculatorPage() {
                 <p className="text-sm text-muted-foreground break-keep">청소 난이도와 범위에 맞는 패키지를 선택하세요</p>
               </CardHeader>
               <CardContent className="space-y-4">
-                {(Object.entries(packages) as [PackageType, (typeof packages)[PackageType]][]).map(([type, pkg]) => (
+                {(Object.entries(packages) as [PackageType, Package][]).map(([type, pkg]) => (
                   <div
                     key={type}
                     className={`relative p-5 border-2 rounded-2xl cursor-pointer transition-all duration-300 ${
@@ -259,28 +211,20 @@ export default function CalculatorPage() {
                     }`}
                     onClick={() => setPricingData((prev) => ({ ...prev, packageType: type }))}
                   >
-                    {"popular" in pkg && pkg.popular && (
+                    {pkg.popular && (
                       <div className="absolute -top-3 left-4 px-3 py-1 bg-[#00C896] text-white text-xs font-medium rounded-full">
                         인기
                       </div>
                     )}
                     <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
                       <div className="flex-1">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className="font-bold text-lg">{pkg.name}</h3>
-                          <span className="text-sm text-muted-foreground break-keep">· {pkg.description}</span>
-                        </div>
-                        <div className="flex flex-wrap gap-2 mt-3">
+                        <h3 className="font-bold text-lg mb-3">{pkg.name}</h3>
+                        <div className="flex flex-wrap gap-2">
                           {pkg.features.map((feature, idx) => (
                             <span key={idx} className="px-2 py-1 bg-secondary text-xs rounded-lg text-muted-foreground break-keep">
                               {feature}
                             </span>
                           ))}
-                        </div>
-                        <div className="flex items-center gap-4 mt-3 text-sm text-muted-foreground">
-                          <span className="flex items-center gap-1">
-                            <Clock className="w-4 h-4" />약 {formatTime(pkg.time)}
-                          </span>
                         </div>
                       </div>
                       <div className="text-right">
@@ -312,13 +256,13 @@ export default function CalculatorPage() {
                   공간 크기 설정
                 </CardTitle>
                 <p className="text-sm text-muted-foreground break-keep">
-                  청소할 공간의 연면적을 설정하세요 (10평 초과 시 평당 추가 요금)
+                  청소 실평수를 설정하세요 (10평 초과 시 평당 추가 요금)
                 </p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
                   <div className="flex justify-between items-center mb-4">
-                    <Label className="text-base font-medium">연면적</Label>
+                    <Label className="text-base font-medium">청소 실평수</Label>
                     <div className="flex items-center gap-2">
                       <Input
                         type="number"
@@ -356,7 +300,7 @@ export default function CalculatorPage() {
                     <div className="flex items-start gap-3">
                       <AlertCircle className="w-5 h-5 text-[#00C896] shrink-0 mt-0.5" />
                       <div>
-                        <p className="font-medium text-sm break-keep">평수 추가 요금</p>
+                        <p className="font-medium text-sm break-keep">청소 실평수 추가 요금</p>
                         <p className="text-sm text-muted-foreground mt-1 break-keep">
                           {pricingData.areaSize - 10}평 추가 × ₩
                           {packages[pricingData.packageType].areaMultiplier.toLocaleString()} ={" "}
@@ -425,15 +369,7 @@ export default function CalculatorPage() {
                       />
                       <div className="flex-1">
                         <p className="font-medium text-sm break-keep">{option.name}</p>
-                        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-                          <span>+₩{option.price.toLocaleString()}</span>
-                          {option.time > 0 && (
-                            <>
-                              <span>·</span>
-                              <span>+{option.time}분</span>
-                            </>
-                          )}
-                        </div>
+                        <p className="text-xs text-muted-foreground">+₩{option.price.toLocaleString()}</p>
                       </div>
                     </div>
                   ))}
@@ -514,40 +450,10 @@ export default function CalculatorPage() {
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Check className="w-5 h-5 text-[#00C896]" />
-                  견적서 완성
+                  견적 요약
                 </CardTitle>
-                <p className="text-sm text-muted-foreground break-keep">견적서 정보를 확인하고 저장하세요</p>
               </CardHeader>
               <CardContent className="space-y-6">
-                {/* 견적서명 입력 */}
-                <div className="space-y-2">
-                  <Label htmlFor="estimate-name" className="text-sm font-medium">
-                    견적서명 <span className="text-red-500">*</span>
-                  </Label>
-                  <Input
-                    id="estimate-name"
-                    placeholder="예: 스튜디오 A 기본 청소"
-                    value={pricingData.estimateName}
-                    onChange={(e) => setPricingData((prev) => ({ ...prev, estimateName: e.target.value }))}
-                    className="bg-background"
-                  />
-                </div>
-
-                {/* 특이사항 */}
-                <div className="space-y-2">
-                  <Label htmlFor="notes" className="text-sm font-medium">
-                    특이사항 <span className="text-muted-foreground">(선택)</span>
-                  </Label>
-                  <Textarea
-                    id="notes"
-                    placeholder="청소 시 참고해야 할 사항을 입력하세요"
-                    value={pricingData.notes}
-                    onChange={(e) => setPricingData((prev) => ({ ...prev, notes: e.target.value }))}
-                    className="bg-background min-h-[80px]"
-                  />
-                </div>
-
-                {/* 견적 상세 내역 */}
                 <div className="p-5 bg-secondary/30 rounded-2xl space-y-3">
                   <h4 className="font-semibold mb-4 break-keep">견적 상세 내역</h4>
 
@@ -558,7 +464,7 @@ export default function CalculatorPage() {
 
                   {pricingData.areaSize > 10 && (
                     <div className="flex justify-between text-sm">
-                      <span>평수 추가 ({pricingData.areaSize - 10}평)</span>
+                      <span>청소 실평수 추가 ({pricingData.areaSize - 10}평)</span>
                       <span>
                         ₩
                         {(
@@ -588,17 +494,17 @@ export default function CalculatorPage() {
                       </div>
                     ))}
 
-                  <div className="border-t border-border pt-3 mt-3 flex justify-between font-bold text-lg">
-                    <span>총 예상 금액</span>
-                    <span className="text-[#00C896]">₩{totalPrice.toLocaleString()}</span>
+                  <div className="border-t border-border pt-3 mt-3 flex justify-between text-sm text-muted-foreground">
+                    <span>소계</span>
+                    <span>₩{subtotal.toLocaleString()}</span>
                   </div>
-
                   <div className="flex justify-between text-sm text-muted-foreground">
-                    <span>예상 소요시간</span>
-                    <span className="flex items-center gap-1">
-                      <Clock className="w-4 h-4" />
-                      {formatTime(totalTime)}
-                    </span>
+                    <span>VAT (10%)</span>
+                    <span>₩{vatAmount.toLocaleString()}</span>
+                  </div>
+                  <div className="border-t border-border pt-3 flex justify-between font-bold text-lg">
+                    <span>최종 예상 금액 (VAT 포함)</span>
+                    <span className="text-[#00C896]">₩{totalWithVat.toLocaleString()}</span>
                   </div>
                 </div>
               </CardContent>
@@ -620,55 +526,24 @@ export default function CalculatorPage() {
             </Button>
 
             <div className="text-center">
-              <div className="text-2xl font-bold text-[#00C896]">₩{totalPrice.toLocaleString()}</div>
-              <div className="text-xs text-muted-foreground flex items-center justify-center gap-1">
-                <Clock className="w-3 h-3" />
-                예상 {formatTime(totalTime)}
-              </div>
+              <div className="text-2xl font-bold text-[#00C896]">₩{subtotal.toLocaleString()}</div>
+              <div className="text-xs text-muted-foreground">예상 금액 (VAT 별도)</div>
             </div>
 
             {currentStep < 4 ? (
               <Button
                 onClick={nextStep}
-                disabled={!canProceed()}
                 className="w-full sm:w-auto bg-[#00C896] hover:bg-[#00B085] text-white"
               >
                 다음
                 <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             ) : (
-              <Button
-                disabled={!canSave}
-                onClick={() => setIsQuoteModalOpen(true)}
-                className="w-full sm:w-auto bg-[#00C896] hover:bg-[#00B085] text-white"
-              >
-                <FileText className="w-4 h-4 mr-2" />
-                견적서 확인
-              </Button>
+              <div className="w-full sm:w-18" />
             )}
           </div>
         </div>
       </div>
-
-      {/* Quote Modal */}
-      <QuoteModal
-        isOpen={isQuoteModalOpen}
-        onClose={() => setIsQuoteModalOpen(false)}
-        totalPrice={totalPrice}
-        totalTime={totalTime}
-        estimateName={pricingData.estimateName}
-        packageName={pricingData.packageType}
-        areaSize={pricingData.areaSize}
-        onPayment={() => {
-          // 결제 페이지로 이동
-          const params = new URLSearchParams({
-            package: pricingData.packageType,
-            amount: totalPrice.toString(),
-            area: pricingData.areaSize.toString(),
-          });
-          router.push(`/payment/checkout?${params.toString()}`);
-        }}
-      />
     </main>
   )
 }

@@ -1,34 +1,36 @@
 "use client"
 
-import { Check, Clock, Sparkles } from "lucide-react"
+import { Check, Sparkles } from "lucide-react"
 import { AnimatedSection } from "@/components/animated-section"
 import { SectionHeader } from "@/components/common"
 import { cn } from "@/lib/utils"
 
-const packages = {
+type Package = {
+  name: string
+  price: number
+  features: string[]
+  areaMultiplier: number
+  popular?: boolean
+}
+
+const packages: Record<string, Package> = {
   basic: {
     name: "Basic",
     price: 12000,
-    description: "청소 뉴비",
     features: ["청소 매뉴얼 제공", "소품 원위치", "테이블 정리 및 닦기", "바닥 쓰레기 정리", "일회용품 보충"],
-    time: 30,
     areaMultiplier: 200,
   },
   standard: {
     name: "Standard",
     price: 18000,
-    description: "청소 중급자",
     features: ["Basic 모든 기능", "바닥 청소기", "설거지 점검(식기 오염 제거)", "화장실 정리", "분리수거"],
-    time: 60,
     areaMultiplier: 500,
     popular: true,
   },
   premium: {
     name: "Premium",
     price: 35000,
-    description: "청소 마스터",
     features: ["Standard 모든 기능", "어질러진 공간 대청소"],
-    time: 120,
     areaMultiplier: 1000,
   },
 }
@@ -67,20 +69,13 @@ export function PackagesSection() {
                 )}
 
                 <div className="mb-6">
-                  <h3 className="text-2xl font-bold mb-2">{pkg.name}</h3>
-                  <p className={cn("text-sm", pkg.popular ? "text-white/80" : "text-muted-foreground")}>
-                    {pkg.description}
-                  </p>
+                  <h3 className="text-2xl font-bold">{pkg.name}</h3>
                 </div>
 
                 <div className="mb-6">
                   <div className="flex items-baseline gap-1">
                     <span className="text-4xl font-bold">{pkg.price.toLocaleString()}</span>
                     <span className={cn("text-sm", pkg.popular ? "text-white/80" : "text-muted-foreground")}>원~</span>
-                  </div>
-                  <div className={cn("flex items-center gap-1 mt-2 text-sm", pkg.popular ? "text-white/80" : "text-muted-foreground")}>
-                    <Clock className="w-4 h-4" />
-                    <span>약 {pkg.time}분 소요</span>
                   </div>
                 </div>
 
