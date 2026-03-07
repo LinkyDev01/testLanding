@@ -123,7 +123,7 @@ export function PlatformFooter() {
 
         {/* Bottom */}
         <div className="border-t border-background/20 mt-12 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-background/50 text-sm">© 2025 Linky Platform. All rights reserved.</p>
+          <p className="text-background/50 text-sm">© 2025 Linky Care. All rights reserved.</p>
           <div className="flex gap-6">
             <Link href="/platform/terms" className="text-background/50 hover:text-background text-sm transition-colors">
               이용약관

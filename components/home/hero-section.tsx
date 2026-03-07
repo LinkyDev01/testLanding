@@ -95,7 +95,7 @@ export function HeroSection() {
               <Link href="/platform" className="space-y-4 block cursor-pointer">
                 <div className="space-y-4 pt-0 md:pt-8">
                   <div className="aspect-square rounded-2xl bg-mint overflow-hidden border border-gray-200 transition-transform duration-300 hover:scale-[1.02] hover:shadow-lg">
-                    <img src="/main/main04.svg" alt="링키케어 로고" className="w-full h-full object-cover" />
+                    <img src="/main/main04.png" alt="링키케어 로고" className="w-full h-full object-cover" />
                   </div>
                   <div className="aspect-4/5 rounded-2xl overflow-hidden group">
                     <img

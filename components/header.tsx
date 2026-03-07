@@ -26,7 +26,7 @@ export function Header({ variant = "main" }: HeaderProps) {
 
   const config = {
     main: {
-      logo: { href: "/", image: "/logos/linky_platform_logo_business.svg", width: 120, height: 30, className: "h-8 w-auto" },
+      logo: { href: "/", image: "/logos/linky_care_logo.png", width: 120, height: 30, className: "h-22 w-auto" },
       navItems: [
         { href: "/lounge", label: "링키라운지" },
         { href: "/platform", label: "링키케어" },
@@ -46,7 +46,7 @@ export function Header({ variant = "main" }: HeaderProps) {
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "예약하기" },
     },
     platform: {
-      logo: { href: "/platform", image: "/logos/linky_platform_logo_business.svg", width: 120, height: 30, className: "h-8 w-auto" },
+      logo: { href: "/platform", image: "/logos/linky_care_logo.png", width: 120, height: 30, className: "h-22 w-auto" },
       navItems: [
         { href: "/platform", label: "서비스 소개" },
         { href: "/platform#features", label: "기능" },

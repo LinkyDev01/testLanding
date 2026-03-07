@@ -111,7 +111,7 @@ export function ServicesSection() {
                   </div>
                   <div>
                     <h3 className="text-xl font-bold">링키케어</h3>
-                    <p className="text-sm text-muted-foreground">Linky Platform</p>
+                    <p className="text-sm text-muted-foreground">Linky Care</p>
                   </div>
                 </div>
 
