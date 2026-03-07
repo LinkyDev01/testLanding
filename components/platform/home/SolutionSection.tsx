@@ -12,7 +12,7 @@ export function SolutionSection() {
         <AnimatedSection>
           <SectionHeader
             label="Our Solutions"
-            title="링키 플랫폼의 솔루션"
+            title="링키케어의 솔루션"
             labelColor="mint"
           />
         </AnimatedSection>

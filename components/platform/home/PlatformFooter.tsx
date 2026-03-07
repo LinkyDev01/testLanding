@@ -29,7 +29,7 @@ export function PlatformFooter() {
             <div>
               <h3 className="text-xl font-semibold mb-2">문의하기</h3>
               <p className="text-background/70 leading-relaxed">
-                링키 플랫폼에 대해 궁금한 점이 있으시면 언제든 문의해 주세요.
+                링키케어에 대해 궁금한 점이 있으시면 언제든 문의해 주세요.
               </p>
             </div>
 

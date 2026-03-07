@@ -47,7 +47,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/platform" className="text-background/70 hover:text-background transition-colors">
-                  링키 플랫폼
+                  링키케어
                 </Link>
               </li>
             </ul>

@@ -116,7 +116,6 @@
 .applicationForm {
     max-width: 500px;
     margin: 0 auto;
-    overflow: hidden;
 }
 
 .formStep {
@@ -133,6 +132,7 @@
         opacity: 0;
         transform: translateY(10px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -209,6 +209,7 @@
         opacity: 0;
         transform: translateY(-8px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -288,8 +289,8 @@
     flex-shrink: 0;
 }
 
-.radioLabel input[type="radio"]:checked + .radioText,
-.radioLabel input[type="checkbox"]:checked + .radioText {
+.radioLabel input[type="radio"]:checked+.radioText,
+.radioLabel input[type="checkbox"]:checked+.radioText {
     font-weight: 500;
     color: var(--text-primary);
 }
@@ -477,8 +478,13 @@
 }
 
 @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 /* Footer */

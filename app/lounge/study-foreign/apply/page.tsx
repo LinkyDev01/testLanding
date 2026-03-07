@@ -110,10 +110,15 @@ export default function StudyForeignApplyPage() {
     }
   }
 
-  const scheduleDays = [
-    { day: "월", lang: "일본어" },
-    { day: "화", lang: "중국어" },
-  ]
+  const scheduleOptions: Record<string, { label: string; value: string }[]> = {
+    "일본어": [
+      { label: "월요일 A반 (19:00-20:30)", value: "월요일 A반 (19:00-20:30)" },
+      { label: "월요일 B반 (21:00-22:30)", value: "월요일 B반 (21:00-22:30)" },
+    ],
+    "중국어": [
+      { label: "월요일 (20:30-22:00)", value: "월요일 (20:30-22:00)" },
+    ],
+  }
 
   return (
     <>
@@ -121,7 +126,7 @@ export default function StudyForeignApplyPage() {
         <div className={styles.container}>
           <div className={styles.sectionHeader}>
             <div className={styles.sectionLabel}>APPLY NOW</div>
-            <h2 className={styles.sectionTitle}>3월 외국어 회화 클래스 신청</h2>
+            <h2 className={styles.sectionTitle}>4월 외국어 회화 클래스 신청</h2>
             <p className={styles.sectionDescription}>
               작성해 주신 내용을 바탕으로 나에게 맞는 클래스를 배정해 드립니다.<br />
               소요 시간: 약 1분
@@ -219,37 +224,30 @@ export default function StudyForeignApplyPage() {
                 <label className={styles.formLabel}>가능한 일정 (모두 선택) *</label>
                 {currentStep === 2 && selectedLanguage ? (
                   <div className={styles.scheduleOptions}>
-                    {scheduleDays
-                      .filter(({ lang }) => lang === selectedLanguage)
-                      .map(({ day }) => (
-                        <div key={day} className={styles.dayGroup}>
-                          <div className={styles.radioGroup}>
-                            {[
-                              { label: `${day}요일 A반 (19:00-20:30)`, value: `${day}요일 A반 (19:00-20:30)` },
-                              { label: `${day}요일 B반 (21:00-22:30)`, value: `${day}요일 B반 (21:00-22:30)` },
-                            ].map(({ label, value }) => (
-                              <label key={value} className={styles.radioLabel}>
-                                <input
-                                  type="checkbox"
-                                  name="schedule"
-                                  value={value}
-                                  checked={selectedSchedules.includes(value)}
-                                  onChange={(e) => {
-                                    setSelectedSchedules(prev =>
-                                      e.target.checked ? [...prev, value] : prev.filter(s => s !== value)
-                                    )
-                                  }}
-                                />
-                                <span className={styles.radioText}>{label}</span>
-                              </label>
-                            ))}
-                          </div>
-                          <div className={styles.dayLabel}>{`수업은 4주간 진행됩니다.`}</div>
-                        </div>
-                      ))}
+                    <div className={styles.dayGroup}>
+                      <div className={styles.radioGroup}>
+                        {(scheduleOptions[selectedLanguage] ?? []).map(({ label, value }) => (
+                          <label key={value} className={styles.radioLabel}>
+                            <input
+                              type="checkbox"
+                              name="schedule"
+                              value={value}
+                              checked={selectedSchedules.includes(value)}
+                              onChange={(e) => {
+                                setSelectedSchedules(prev =>
+                                  e.target.checked ? [...prev, value] : prev.filter(s => s !== value)
+                                )
+                              }}
+                            />
+                            <span className={styles.radioText}>{label}</span>
+                          </label>
+                        ))}
+                      </div>
+                      <div className={styles.dayLabel}>수업은 4주간 진행됩니다.</div>
+                    </div>
                   </div>
                 ) : !selectedLanguage ? (
-                  <p className={styles.scheduleHint}>일본어 클래스는 월요일, 중국어 클래스는 화요일에 진행됩니다.</p>
+                  <p className={styles.scheduleHint}>일본어 클래스는 월요일, 중국어 클래스는 월요일·화요일에 진행됩니다.</p>
                 ) : null}
               </div>
               <div className={styles.formButtons}>
@@ -305,7 +303,7 @@ export default function StudyForeignApplyPage() {
                 </label>
                 <div className={styles.formPrivacyNotice}>
                   신청자 개별 연락 예정<br />
-                  <strong>비용: 10만원 (4주, 주 1회)</strong><br />
+                  <strong>비용: 15만원 (4주, 주 1회)</strong><br />
                   참가자로 선정된 분들은 결제 후 최종 참가 확정되며 조기 마감될 수 있습니다.
                 </div>
               </div>

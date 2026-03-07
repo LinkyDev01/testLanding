@@ -100,7 +100,7 @@ export function ServicesSection() {
               <div className="aspect-video overflow-hidden">
                 <img
                   src="/professional-cleaning-service-mobile-app-interface.jpg"
-                  alt="링키 플랫폼"
+                  alt="링키케어"
                   className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
                 />
               </div>
@@ -110,7 +110,7 @@ export function ServicesSection() {
                     <Building className="w-6 h-6 text-white" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold">링키 플랫폼</h3>
+                    <h3 className="text-xl font-bold">링키케어</h3>
                     <p className="text-sm text-muted-foreground">Linky Platform</p>
                   </div>
                 </div>

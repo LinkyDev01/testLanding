@@ -29,7 +29,7 @@ export function Header({ variant = "main" }: HeaderProps) {
       logo: { href: "/", image: "/logos/linky_platform_logo_business.svg", width: 120, height: 30, className: "h-8 w-auto" },
       navItems: [
         { href: "/lounge", label: "링키라운지" },
-        { href: "/platform", label: "링키 플랫폼" },
+        { href: "/platform", label: "링키케어" },
         { href: "#contact", label: "문의하기" },
       ],
       ctaButton: { bg: "bg-[#9CB7A4] hover:bg-[#8AA594]", text: "시작하기" },

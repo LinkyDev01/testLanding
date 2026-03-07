@@ -37,7 +37,7 @@ export function PlatformHeroSection() {
 
             <AnimatedSection delay={200}>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg break-keep">
-                링키 플랫폼은 공간 대여 업자와 긱워커를 연결하는 B2B/B2C 중개형
+                링키케어은 공간 대여 업자와 긱워커를 연결하는 B2B/B2C 중개형
                 플랫폼입니다. 공간 운영의 번거로움을 줄이고, 사람에게는 안정적인
                 일과 기회를 제공합니다.
               </p>
@@ -78,7 +78,7 @@ export function PlatformHeroSection() {
               <div className="aspect-square rounded-3xl overflow-hidden group">
                 <img
                   src="/modern-mobile-app-interface-showing-cleaning-servi.jpg"
-                  alt="링키 플랫폼 앱"
+                  alt="링키케어 앱"
                   className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
