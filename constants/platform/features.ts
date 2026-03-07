@@ -23,7 +23,7 @@ export const FOR_BUSINESSES: Feature[] = [
   {
     icon: Star,
     title: "검증된 청소 인력",
-    description: "평점 시스템으로 검증된 신뢰할 수 있는 긱워커를 만나보세요",
+    description: "평점 시스템으로 검증된 신뢰할 수 있는 링키 파트너를 만나보세요",
   },
 ]
 
@@ -54,12 +54,12 @@ export const HOW_IT_WORKS: ProcessStep[] = [
   {
     step: "02",
     title: "자동 매칭",
-    description: "지역과 일정에 맞는 최적의 긱워커가 자동으로 배정됩니다",
+    description: "지역과 일정에 맞는 최적의 링키 파트너가 자동으로 배정됩니다",
   },
   {
     step: "03",
     title: "청소 완료",
-    description: "긱워커가 청소를 완료하고 상태를 보고합니다",
+    description: "링키 파트너가 청소를 완료하고 상태를 보고합니다",
   },
   {
     step: "04",
@@ -87,8 +87,8 @@ export const EXTENDED_FEATURES: Feature[] = [
 ]
 
 export const PLATFORM_STATS: StatItem[] = [
-  { value: "30+", label: "파트너 공간" },
-  { value: "100+", label: "등록 긱워커" },
+  { value: "30+", label: "링키 파트너 공간" },
+  { value: "100+", label: "링키 파트너" },
   { value: "500+", label: "완료 서비스" },
 ]
 

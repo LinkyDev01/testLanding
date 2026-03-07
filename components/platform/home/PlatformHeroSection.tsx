@@ -16,30 +16,18 @@ export function PlatformHeroSection() {
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           <div className="space-y-8">
-            <AnimatedSection>
-              <div className="flex items-center gap-2">
-                <div className="w-4 h-4 rounded-full bg-mint animate-pulse" />
-                <span className="text-sm font-medium text-mint">
-                  B2B/B2C 중개 플랫폼
-                </span>
-              </div>
-            </AnimatedSection>
 
             <AnimatedSection delay={100}>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight break-keep">
-                공간 운영을 연결하는
+                파티룸·에어비앤비
                 <br />
-                <span className="text-mint">청소 중개</span>
-                <br />
-                플랫폼
+                <span className="text-mint">청소 서비스</span>
               </h1>
             </AnimatedSection>
 
             <AnimatedSection delay={200}>
               <p className="text-lg text-muted-foreground leading-relaxed max-w-lg break-keep">
-                링키케어은 공간 대여 업자와 긱워커를 연결하는 B2B/B2C 중개형
-                플랫폼입니다. 공간 운영의 번거로움을 줄이고, 사람에게는 안정적인
-                일과 기회를 제공합니다.
+                파티룸·에어비앤비 사장님의 청소 걱정, 링키케어가 대신합니다.  체계적인 청소 관리로 사장님은 매출에만 집중하세요.
               </p>
             </AnimatedSection>
 
@@ -54,7 +42,7 @@ export function PlatformHeroSection() {
                   variant="outline"
                   className="transition-transform hover:scale-105 bg-transparent"
                 >
-                  긱워커로 등록하기
+                  링키 파트너로 등록하기
                 </Button>
               </div>
             </AnimatedSection>

@@ -231,7 +231,7 @@ export default function PaymentSuccessView() {
               <span className="w-5 h-5 bg-[#F5E100] rounded-full flex items-center justify-center text-[10px] font-bold flex-shrink-0 mt-0.5">
                 3
               </span>
-              <span>확정된 일정에 전문 파트너가 방문하여 서비스를 제공합니다</span>
+              <span>확정된 일정에 전문 링키 파트너가 방문하여 서비스를 제공합니다</span>
             </li>
           </ul>
         </div>

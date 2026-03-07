@@ -31,20 +31,20 @@ const packages: Record<PackageType, Package> = {
   basic: {
     name: "Basic",
     price: 12000,
-    features: ["청소 매뉴얼 제공", "소품 원위치", "테이블 정리 및 닦기", "바닥 쓰레기 정리", "일회용품 보충"],
+    features: ["손님이 쓰레기까지 처리하고 퇴실"],
     areaMultiplier: 200,
   },
   standard: {
     name: "Standard",
     price: 18000,
-    features: ["Basic 모든 기능", "바닥 청소기", "설거지 점검(식기 오염 제거)", "화장실 정리", "분리수거"],
+    features: ["손님이 기본 정리 후 퇴실"],
     areaMultiplier: 500,
     popular: true,
   },
   premium: {
     name: "Premium",
     price: 35000,
-    features: ["Standard 모든 기능", "어질러진 공간 대청소"],
+    features: ["손님이 그대로 퇴실"],
     areaMultiplier: 1000,
   },
 }
@@ -161,21 +161,19 @@ export default function CalculatorPage() {
             {[1, 2, 3, 4].map((step) => (
               <div key={step} className="flex items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${
-                    step < currentStep
-                      ? "bg-[#00C896] text-white"
-                      : step === currentStep
-                        ? "bg-[#00C896] text-white ring-4 ring-[#00C896]/20"
-                        : "bg-secondary text-muted-foreground"
-                  }`}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center text-sm font-semibold transition-all duration-300 ${step < currentStep
+                    ? "bg-[#00C896] text-white"
+                    : step === currentStep
+                      ? "bg-[#00C896] text-white ring-4 ring-[#00C896]/20"
+                      : "bg-secondary text-muted-foreground"
+                    }`}
                 >
                   {step < currentStep ? <Check className="w-5 h-5" /> : step}
                 </div>
                 {step < 4 && (
                   <div
-                    className={`w-16 sm:w-24 h-1 mx-1 sm:mx-2 rounded transition-colors duration-300 ${
-                      step < currentStep ? "bg-[#00C896]" : "bg-secondary"
-                    }`}
+                    className={`w-16 sm:w-24 h-1 mx-1 sm:mx-2 rounded transition-colors duration-300 ${step < currentStep ? "bg-[#00C896]" : "bg-secondary"
+                      }`}
                   />
                 )}
               </div>
@@ -204,11 +202,10 @@ export default function CalculatorPage() {
                 {(Object.entries(packages) as [PackageType, Package][]).map(([type, pkg]) => (
                   <div
                     key={type}
-                    className={`relative p-5 border-2 rounded-2xl cursor-pointer transition-all duration-300 ${
-                      pricingData.packageType === type
-                        ? "border-[#00C896] bg-[#00C896]/5 shadow-lg"
-                        : "border-border hover:border-[#00C896]/50 hover:shadow-md"
-                    }`}
+                    className={`relative p-5 border-2 rounded-2xl cursor-pointer transition-all duration-300 ${pricingData.packageType === type
+                      ? "border-[#00C896] bg-[#00C896]/5 shadow-lg"
+                      : "border-border hover:border-[#00C896]/50 hover:shadow-md"
+                      }`}
                     onClick={() => setPricingData((prev) => ({ ...prev, packageType: type }))}
                   >
                     {pkg.popular && (
@@ -322,11 +319,10 @@ export default function CalculatorPage() {
                     <button
                       key={size}
                       onClick={() => setPricingData((prev) => ({ ...prev, areaSize: size }))}
-                      className={`py-3 rounded-xl border-2 text-sm font-medium transition-all ${
-                        pricingData.areaSize === size
-                          ? "border-[#00C896] bg-[#00C896]/10 text-[#00C896]"
-                          : "border-border hover:border-[#00C896]/50"
-                      }`}
+                      className={`py-3 rounded-xl border-2 text-sm font-medium transition-all ${pricingData.areaSize === size
+                        ? "border-[#00C896] bg-[#00C896]/10 text-[#00C896]"
+                        : "border-border hover:border-[#00C896]/50"
+                        }`}
                     >
                       {size}평
                     </button>
@@ -355,11 +351,10 @@ export default function CalculatorPage() {
                   {additionalOptions.map((option) => (
                     <div
                       key={option.id}
-                      className={`flex items-center gap-3 p-4 border-2 rounded-xl cursor-pointer transition-all ${
-                        pricingData.additionalOptions.includes(option.id)
-                          ? "border-[#00C896] bg-[#00C896]/5"
-                          : "border-border hover:border-[#00C896]/50"
-                      }`}
+                      className={`flex items-center gap-3 p-4 border-2 rounded-xl cursor-pointer transition-all ${pricingData.additionalOptions.includes(option.id)
+                        ? "border-[#00C896] bg-[#00C896]/5"
+                        : "border-border hover:border-[#00C896]/50"
+                        }`}
                       onClick={() => toggleAdditionalOption(option.id)}
                     >
                       <Checkbox

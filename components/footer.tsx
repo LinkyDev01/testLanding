@@ -8,16 +8,6 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           {/* Brand */}
           <div className="md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 rounded-lg bg-[#9CB7A4] flex items-center justify-center">
-                <span className="text-white font-bold text-lg">L</span>
-              </div>
-              <span className="text-xl font-bold">Linky</span>
-            </div>
-            <p className="text-background/70 leading-relaxed max-w-md mb-4">
-              사람과 사람을 잇는 공간·플랫폼 서비스. 오프라인 공간과 온라인 플랫폼을 통해 사람, 공간, 일을 유기적으로
-              연결합니다.
-            </p>
             <div className="text-background/50 text-sm space-y-1">
               <p>주식회사 링키</p>
               <p>대표 : 안동민 | 개인정보관리책임자 : 안동민</p>

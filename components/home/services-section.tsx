@@ -41,8 +41,7 @@ export function ServicesSection() {
                 </div>
 
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  사람을 잇는 오프라인 커뮤니티 공간. 단순한 파티룸이 아닌, '목적
-                  있는 만남'이 자연스럽게 이루어지는 커뮤니티 라운지입니다.
+                  링키라운지는 사람과 사람이 연결되는 공간입니다. 공간에서 나누는 시간이 오래 남는 기억이 될 수 있도록, 연결의 순간을 더 특별하게 만듭니다.
                 </p>
 
                 {/* Features */}
@@ -116,15 +115,14 @@ export function ServicesSection() {
                 </div>
 
                 <p className="text-muted-foreground leading-relaxed mb-6">
-                  공간 운영을 연결하는 청소 중개 플랫폼. 공간 대여 업자와 긱워커를
-                  연결하는 B2B/B2C 중개형 플랫폼입니다.
+                  파티룸·에어비앤비 사장님의 청소 걱정, 링키케어가 대신합니다. 체계적인 청소 관리로 사장님은 매출에만 집중하세요.
                 </p>
 
                 {/* Features */}
                 <div className="grid grid-cols-2 gap-3 mb-6">
                   {[
                     { icon: Building, label: "청소 중개" },
-                    { icon: Users, label: "긱워커 매칭" },
+                    { icon: Users, label: "링키 파트너 매칭" },
                     { icon: MapPin, label: "지역 기반" },
                     { icon: Clock, label: "유연한 일정" },
                   ].map((item, index) => (

@@ -17,20 +17,20 @@ const packages: Record<string, Package> = {
   basic: {
     name: "Basic",
     price: 12000,
-    features: ["청소 매뉴얼 제공", "소품 원위치", "테이블 정리 및 닦기", "바닥 쓰레기 정리", "일회용품 보충"],
+    features: ["간단한 정리정돈만 필요한 경우"],
     areaMultiplier: 200,
   },
   standard: {
     name: "Standard",
     price: 18000,
-    features: ["Basic 모든 기능", "바닥 청소기", "설거지 점검(식기 오염 제거)", "화장실 정리", "분리수거"],
+    features: ["고객이 기본적인 정리를 마치고 퇴실한 경우"],
     areaMultiplier: 500,
     popular: true,
   },
   premium: {
     name: "Premium",
     price: 35000,
-    features: ["Standard 모든 기능", "어질러진 공간 대청소"],
+    features: ["고객이 뒷정리 없이 그대로 퇴실한 경우"],
     areaMultiplier: 1000,
   },
 }

@@ -20,14 +20,6 @@ export function HeroSection() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Text Content */}
           <div className="space-y-8">
-            <AnimatedSection delay={0}>
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-sage-light rounded-full">
-                <span className="w-2 h-2 bg-sage rounded-full animate-pulse" />
-                <span className="text-sm text-rose font-medium">
-                  사람과 사람을 연결합니다
-                </span>
-              </div>
-            </AnimatedSection>
 
             <AnimatedSection delay={100}>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight text-balance">
@@ -38,40 +30,11 @@ export function HeroSection() {
               </h1>
             </AnimatedSection>
 
-            <AnimatedSection delay={200}>
-              <p className="text-lg text-muted-foreground leading-relaxed max-w-lg">
-                Linky는 오프라인 공간과 온라인 플랫폼을 통해 사람, 공간, 일을
-                유기적으로 연결하는 라이프스타일 기반 서비스입니다.
-              </p>
-            </AnimatedSection>
-
-            <AnimatedSection delay={300}>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <CTAButton
-                  size="lg"
-                  ctaVariant="sage"
-                  onClick={() => trackCustom("ClickCTA", { button: "메인_서비스알아보기" })}
-                >
-                  서비스 알아보기
-                  <ArrowRight className="ml-2 w-4 h-4" />
-                </CTAButton>
-                <Button
-                  size="lg"
-                  variant="outline"
-                  asChild
-                  className="transition-transform hover:scale-105 bg-transparent"
-                  onClick={() => trackCustom("ClickCTA", { button: "메인_문의하기" })}
-                >
-                  <Link href="#contact">문의하기</Link>
-                </Button>
-              </div>
-            </AnimatedSection>
-
             {/* Stats */}
             <AnimatedSection delay={400}>
               <div className="flex gap-8 pt-8 border-t border-border">
                 <StatCard value="50+" label="성공적인 모임" accentColor="sage" />
-                {/* <StatCard value="200+" label="파트너 공간" accentColor="mint" /> */}
+                {/* <StatCard value="200+" label="링키 파트너 공간" accentColor="mint" /> */}
                 <StatCard value="100%" label="고객 만족도" accentColor="mustard" />
               </div>
             </AnimatedSection>

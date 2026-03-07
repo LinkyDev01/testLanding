@@ -12,7 +12,7 @@ export function ProblemSection() {
         <AnimatedSection>
           <SectionHeader
             label="Problems We Solve"
-            title="우리가 해결하는 문제"
+            title="시장의 구조적 문제"
             labelColor="mint"
           />
         </AnimatedSection>
@@ -42,7 +42,7 @@ export function ProblemSection() {
               <div className="w-12 h-12 rounded-xl bg-mint-light flex items-center justify-center mb-6">
                 <Users className="w-6 h-6 text-mint" />
               </div>
-              <h3 className="text-xl font-bold mb-4 break-keep">긱워커의 고민</h3>
+              <h3 className="text-xl font-bold mb-4 break-keep">링키 파트너의 고민</h3>
               <ul className="space-y-4">
                 {WORKER_PROBLEMS.map((item, index) => (
                   <li key={index} className="flex items-start gap-3 group">

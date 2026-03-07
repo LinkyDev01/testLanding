@@ -28,7 +28,7 @@ export function Header() {
           <div className="flex items-center justify-between h-16 md:h-[70px]">
             <Link href="/" className="flex items-center gap-2">
               <Image
-                src="/logos/logo.png" 
+                src="/logos/logo.png"
                 alt="Linky Logo"
                 width={120}
                 height={40}
@@ -45,10 +45,10 @@ export function Header() {
   const handleScroll = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault()
     setIsOpen(false) // 모바일 메뉴 닫기
-    
+
     const targetId = href.substring(1)
     const targetElement = document.getElementById(targetId)
-    
+
     if (targetElement) {
       const headerOffset = 70
       const elementPosition = targetElement.getBoundingClientRect().top
@@ -62,46 +62,46 @@ export function Header() {
   }
 
   return (
-    <header 
+    <header
       className={`
         fixed top-0 left-0 right-0 z-50 
         transition-all duration-300 ease-in-out
-        ${isScrolled 
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100' 
+        ${isScrolled
+          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100'
           : 'bg-white'
         }
       `}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-[70px]">
-          
+
           {/* 로고 */}
-          <Link 
+          <Link
             href="/"
             className="flex items-center gap-2 group"
           >
             <Image
-                src="/logos/logo.png" 
-                alt="Linky Logo"
-                width={120}
-                height={100}
-                className="h-[70px] w-auto object-contain"
-                priority
-              />
+              src="/logos/logo.png"
+              alt="Linky Logo"
+              width={120}
+              height={100}
+              className="h-[70px] w-auto object-contain"
+              priority
+            />
           </Link>
 
           {/* 데스크톱 CTA */}
           <div className="hidden md:flex items-center gap-3">
-            <Button 
+            <Button
               variant="outlineSecondary"
               className='font-bold'
               asChild
             >
               <Link href="#contact" onClick={(e) => handleScroll(e, "#contact")}>
-                파트너 지원
+                링키 파트너 지원
               </Link>
             </Button>
-            <Button 
+            <Button
               variant="default"
               className="
                 px-6 py-2 rounded-lg font-bold

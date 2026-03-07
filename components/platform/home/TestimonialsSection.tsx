@@ -7,21 +7,21 @@ import { SectionHeader } from "@/components/common"
 const testimonials = [
   {
     name: "김OO 대표",
-    company: "논현동 스터디카페 운영 3년차",
+    company: "논현동 파티룸 운영 3년차",
     rating: 5,
     content:
       "매일 아침 30분씩 정리하던 시간이 완전히 사라졌어요. 이제는 그 시간에 마케팅이나 고객 응대에 집중할 수 있게 되었습니다. 링키 덕분에 매출이 20% 올랐어요",
   },
   {
     name: "박OO 대표",
-    company: "강남역 파티룸 운영 1년차",
+    company: "강남역 연습실 운영 1년차",
     rating: 5,
     content:
       "청소업체는 너무 비싸고, 알바를 쓰자니 관리가 어려웠는데 링키는 필요할 때만 부를 수 있어서 정말 편해요. 비용도 절반 이하로 줄었습니다.",
   },
   {
     name: "이OO 대표",
-    company: "역삼동 무인 스터디카페 2년차",
+    company: "역삼동 파티룸 2년차",
     rating: 5,
     content:
       "무인으로 운영하다 보니 정리 때문에 매번 직접 가야 했는데, 이제는 링키에서 완벽하게 처리해주셔서 온전히 사업에만 집중할 수 있게 되었습니다.",
@@ -34,7 +34,7 @@ export function TestimonialsSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <AnimatedSection>
           <SectionHeader
-            label="Testimonials"
+            label="Reviews"
             title="고객 후기"
             description="링키와 함께 변화를 경험한 분들의 이야기"
             labelColor="mint"
