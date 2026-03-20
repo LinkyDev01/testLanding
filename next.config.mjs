@@ -6,6 +6,15 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  async redirects() {
+    return [
+      {
+        source: "/lounge",
+        destination: "https://linkylounge.com/",
+        permanent: false,
+      },
+    ]
+  },
 }
 
 export default nextConfig
